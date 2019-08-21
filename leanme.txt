@@ -1,0 +1,2 @@
+-Limpio el master
+Trabajamos en el branch "ideas"
