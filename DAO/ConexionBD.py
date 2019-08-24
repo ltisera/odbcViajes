@@ -1,5 +1,6 @@
 import sys
-from ..CONFIGS.configs import getConfigDB
+sys.path.append('D:\DropBox\Dropbox\FAcultad\Sistemas Distribuidos\odbcViajes\odbcViajes')
+from CONFIGS.configs import getConfigDB
 import mysql.connector
 from mysql.connector import Error
 

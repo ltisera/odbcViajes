@@ -6,7 +6,7 @@ class Pasajero():
         self._telefono = telefono
         self._email = email
         self._millas = millas
-        self.clave = clave
+        self._clave = clave
         self._direccion = direccion
         self._nacionalidad = nacionalidad
 
@@ -85,11 +85,22 @@ class Pasajero():
     def nacionalidad(self, nacionalidad):
     	self._nacionalidad = nacionalidad
 
+    def datos(self):
+        return (self._DNI,
+            self._nombre,
+            self._apellido,
+            self._telefono,
+            self._email,
+            self._millas,
+            self._clave,
+            self._direccion,
+            self._nacionalidad)
     def __str__(self):
-        	return str("arma el string no seas vago!!!!")
+        
+        return str(self.__dict__)
 
 if __name__ == '__main__':
     print("Estoy en el main de pasajero")
     print("Armando usuario")
-    usrTST = Pasajero
+    usrTST = Pasajero()
     print(usrTST)
