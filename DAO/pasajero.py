@@ -1,14 +1,36 @@
 class Pasajero():
-    def __init__(self, DNI=0, nombre="", apellido="",telefono="",email="",millas=0,clave="",direccion="",nacionalidad=""):
-        self._DNI = DNI
-        self._nombre = nombre
-        self._apellido = apellido
-        self._telefono = telefono
-        self._email = email
-        self._millas = millas
-        self._clave = clave
-        self._direccion = direccion
-        self._nacionalidad = nacionalidad
+    
+    def __init__(self, DNI=0, nombre="", apellido="",telefono="",email="",millas=0,clave="",direccion="",nacionalidad="", registro = None):
+        if(not(registro is None)):
+            print(str("DNI: " + str(registro[0])+ "," +
+                        "\nNombre: " + str(registro[1])+ "," +
+                        "\nApellido: " + str(registro[2])+ "," +
+                        "\nTelefono: " + str(registro[3])+ "," +
+                        "\nEmail: " + str(registro[4])+ "," +
+                        "\nMillas: " + str(registro[5])+ "," +
+                        "\nclave: " + str(registro[6])+ "," +
+                        "\ndireccion: " + str(registro[7])+ "," +
+                        "\nNacionalidad: " + str(registro[8])+ "L"
+            ))
+            self._DNI = registro[0]
+            self._nombre = registro[1]
+            self._apellido = registro[2]
+            self._telefono = registro[3]
+            self._email = registro[4]
+            self._millas = registro[5]
+            self._clave = registro[6]
+            self._direccion = registro[7]
+            self._nacionalidad = registro[8]
+        else:
+            self._DNI = DNI
+            self._nombre = nombre
+            self._apellido = apellido
+            self._telefono = telefono
+            self._email = email
+            self._millas = millas
+            self._clave = clave
+            self._direccion = direccion
+            self._nacionalidad = nacionalidad
 
     @property
     def DNI(self):

@@ -41,17 +41,23 @@ class PasajeroDAO(ConexionBD):
 
         finally:
 
+
             self.cerrarConexion()
 
         return valido
     
     def traerPasajero(self, DNI):
         try:
+            pTraido = None
             self.crearConexion()
             self._micur.callproc("consultaPasajero", (DNI,))
-            for result in self._micur.stored_results():
-                return result.fetchone()
-                
+            for res in self._micur.stored_results():
+                r = res.fetchone()
+                print(r)
+                if(r is not None):
+                    pTraido = Pasajero(registro = r)
+            return pTraido
+
         except mysql.connector.Error as err:
             print("DANGER ALGO OCURRIO: " + str (err))
         finally:
@@ -68,8 +74,18 @@ class PasajeroDAO(ConexionBD):
             print("DANGER ALGO OCURRIO: " + str (err))
         finally:
             self.cerrarConexion()
-    
-    
+    def loginPasajero(self, dni):
+        if (self.traerPasajero(dni) is not None):
+
+            return True
+        return False
+"""
+    Implementar el metodo Mathov    
+    def loginPasajero(dni, mail = "", clave):
+        self.traerPasajero(dni)
+"""
+
+
 if __name__ == '__main__':
     tstPDAO = PasajeroDAO()
-    print(tstPDAO.traerPasajero(23))
+    print(tstPDAO.traerPasajero(4).clave)

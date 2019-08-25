@@ -12,4 +12,17 @@ CREATE PROCEDURE consultaPasajero(in DNI int)
 BEGIN
 	SELECT * FROM pasajero where pasajero.DNI = DNI;
 END//
+
+create procedure pasajeroValido(in dni int, in clave varchar(45), out valido tinyint(1))
+BEGIN
+	declare pasa varchar(45);
+	SELECT email INTO pasa FROM pasajero where pasajero.DNI = dni AND pasajero.clave = clave;
+	if(pasa is not null) then
+		SET valido = TRUE;
+	else
+		set valido = FALSE;
+	end if;
+END//
 delimiter ;
+
+
