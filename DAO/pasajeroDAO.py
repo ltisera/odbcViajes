@@ -53,7 +53,6 @@ class PasajeroDAO(ConexionBD):
             self._micur.callproc("consultaPasajero", (DNI,))
             for res in self._micur.stored_results():
                 r = res.fetchone()
-                print(r)
                 if(r is not None):
                     pTraido = Pasajero(registro = r)
             return pTraido
@@ -74,11 +73,17 @@ class PasajeroDAO(ConexionBD):
             print("DANGER ALGO OCURRIO: " + str (err))
         finally:
             self.cerrarConexion()
-    def loginPasajero(self, dni):
-        if (self.traerPasajero(dni) is not None):
+    def loginPasajero(self, dni, clave):
+        try:
+            if (self.traerPasajero(dni).clave == clave):
+                print("Pasajero registrado")
+                return True
+            else:
+                return False
+        except AttributeError as e:
+            print ("Excep")
+            return False
 
-            return True
-        return False
 """
     Implementar el metodo Mathov    
     def loginPasajero(dni, mail = "", clave):
@@ -88,4 +93,5 @@ class PasajeroDAO(ConexionBD):
 
 if __name__ == '__main__':
     tstPDAO = PasajeroDAO()
-    print(tstPDAO.traerPasajero(4).clave)
+    print(tstPDAO.loginPasajero(7, None))
+    print(tstPDAO.loginPasajero(7, "ClaceFalsa"))

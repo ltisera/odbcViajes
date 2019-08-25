@@ -2,16 +2,6 @@ class Pasajero():
     
     def __init__(self, DNI=0, nombre="", apellido="",telefono="",email="",millas=0,clave="",direccion="",nacionalidad="", registro = None):
         if(not(registro is None)):
-            print(str("DNI: " + str(registro[0])+ "," +
-                        "\nNombre: " + str(registro[1])+ "," +
-                        "\nApellido: " + str(registro[2])+ "," +
-                        "\nTelefono: " + str(registro[3])+ "," +
-                        "\nEmail: " + str(registro[4])+ "," +
-                        "\nMillas: " + str(registro[5])+ "," +
-                        "\nclave: " + str(registro[6])+ "," +
-                        "\ndireccion: " + str(registro[7])+ "," +
-                        "\nNacionalidad: " + str(registro[8])+ "L"
-            ))
             self._DNI = registro[0]
             self._nombre = registro[1]
             self._apellido = registro[2]
