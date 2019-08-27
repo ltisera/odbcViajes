@@ -1,6 +1,6 @@
-from pasaje import Pasaje
+from DAO.pasaje import Pasaje
 import mysql.connector
-from ConexionBD import ConexionBD
+from DAO.ConexionBD import ConexionBD
 
 
 class PasajeDAO(ConexionBD):
@@ -11,7 +11,6 @@ class PasajeDAO(ConexionBD):
         valido = False
         try:
             self.crearConexion()
-            print("TST")
             self._micur.callproc("altaPasaje", pasaje.datos())
             self._bd.commit()
             valido = True
@@ -42,7 +41,7 @@ class PasajeDAO(ConexionBD):
         return pTraido
 
     def traerPasajesXPasajero(self, idPasajero):
-        lstPasajes = None
+        lstPasajes = []
         try:
             self.crearConexion()
             self._micur.callproc("consultaPasajeXPasajero", (idPasajero,))

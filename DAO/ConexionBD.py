@@ -1,5 +1,6 @@
 import sys
 sys.path.append('D:\DropBox\Dropbox\FAcultad\Sistemas Distribuidos\odbcViajes\odbcViajes')
+sys.path.append(r'C:\Users\Camila\Documents\GitHub\odbcViajes')
 from CONFIGS.configs import getConfigDB
 import mysql.connector
 from mysql.connector import Error

@@ -1,6 +1,6 @@
-from pasajero import Pasajero
+from DAO.pasajero import Pasajero
 import mysql.connector
-from ConexionBD import ConexionBD
+from DAO.ConexionBD import ConexionBD
 
 
 class PasajeroDAO(ConexionBD):
@@ -72,18 +72,28 @@ class PasajeroDAO(ConexionBD):
             self.cerrarConexion()
 
     def loginPasajero(self, dni, clave):
+        valido = False
         try:
             if (self.traerPasajero(dni).clave == clave):
-                print("Pasajero registrado")
-                return True
+                if (clave is not None):
+                    print("Pasajero registrado")
+                    valido = True
+                else:
+                    print("Pasajero casual")
             else:
-                return False
+                print("Clave incorrecta")
         except AttributeError as e:
-            print("Excep" + str(e))
-            return False
+            print("Pasajero no registrado err: " + str(e))
+        return valido
 
 
 if __name__ == '__main__':
     tstPDAO = PasajeroDAO()
-    print(tstPDAO.loginPasajero(7, None))
-    print(tstPDAO.loginPasajero(7, "ClaceFalsa"))
+    print(tstPDAO.loginPasajero(123, None))
+    print(tstPDAO.loginPasajero(123, "ClaceFalsa"))
+
+    print(tstPDAO.loginPasajero(1234, None))
+    print(tstPDAO.loginPasajero(1234, "1234"))
+
+    print(tstPDAO.loginPasajero(666, None))
+    print(tstPDAO.loginPasajero(666, "1234"))

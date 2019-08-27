@@ -1,7 +1,7 @@
-from ciudad import Ciudad
+from DAO.ciudad import Ciudad
 import mysql.connector
 from mysql.connector import Error
-from ConexionBD import ConexionBD
+from DAO.ConexionBD import ConexionBD
 
 
 class CiudadDAO(ConexionBD):
@@ -24,12 +24,11 @@ class CiudadDAO(ConexionBD):
 
         return valido
 
-    def eliminarCiudad(self, id):
+    def eliminarCiudad(self, idCiudad):
         valido = False
         try:
             self.crearConexion()
-            print("TST")
-            self._micur.callproc("bajaCiudad", (id,))
+            self._micur.callproc("bajaCiudad", (idCiudad,))
             self._bd.commit()
             valido = True
 
@@ -41,15 +40,15 @@ class CiudadDAO(ConexionBD):
 
         return valido
 
-    def traerCiudad(self, id):
+    def traerCiudad(self, idCiudad):
         cTraido = None
         try:
             self.crearConexion()
-            self._micur.callproc("consultaCiudad", (id,))
+            self._micur.callproc("consultaCiudad", (idCiudad,))
             for res in self._micur.stored_results():
                 r = res.fetchone()
                 if(r is not None):
-                    cTraido = Pasaje(registro=r)
+                    cTraido = Ciudad(registro=r)
 
         except mysql.connector.Error as err:
             print("DANGER ALGO OCURRIO: " + str(err))
@@ -60,7 +59,7 @@ class CiudadDAO(ConexionBD):
         return cTraido
 
     def traerCiudades(self):
-        lstCiudades = None
+        lstCiudades = []
         try:
             self.crearConexion()
             self._micur.callproc("consultaCiudades")
@@ -82,3 +81,4 @@ class CiudadDAO(ConexionBD):
 
 
 if __name__ == '__main__':
+    pass

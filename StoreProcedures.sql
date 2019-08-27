@@ -3,8 +3,8 @@ delimiter //
 #DROP PROCEDURE altaPasajero;
 CREATE PROCEDURE altaPasajero (in dni int, in nombre varchar(45), in apellido varchar(45), in telefono varchar(45), in email varchar(45), in millas float, in clave varchar(45), in direccion varchar(45), in nacionalidad varchar(45))
 BEGIN
-	insert into pasajero (dni,nombre,apellido,telefono,email,millas,clave,direccion,nacionalidad) 
-    values(dni,nombre,apellido,telefono,email,millas,clave,direccion,nacionalidad);
+	insert into pasajero (dni, nombre, apellido, telefono, email, millas, clave, direccion, nacionalidad) 
+    values(dni, nombre, apellido, telefono, email, millas, clave, direccion, nacionalidad);
 END//
 
 #DROP PROCEDURE consultaPasajero;
@@ -20,10 +20,10 @@ BEGIN
 END//
 
 #DROP PROCEDURE altaPasaje;
-CREATE PROCEDURE altaPasaje (in codigo varchar(10), in fecha date, in valor float , in pasajero int, in origen int, in destino int, in formaPago enum('dinero','millas'))
+CREATE PROCEDURE altaPasaje (in codigo varchar(10), in fecha date, in valor float, in pasajero int, in origen int, in destino int, in formaPago enum('dinero','millas'))
 BEGIN
-	insert into pasaje (codigo, fecha, valor,  pasajero, origen,destino, formaPago) 
-    values(codigo, fecha, valor,  pasajero, origen,destino, formaPago);
+	insert into pasaje (codigo, fecha, valor, pasajero, origen, destino, formaPago) 
+    values(codigo, fecha, valor, pasajero, origen, destino, formaPago);
 END//
 
 #DROP PROCEDURE consultaPasaje;
@@ -39,22 +39,22 @@ BEGIN
 END//
 
 #DROP PROCEDURE altaCiudad;
-CREATE PROCEDURE altaCiudad (in idDestinos int, in nombre varchar(45), in cordenada varchar(45) , in baja tinyint)
+CREATE PROCEDURE altaCiudad (in idCiudad int, in nombre varchar(45), in coordenada varchar(45) , in baja tinyint)
 BEGIN
-	insert into ciudad (idDestinos, nombre, cordenada, baja) 
-    values(idDestinos, nombre, cordenada, baja);
+	insert into ciudad (nombre, coordenada, baja) 
+    values(nombre, coordenada, baja);
 END// 
 
 #DROP PROCEDURE bajaCiudad;
-CREATE PROCEDURE bajaCiudad (in idDestinos int)
+CREATE PROCEDURE bajaCiudad (in idCiudad int)
 BEGIN
-	update ciudad set ciudad.baja = True where ciudad.idDestinos = idDestinos;
+	update ciudad set ciudad.baja = True where ciudad.idCiudad = idCiudad;
 END//    
 
 #DROP PROCEDURE consultaCiudad;
 CREATE PROCEDURE consultaCiudad(in idDestinos int)
 BEGIN
-	SELECT * FROM ciudad where ciudad.idDestinos = idDestinos;
+	SELECT * FROM ciudad where ciudad.idCiudad = idCiudad;
 END//
 
 #DROP PROCEDURE consultaCiudades;
