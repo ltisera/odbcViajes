@@ -1,7 +1,7 @@
 from pasajero import Pasajero
 import mysql.connector
-from mysql.connector import Error
 from ConexionBD import ConexionBD
+
 
 class PasajeroDAO(ConexionBD):
     def __init__(self):
@@ -36,43 +36,41 @@ class PasajeroDAO(ConexionBD):
                 valido = "No lo se rick, parece falso"
 
         except mysql.connector.errors.IntegrityError as e:
-            
             valido = "Usuario Usuario Duplicado" + str(e)
 
         finally:
-
-
             self.cerrarConexion()
 
         return valido
-    
+
     def traerPasajero(self, DNI):
+        pTraido = None
         try:
-            pTraido = None
             self.crearConexion()
             self._micur.callproc("consultaPasajero", (DNI,))
             for res in self._micur.stored_results():
                 r = res.fetchone()
                 if(r is not None):
-                    pTraido = Pasajero(registro = r)
-            return pTraido
+                    pTraido = Pasajero(registro=r)
 
         except mysql.connector.Error as err:
-            print("DANGER ALGO OCURRIO: " + str (err))
+            print("DANGER ALGO OCURRIO: " + str(err))
         finally:
             self.cerrarConexion()
-    
-    def traerPasajerosXMail(self, mail):
+        return pTraido
+
+    def traerPasajerosXEmail(self, mail):
         try:
             self.crearConexion()
-            self._micur.callproc("consultaPasajeroXMail", (mail,))
+            self._micur.callproc("consultaPasajeroXEmail", (mail,))
             for result in self._micur.stored_results():
                 return result.fetchone()
-                
+
         except mysql.connector.Error as err:
-            print("DANGER ALGO OCURRIO: " + str (err))
+            print("DANGER ALGO OCURRIO: " + str(err))
         finally:
             self.cerrarConexion()
+
     def loginPasajero(self, dni, clave):
         try:
             if (self.traerPasajero(dni).clave == clave):
@@ -81,14 +79,8 @@ class PasajeroDAO(ConexionBD):
             else:
                 return False
         except AttributeError as e:
-            print ("Excep")
+            print("Excep" + str(e))
             return False
-
-"""
-    Implementar el metodo Mathov    
-    def loginPasajero(dni, mail = "", clave):
-        self.traerPasajero(dni)
-"""
 
 
 if __name__ == '__main__':

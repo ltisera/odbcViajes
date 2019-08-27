@@ -1,7 +1,7 @@
 from pasaje import Pasaje
 import mysql.connector
-from mysql.connector import Error
 from ConexionBD import ConexionBD
+
 
 class PasajeDAO(ConexionBD):
     def __init__(self):
@@ -12,64 +12,52 @@ class PasajeDAO(ConexionBD):
         try:
             self.crearConexion()
             print("TST")
-            self._micur.callproc("altaPasaje",pasaje.datos())
-
+            self._micur.callproc("altaPasaje", pasaje.datos())
             self._bd.commit()
             valido = True
-            
+
         except mysql.connector.errors.IntegrityError as e:
             print(e)
-            
+
         finally:
-
-
             self.cerrarConexion()
 
         return valido
-    
+
     def traerPasaje(self, DNI):
+        pTraido = None
         try:
-            pTraido = None
             self.crearConexion()
             self._micur.callproc("consultaPasaje", (DNI,))
             for res in self._micur.stored_results():
                 r = res.fetchone()
                 if(r is not None):
-                    pTraido = Pasaje(registro = r)
-            return pTraido
+                    pTraido = Pasaje(registro=r)
 
         except mysql.connector.Error as err:
-            print("DANGER ALGO OCURRIO: " + str (err))
+            print("DANGER ALGO OCURRIO: " + str(err))
         finally:
             self.cerrarConexion()
-    
-    def traerPasajesXMail(self, mail):
+
+        return pTraido
+
+    def traerPasajesXPasajero(self, idPasajero):
+        lstPasajes = None
         try:
             self.crearConexion()
-            self._micur.callproc("consultaPasajeXMail", (mail,))
+            self._micur.callproc("consultaPasajeXPasajero", (idPasajero,))
             for result in self._micur.stored_results():
-                return result.fetchone()
-                
+                reg = result.fetchall()
+                if reg is not None:
+                    for r in reg:
+                        lstPasajes.append(Pasaje(registro=r))
+
         except mysql.connector.Error as err:
-            print("DANGER ALGO OCURRIO: " + str (err))
+            print("DANGER ALGO OCURRIO: " + str(err))
         finally:
             self.cerrarConexion()
-    def loginPasaje(self, dni, clave):
-        try:
-            if (self.traerPasaje(dni).clave == clave):
-                print("Pasaje registrado")
-                return True
-            else:
-                return False
-        except AttributeError as e:
-            print ("Excep " + str(e))
-            return False
 
-"""
-    Implementar el metodo Mathov    
-    def loginPasaje(dni, mail = "", clave):
-        self.traerPasaje(dni)
-"""
+        return lstPasajes
 
 
 if __name__ == '__main__':
