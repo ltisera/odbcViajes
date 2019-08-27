@@ -12,13 +12,13 @@ class PasajeDAO(ConexionBD):
         try:
             self.crearConexion()
             print("TST")
-            self._micur.callproc("altaPasaje", ('1', '2019-06-15', 12.5, 3, 1, 123, 'dinero'))
-            print("NO Commit")
+            self._micur.callproc("altaPasaje",pasaje.datos())
+
             self._bd.commit()
             valido = True
             
         except mysql.connector.errors.IntegrityError as e:
-            pass
+            print(e)
             
         finally:
 
@@ -62,7 +62,7 @@ class PasajeDAO(ConexionBD):
             else:
                 return False
         except AttributeError as e:
-            print ("Excep")
+            print ("Excep " + str(e))
             return False
 
 """
@@ -81,8 +81,8 @@ if __name__ == '__main__':
     tpasaje.fecha = "2019-06-15"
     tpasaje.valor = 12.5
     tpasaje.pasajero = 3
-    tpasaje.origen = 1
-    tpasaje.destino = 123
+    tpasaje.origen = 23
+    tpasaje.destino = 12
     tpasaje.formaPago = "dinero"
     print("Mi pasaje")
     print(tpasaje.datos())
