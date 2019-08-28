@@ -72,6 +72,18 @@ class PasajeroDAO(ConexionBD):
             self.cerrarConexion()
 
     def loginPasajero(self, dni, clave):
+        try:
+            self.crearConexion()
+            self._micur.callproc("loginPasajero", (dni, clave))
+            for result in self._micur.stored_results():
+                return result.fetchone()[0] == 1
+
+        except mysql.connector.Error as err:
+            print("DANGER ALGO OCURRIO: " + str(err))
+        finally:
+            self.cerrarConexion()
+
+    def loginPasajeroSinSQL(self, dni, clave):
         valido = False
         try:
             if (self.traerPasajero(dni).clave == clave):

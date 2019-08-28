@@ -38,9 +38,9 @@ def agregarCiudades(ciudadDAO):
     lstC = []
 
     if ciudadDAO.traerCiudades() == []:
-        lstC.append(Ciudad(None, "Buenos Aires", "coordenada", False))
-        lstC.append(Ciudad(None, "Cordoba", "coordenada", False))
-        lstC.append(Ciudad(None, "Jujuy", "coordenada", False))
+        lstC.append(Ciudad(nombre="Buenos Aires", coordenada="123321444"))
+        lstC.append(Ciudad(nombre="Cordoba", coordenada="3476423794194"))
+        lstC.append(Ciudad(nombre="Jujuy", coordenada="1231446828"))
 
         for c in lstC:
             ciudadDAO.agregarCiudad(c)
@@ -73,6 +73,8 @@ def tstPasajeroDAO(pasajeroDAO):
     p = pasajeroDAO.traerPasajero(5)
     print("\n---Cliente regular clave None---")
     print(pasajeroDAO.loginPasajero(5, None))
+    print("\n---Cliente regular clave falsa---")
+    print(pasajeroDAO.loginPasajero(5, "Mentiras"))
     print("\n---Cliente regular clave real---")
     print(pasajeroDAO.loginPasajero(5, p.clave))
 

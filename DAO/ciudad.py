@@ -1,5 +1,5 @@
 class Ciudad():
-    def __init__(self, idCiudad=0, nombre="", coordenada=0, baja="", registro=None):
+    def __init__(self, idCiudad=0, nombre="", coordenada=0, baja=False, registro=None):
         if(not(registro is None)):
             self._idCiudad = registro[0]
             self._nombre = registro[1]
@@ -45,10 +45,8 @@ class Ciudad():
         self._baja = baja
 
     def datos(self):
-        return (self._idCiudad,
-                self._nombre,
-                self._coordenada,
-                self._baja,)
+        return (self._nombre,
+                self._coordenada,)
 
     def __str__(self):
         return str(self.__dict__)
