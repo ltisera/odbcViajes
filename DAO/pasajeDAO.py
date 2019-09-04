@@ -23,11 +23,11 @@ class PasajeDAO(ConexionBD):
 
         return valido
 
-    def traerPasaje(self, DNI):
+    def traerPasaje(self, codigo):
         pTraido = None
         try:
             self.crearConexion()
-            self._micur.callproc("consultaPasaje", (DNI,))
+            self._micur.callproc("consultaPasaje", (codigo,))
             for res in self._micur.stored_results():
                 r = res.fetchone()
                 if(r is not None):
