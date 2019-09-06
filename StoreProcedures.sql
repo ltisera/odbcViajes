@@ -1,5 +1,5 @@
+use odbcViajes;
 delimiter //
-
 DROP PROCEDURE IF EXISTS altaPasajero//
 CREATE PROCEDURE altaPasajero (in dni int, in nombre varchar(45), in apellido varchar(45), in telefono varchar(45), in email varchar(45), in millas float, in clave varchar(45), in direccion varchar(45), in nacionalidad varchar(45))
 BEGIN
@@ -74,6 +74,23 @@ BEGIN
 		SELECT FALSE;
 	end if;
 END//
+
+DROP PROCEDURE IF EXISTS matarTodo//
+create procedure matarTodo()
+begin
+	set SQL_SAFE_UPDATES = 0;
+    delete from cancelacion;
+     delete from pasaje;
+    delete from pasajero;
+   
+	delete from ciudad;
+    ALTER TABLE ciudad AUTO_INCREMENT = 1;
+    ALTER TABLE cancelacion AUTO_INCREMENT = 1;
+    
+    
+    
+    set SQL_SAFE_UPDATES = 1;
+end//
 delimiter ;
 
 

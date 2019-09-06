@@ -1,5 +1,5 @@
 import sys
-sys.path.append('D:\DropBox\Dropbox\FAcultad\Sistemas Distribuidos\odbcViajes\odbcViajes')
+sys.path.append(r'D:\DropBox\Dropbox\FAcultad\Sistemas Distribuidos\odbcViajes\odbcViajes')
 sys.path.append(r'C:\Users\Camila\Documents\GitHub\odbcViajes')
 from DAO.pasajeroDAO import PasajeroDAO
 from DAO.pasajero import Pasajero

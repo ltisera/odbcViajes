@@ -1,5 +1,5 @@
 import sys
-sys.path.append('D:\DropBox\Dropbox\FAcultad\Sistemas Distribuidos\odbcViajes\odbcViajes')
+sys.path.append(r'D:\DropBox\Dropbox\FAcultad\Sistemas Distribuidos\odbcViajes\odbcViajes')
 sys.path.append(r'C:\Users\Camila\Documents\GitHub\odbcViajes')
 from CONFIGS.configs import getConfigDB
 import mysql.connector
@@ -33,8 +33,5 @@ class ConexionBD:
 if __name__ == '__main__':
     a = ConexionBD()
     b = ConexionBD()
-    a.setCont(2)
-    print(a.getCont())
-    b.setCont(4)
-    print(a.getCont())
+
     
