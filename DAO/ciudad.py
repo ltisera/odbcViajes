@@ -1,15 +1,17 @@
 class Ciudad():
-    def __init__(self, idCiudad=0, nombre="", coordenada=0, baja=False, registro=None):
+    def __init__(self, idCiudad=0, nombre="", latitud=0, longitud=0, baja=False, registro=None):
         if(not(registro is None)):
             self._idCiudad = registro[0]
             self._nombre = registro[1]
-            self._coordenada = registro[2]
-            self._baja = registro[3]
+            self._latitud = registro[2]
+            self._longitud = registro[3]
+            self._baja = registro[4]
 
         else:
             self._idCiudad = idCiudad
             self._nombre = nombre
-            self._coordenada = coordenada
+            self._latitud = latitud
+            self._longitud = longitud
             self._baja = baja
 
     @property
@@ -29,12 +31,20 @@ class Ciudad():
         self._nombre = nombre
 
     @property
-    def coordenada(self):
-        return self._coordenada
+    def latitud(self):
+        return self._latitud
 
-    @coordenada.setter
-    def coordenada(self, coordenada):
-        self._coordenada = coordenada
+    @latitud.setter
+    def latitud(self, latitud):
+        self._latitud = latitud
+
+    @property
+    def longitud(self):
+        return self._longitud
+
+    @longitud.setter
+    def longitud(self, longitud):
+        self._longitud = longitud
 
     @property
     def baja(self):
@@ -46,7 +56,8 @@ class Ciudad():
 
     def datos(self):
         return (self._nombre,
-                self._coordenada,)
+                self._latitud,
+                self._longitud,)
 
     def __str__(self):
         return str(self.__dict__)
