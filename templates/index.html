@@ -1,11 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>El mas rapido del oeste fiummmmm!</title>
+    <meta charset="UTF-8">
+    <title>GRC</title>
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="static/css/estilos.css" />
+    <link rel="shortcut icon" type="image/x-icon">
+    <script src="static/js/jquery-3.3.1.js"></script>
+    <script src="static/js/menu.js"></script>
 </head>
 <body>
-    <br>
-    Ofrecemos los mejores viajes a todos los destinos inimaginables<br>
+    <nav class="main-nav">
+        <div class="container container--flex">
+            <img src="http://www.apacid.com.ar/imagenes/iconos/Menu.png" class="icon-menu" id="btnMenu"></img>
+            <ul class="menu menu_nav" id="menu_nav">
+                <li class="menu__item menu__link--select" name="inicio"><a class="menu__link">Inicio</a></li>
+                <li class="menu__item" name="info"><a class="menu__link">Informacion</a></li>
+                <li class="menu__item" name="contacto"><a class="menu__link">Contacto</a></li>
+            </ul>
+            <div class="logo-container">
+                <h1 class="logo">El mas rapido del oeste</h1>
+            </div>
+            <img src="http://www.apacid.com.ar/imagenes/iconos/Menu.png" class="icon-menu" id="btnMenu2"></img>
+            <div class="menu menu_login" id="menu_login">
+                <div class="login__content">
+                    <label class="login__link--select login__link" id="login">Login</label> 
+                    <label class="login__link">|</label> 
+                    <label class="login__link" id="registro">Registrar</label>
+                    <div style="text-align: left;">
+                        <div id="divRegistro" class="ocultar">
+                            <label class="login__txt">Nombre: </label>
+                            <input class="login__input" id="nombre" type="text"></p>
+                            <label class="login__txt">Apellido: </label>
+                            <input class="login__input" id="apellido" type="text"></p>
+                        </div>
+                        <label class="login__txt">Usuario: </label>
+                        <input class="login__input" id="email" type="text"></p>
+                        <label class="login__txt">Password: </label>
+                        <input class="login__input" id="password" type="password"></p>
+                    </div>                
+                    <button class="login__btn" id="login-submit">Entrar</button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
+    <main id="index-main" class="main">
+        <!-- Aqui se insertara el contenido dinamicamente /-->
+    </main>
+
+    <footer class="main-footer">
+        <div class="container container--flex">
+            <div class="column column--33">
+                <h2 class="column__title">¿Por que GRC?</h2>
+                <p class="column__txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus nam eaque corporis similique doloremque quidem voluptates voluptatum, pariatur, cum labore laudantium necessitatibus modi optio, molestiae aspernatur consequuntur unde tenetur rem!</p>
+            </div>
+            <div class="column column--33">
+                <h2 class="column__title">Blablabla</h2>
+                <p class="column__txt">Pos algo</p>
+                <p class="column__txt">Algo</p>
+                <p class="column__txt">Mas algo</p>
+                <p class="column__txt">Yep, algo</p>
+            </div>
+            <div class="column column--33">
+                <h2 class="column__title">Y MAS!!</h2>
+                <p class="column__txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi maiores, ab, sapiente labore laboriosam iure cum minima consectetur cupiditate velit aut hic voluptas, nisi! Quidem obcaecati voluptate totam, maiores mollitia.</p>
+            </div>
+            <p class="copy">2019 Derechos reservados</p>
+        </div>
+    </footer>
 </body>
 </html>
