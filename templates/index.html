@@ -8,6 +8,28 @@
     <link rel="shortcut icon" type="image/x-icon">
     <script src="static/js/jquery-3.3.1.js"></script>
     <script src="static/js/menu.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            console.log("FUNCIONO");
+            $.ajax({
+                url:'traerCiudades', 
+                type:'POST',
+                success: function(response){
+                    console.log("Eh aqui las respuestas pequeño")
+                    console.log(response.length)
+                    for(var i = 0; i < response[1].length; i++){
+                        $("#browsers").append("<option value=\"" + response[1][i].nombre + "\">")
+                        console.log("Item " + response[1][i].nombre)
+                    }
+                },
+                error: function(response){
+                    console.log(response)
+                },
+
+            });
+        });
+    </script>
 </head>
 <body>
     <nav class="main-nav">
@@ -45,9 +67,33 @@
         </div>
     </nav>
 
-    <main id="index-main" class="main">
-        <!-- Aqui se insertara el contenido dinamicamente /-->
-    </main>
+    <div class="banner">
+        <img src="https://incalake.com/galeria/admin/short-slider/BUSES/TITICACA-BOLIVIA/titicaca-bolivia-bus.png" alt="" class="banner__img">
+        <div class="fondo"> 
+
+                <div class="secOrigen">
+                    <div class="container">
+                        <h3 class="main__title">Origen</h2>
+                        <p class="main__txt">Seleccione el origen de su viaje</p>
+                        <input name="inpListCiudadOrigen" list="browsers">
+                        <datalist id="browsers">
+                        </datalist>
+                    </div>
+                </div>
+                <div class="secDestino ">
+                    <div class="container">
+                        <h3 class="group__title">Destino</h3>
+                        <p>asd</p>
+                    </div>
+                </div>
+        
+            </div>
+    </div>
+
+    
+
+
+
 
     <footer class="main-footer">
         <div class="container container--flex">

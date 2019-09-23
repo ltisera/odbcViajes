@@ -39,10 +39,10 @@ BEGIN
 END//
 
 DROP PROCEDURE IF EXISTS altaCiudad//
-CREATE PROCEDURE altaCiudad (in nombre varchar(45), in coordenada varchar(45))
+CREATE PROCEDURE altaCiudad (in nombre varchar(45), in latitud varchar(45), in longitud varchar(45))
 BEGIN
-	insert into ciudad (nombre, coordenada) 
-    values(nombre, coordenada);
+	insert into ciudad (nombre, latitud, longitud) 
+    values(nombre, latitud, longitud);
 END// 
 
 DROP PROCEDURE IF EXISTS bajaCiudad//

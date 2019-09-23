@@ -2,6 +2,7 @@ import sys
 #sys.path.append('D:\DropBox\Dropbox\FAcultad\Sistemas Distribuidos\odbcViajes\odbcViajes')
 sys.path.append(r'C:\Users\Camila\Documents\GitHub\odbcViajes')
 from DAO.pasajeroDAO import PasajeroDAO
+from DAO.ciudadDAO import CiudadDAO
 from flask import Flask, render_template, send_from_directory, request, jsonify, Response
 
 
@@ -22,9 +23,23 @@ def login():
     return jsonify((200, pasajero))
 
 
-@app.route('/algo', methods=['GET', 'POST'])
-def algo():
-    return "algo"
+@app.route('/traerCiudades', methods=['GET', 'POST'])
+def traerCiudades():
+    cDAO = CiudadDAO()
+    lista = cDAO.traerCiudades()
+    
+    lstRefJson = []
+    for i in lista:
+        if(len(lista)>0):
+            refJson = {}
+            refJson["idCiudad"] = i.idCiudad
+            refJson["nombre"] = i.nombre
+            refJson["latitud"] = i.latitud
+            refJson["longitud"] = i.longitud
+            refJson["baja"] = i.baja
+
+            lstRefJson.append(refJson)
+    return jsonify((200, lstRefJson))
 
 
 @app.route('/static/<path:path>')

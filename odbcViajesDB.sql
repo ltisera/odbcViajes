@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS `odbcViajes`.`Pasajero` (
   `nacionalidad` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`DNI`))
 ENGINE = InnoDB;
-DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -46,8 +45,6 @@ CREATE TABLE IF NOT EXISTS `odbcViajes`.`Ciudad` (
   `baja` TINYINT(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idCiudad`))
 ENGINE = InnoDB;
-AUTO_INCREMENT = 4
-DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -59,7 +56,6 @@ CREATE TABLE IF NOT EXISTS `odbcViajes`.`Cancelacion` (
   `montoReintegro` FLOAT NOT NULL,
   PRIMARY KEY (`idCancelacion`))
 ENGINE = InnoDB;
-DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -100,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `odbcViajes`.`Pasaje` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-DEFAULT CHARACTER SET = utf8;
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

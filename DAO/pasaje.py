@@ -91,8 +91,7 @@ class Pasaje():
                 self._pasajero,
                 self._origen,
                 self._destino,
-                self._formaPago,
-                self._cancelacion)
+                self._formaPago)
 
     def __str__(self):
         return str(self.__dict__)
