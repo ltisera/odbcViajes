@@ -1,24 +1,11 @@
 /* ------------- Menu ------------- */
-$(document).ready(function(){
-    $("#index-main").html(inicioHTML());
-    
-});
+
 $(document).on('click', ".menu__item", function() {
     $(".menu__item").toggleClass("menu__link--select", false);
     $(this).toggleClass("menu__link--select");
-    $("#index-main").html(menuHTML($(this).attr("name")));
+    window.location.href = ('http://localhost:5000' + $(this).attr("name"));
     $("#menu").toggleClass("mostrar");
 });
-
-
-
-/* ------------- Limpiar Coockie ------------- */
-
-limpiameLaCoockie();
-
-function limpiameLaCoockie(){
-    document.cookie = "idUsuarioLogueado=;expires=Thu, 01 Jan 1970 00:00:01 GMT;"
-}
 
 
 /* ------------- Ocultar y Mostrar Nav ------------- */
@@ -31,11 +18,6 @@ $(document).on('click', "#btnMenu2", function() {
     $("#menu_nav").removeClass("mostrar_nav");
     $("#menu_login").toggleClass("mostrar_login");
 });
-
-
-
-
-
 
 
 $(document).on('click', ".login__link", function() {
@@ -60,6 +42,10 @@ $(document).on('click', "#login-submit", function() {
     else{
         registrarUsuario();
     }
+});
+
+$(document).on('click', ".cancelar-submit", function() {
+    console.log("cancelar pasaje: " + $(this).attr("id"))
 });
 
 function registrarUsuario(){
@@ -104,18 +90,17 @@ function iniciarSesion(){
     }
     else{
         $.ajax({
-            url : "loguearUsuario",
+            url : "login",
             type : "POST",
             data : {
-                usuario : $("#email").val(),
-                password : $("#password").val()
+                dni : $("#email").val(),
+                clave : $("#password").val()
             },
             success: function(response){
                 console.log(response);
-                var idUsuarioLogueado = response.id;
-                document.cookie = "idUsuarioLogueado=" + idUsuarioLogueado;
-                window.location.href = ('http://localhost:5000/grupos')
-                
+                if (response[1] == true){
+                    window.location.href = ('http://localhost:5000/pasajes')
+                }
             },
             error: function(response){
                 alert(response.responseJSON.error);
@@ -124,78 +109,42 @@ function iniciarSesion(){
     }
 };
 
-/* ------------- Menu HTML ------------- */
-
-function menuHTML(opcion){
-    var html = "";
-    if (opcion == "inicio"){
-        html = inicioHTML();
-    }
-    else if (opcion == "info") {
-        html = infoHTML();
-    }
-    else if (opcion == "contacto"){
-        html = "";
-    }
-    return html;
-}
-
-function inicioHTML(){
-    var html = `
-    <section class="banner">
-        <img src="https://incalake.com/galeria/admin/short-slider/BUSES/TITICACA-BOLIVIA/titicaca-bolivia-bus.png" alt="" class="banner__img">
-        
-    </section>
-    <section class="group group--color">
-        <div class="container">
-            <h3 class="main__title">bienvenido</h2>
-            <p class="main__txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam error sint optio alias minus, nisi officia, aperiam dignissimos molestias necessitatibus. Temporibus, possimus laudantium sunt. Veniam voluptatum laudantium natus enim.</p>
-        </div>
-    </section>
-    <section class="group main__about__description">
-        <div class="container">
-            <h3 class="group__title">Otro Algo</h3>
-            <p">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam unde error quod voluptatum non, architecto quisquam, voluptatibus numquam distinctio necessitatibus illum ducimus? Molestiae, architecto, dolores nam quidem laboriosam corporis nulla.</p>
-        </div>
-    </section>
-    `;
-    return html;
-}
-
-function infoHTML(){
-    var html = `
-    <section class="banner">
-        <img src="/banner-info.jpg" alt="" class="banner__img">
-        <div class="banner__content" style="width:90%">
-            <h2 class="banner__title banner_info_title">Trayendo problemas a todas sus soluciones</h2>
-        </div>
-    </section>
-    <section class="group group--color">
-        <div class="container">
-            <h2 class="main__title">Sobre Nosotros</h2>
-            <p class="main__txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint dolore ab obcaecati animi cumque voluptate, quos id quod atque repellat, consequuntur eum eos facere et necessitatibus nisi doloremque corporis sunt. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi iusto nemo ducimus architecto eos earum numquam nobis a ullam tempore alias nesciunt voluptates, modi vero enim minima. Perspiciatis, rerum! Dolor! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil asperiores quaerat itaque rem temporibus deleniti dolor iste fugiat, minima natus perspiciatis sed! Magnam ipsum totam sit dolorem nostrum, reiciendis modi.</p>
-        </div>
-    </section>
-    <section class="group our-team">
-        <h2 class="group__title">Nuestro Equipo</h2>
-        <div class="container container--flex">
-            <div class="column column--33">
-                <h3 class="our-team__title">Bongo</h3>
-                <img src="/team1.jpg" alt="" class="our-team__img our-team__txt">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, fugiat, a repudiandae reiciendis architecto deserunt optio rerum earum error natus ad cumque labore blanditiis nobis nihil aliquam dolor iste voluptate.</p>
-            </div>
-            <div class="column column--33">
-                <h3 class="our-team__title">Tio Cosa</h3>
-                <img src="/team2.jpg" alt="" class="our-team__img our-team__txt">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime reiciendis, sapiente minima vitae praesentium blanditiis officia minus, laudantium culpa ut quae in, animi numquam. Placeat omnis dolores deserunt architecto quo.</p>
-            </div>
-            <div class="column column--33">
-                <h3 class="our-team__title">Carlos</h3>
-                <img src="/team3.jpg" alt="" class="our-team__img our-team__txt">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut vero ea quae, rem culpa, nostrum quos similique dignissimos voluptas beatae, quaerat cupiditate atque cumque enim provident animi! At, distinctio, quo.</p>
-            </div>
-        </div>
-    </section>
-    `;
-    return html;
+function traerPasajes(){
+    $.ajax({
+        url : "traerPasajes",
+        type : "POST",
+        data : {
+            dni : 5,
+        },
+        success: function(response){
+            if(response[1] == null){
+                $("#pasaje").html("Usted no tiene pasajes");
+            }else{
+                console.log(response[1]);
+                var texthtml = ""
+                for(var i = 0; i < response[1].length; i++){
+                    texthtml = texthtml +
+                        "<div class='secOrigen'>"                             +
+                            "<div class='container'>"                         +   
+                                "<h3 class='main__title'>Pasaje</h3>"         +
+                                "<div>"                   +
+                                    "<h4>Codigo: "        + response[1][i][0] + "</h4>" +
+                                    "<h4>Fecha: "         + response[1][i][1] + "</h4>" +
+                                    "<h4>Valor: "         + response[1][i][2] + "</h4>" +
+                                    "<h4>DNI Pasajero: "  + response[1][i][3] + "</h4>" +
+                                    "<h4>Origen: "        + response[1][i][4] + "</h4>" +
+                                    "<h4>Destino: "       + response[1][i][5] + "</h4>" +
+                                    "<h4>Forma de Pago: " + response[1][i][6] + "</h4>" +
+                                    "<button class='cancelar-submit' id='"+response[1][i][0]+"'>Cancelar</button>" +
+                                "</div>"                  +
+                            "</div>"                      +
+                        "</div>";
+                }
+                $("#pasajes").html(texthtml);
+            }
+        },
+        error: function(response){
+            alert(response.responseJSON.error);
+        }
+    });
 }

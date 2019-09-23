@@ -2,6 +2,7 @@ import sys
 #sys.path.append('D:\DropBox\Dropbox\FAcultad\Sistemas Distribuidos\odbcViajes\odbcViajes')
 sys.path.append(r'C:\Users\Camila\Documents\GitHub\odbcViajes')
 from DAO.pasajeroDAO import PasajeroDAO
+from DAO.pasajeDAO import PasajeDAO
 from DAO.ciudadDAO import CiudadDAO
 from flask import Flask, render_template, send_from_directory, request, jsonify, Response
 
@@ -9,6 +10,8 @@ from flask import Flask, render_template, send_from_directory, request, jsonify,
 app = Flask(__name__, static_folder='static', static_url_path='')
 
 pDAO = PasajeroDAO()
+cDAO = CiudadDAO()
+pasDAO = PasajeDAO()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -25,12 +28,10 @@ def login():
 
 @app.route('/traerCiudades', methods=['GET', 'POST'])
 def traerCiudades():
-    cDAO = CiudadDAO()
     lista = cDAO.traerCiudades()
-    
     lstRefJson = []
     for i in lista:
-        if(len(lista)>0):
+        if(len(lista) > 0):
             refJson = {}
             refJson["idCiudad"] = i.idCiudad
             refJson["nombre"] = i.nombre
@@ -40,6 +41,36 @@ def traerCiudades():
 
             lstRefJson.append(refJson)
     return jsonify((200, lstRefJson))
+
+
+@app.route('/consulta', methods=['GET', 'POST'])
+def consulta():
+    return render_template('consulta.html')
+
+
+@app.route('/traerPasaje', methods=['GET', 'POST'])
+def traerPasaje():
+    p = pasDAO.traerPasaje(request.values["codigo"])
+    print(p)
+    if p is not None:
+        p = (p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago)
+    return jsonify((200, p))
+
+
+@app.route('/traerPasajes', methods=['GET', 'POST'])
+def traerPasajes():
+    print(request.values["dni"])
+    r = pasDAO.traerPasajesXPasajero(request.values["dni"])
+    print(r)
+    lstP = []
+    for p in r:
+        lstP.append((p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago))
+    return jsonify((200, lstP))
+
+
+@app.route('/pasajes', methods=['GET', 'POST'])
+def pasajes():
+    return render_template('pasajes.html')
 
 
 @app.route('/static/<path:path>')
