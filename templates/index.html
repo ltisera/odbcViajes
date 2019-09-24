@@ -18,15 +18,16 @@
                 success: function(response){
                     console.log("Eh aqui las respuestas pequeño")
                     console.log(response)
+                    var strIdCiudad = "0"
                     for(var i = 0; i < response[1].length; i++){
-                        $("#lstCiudadOrigen").append("<option id=\"ciudadOrigen" + String(response[1][i].idCiudad) + "\" value=\"" + response[1][i].nombre + "\">")
-                        $("#lstCiudadDestino").append("<option id=\"ciudadDestino" + String(response[1][i].idCiudad) + "\" value=\"" + response[1][i].nombre + "\">")
+                        strIdCiudad = String(response[1][i].idCiudad)
+                        $("#lstOrigen").append("<option id=\"origen" + strIdCiudad + "\">" + response[1][i].nombre + "</option>")
+                        $("#lstDestino").append("<option id=\"destino" + strIdCiudad + "\">" + response[1][i].nombre + "</option>")
                         
-
-                        $("#ciudadOrigen"+String(response[1][i].idCiudad)).data("latitud", response[1][i].latitud)
-                        $("#ciudadOrigen"+String(response[1][i].idCiudad)).data("longitud", response[1][i].longitud)
-                        $("#ciudadDestino"+String(response[1][i].idCiudad)).data("latitud", response[1][i].latitud)
-                        $("#ciudadDestino"+String(response[1][i].idCiudad)).data("longitud", response[1][i].longitud)
+                        $("#origen"+strIdCiudad).data("latitud", response[1][i].latitud)
+                        $("#origen"+strIdCiudad).data("longitud", response[1][i].longitud)
+                        $("#destino"+strIdCiudad).data("latitud", response[1][i].latitud)
+                        $("#destino"+strIdCiudad).data("longitud", response[1][i].longitud)
                         
                         console.log("NC " + response[1][i].nombre)
                         console.log("Latitu " + response[1][i].latitud)
@@ -42,19 +43,21 @@
         });
 
 $(document).on('click', "#idConfirmarViaje", function() {
-    var selector = document.getElementById('lstCiudadOrigen');
-    var idSeleccionado = selector[selector.selectedIndex].id;
-    var opcion = document.getElementById(idSeleccionado)
+    var selector = document.getElementById('lstOrigen');
+    var idSeleccionado = selector[selector.selectedIndex].id; 
 
-    console.log("Manera 1, no sirve solo te trae el html") 
-    console.log(opcion) 
+    console.log("----------Origen-----------") 
+    console.log($("#"+idSeleccionado).html())
+    console.log("Latitud: " + $("#"+idSeleccionado).data("latitud"))
+    console.log("Longitud: " + $("#"+idSeleccionado).data("longitud"))
 
+    var selector = document.getElementById('lstDestino');
+    var idSeleccionado = selector[selector.selectedIndex].id; 
 
-    console.log("Otra Manera") 
-    console.log($("#"+idSeleccionado).data("latitud"))    
-
-    console.log("Manera Mathov Latitud: ")
-    console.log($("#ciudadOrigen"+$("#lstCiudadOrigen").val()).data("latitud"))
+    console.log("----------Destino----------") 
+    console.log($("#"+idSeleccionado).html())
+    console.log("Latitud: " + $("#"+idSeleccionado).data("latitud"))
+    console.log("Longitud: " + $("#"+idSeleccionado).data("longitud"))
 
 });
     </script>
@@ -102,7 +105,7 @@ $(document).on('click', "#idConfirmarViaje", function() {
                 <div class="container">
                     <h3 class="main__title">Origen</h2>
                     <p class="main__txt">Seleccione el origen de su viaje</p>
-                    <select id="lstCiudadOrigen">
+                    <select id="lstOrigen">
                     </select>
                     <input type="date" id="idFechaViaje" name="trip-start"
                         value="2019-09-24"
@@ -114,7 +117,7 @@ $(document).on('click', "#idConfirmarViaje", function() {
                 <div class="container">
                     <h3 class="main__title">Destino</h2>
                     <p class="main__txt">Seleccione el destino de su viaje</p>
-                    <select id="lstCiudadDestino">
+                    <select id="lstDestino">
                     </select>
                     
                 </div>
