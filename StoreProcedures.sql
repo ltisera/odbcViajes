@@ -26,6 +26,14 @@ BEGIN
     values(codigo, fecha, valor, pasajero, origen, destino, formaPago);
 END//
 
+DROP PROCEDURE IF EXISTS cancelarPasaje//
+CREATE PROCEDURE cancelarPasaje(in codigo varchar(10))
+BEGIN
+	insert into cancelacion (fecha, montoReintegro)
+	values(NOW(), 1);
+	update pasaje set pasaje.cancelacion = LAST_INSERT_ID() where pasaje.codigo = codigo;
+END//
+
 DROP PROCEDURE IF EXISTS consultaPasaje//
 CREATE PROCEDURE consultaPasaje(in codigo varchar(10))
 BEGIN
@@ -35,7 +43,7 @@ END//
 DROP PROCEDURE IF EXISTS consultaPasajeXPasajero//
 CREATE PROCEDURE consultaPasajeXPasajero(in DNI int)
 BEGIN
-	SELECT * FROM pasaje where pasaje.pasajero = DNI;
+	SELECT * FROM pasaje where pasaje.pasajero = DNI and pasaje.cancelacion is null;
 END//
 
 DROP PROCEDURE IF EXISTS altaCiudad//

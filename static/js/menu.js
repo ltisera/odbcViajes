@@ -45,7 +45,13 @@ $(document).on('click', "#login-submit", function() {
 });
 
 $(document).on('click', ".cancelar-submit", function() {
-    console.log("cancelar pasaje: " + $(this).attr("id"))
+    if(window.confirm("Esta seguro que quiere cancelar su pasaje?")){
+        console.log("cancelar pasaje: " + $(this).attr("id"));
+        cancelarPasaje($(this).attr("id"));
+    }
+    else{
+        console.log("miedoso");
+    }
 });
 
 function registrarUsuario(){
@@ -107,6 +113,23 @@ function iniciarSesion(){
             }
         });
     }
+};
+
+function cancelarPasaje(dni){
+    $.ajax({
+        url : "cancelarPasaje",
+        type : "POST",
+        data : {
+            codigo : dni,
+            fecha: Date()
+        },
+        success: function(response){
+            console.log(response);
+        },
+        error: function(response){
+            alert(response.responseJSON.error);
+        }
+    });
 };
 
 function traerPasajes(){

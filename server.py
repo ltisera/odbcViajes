@@ -4,14 +4,15 @@ sys.path.append(r'C:\Users\Camila\Documents\GitHub\odbcViajes')
 from DAO.pasajeroDAO import PasajeroDAO
 from DAO.pasajeDAO import PasajeDAO
 from DAO.ciudadDAO import CiudadDAO
+from DAO.cancelacionDAO import CancelacionDAO
 from flask import Flask, render_template, send_from_directory, request, jsonify, Response
 
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 
-pDAO = PasajeroDAO()
-cDAO = CiudadDAO()
-pasDAO = PasajeDAO()
+pasajeroDAO = PasajeroDAO()
+ciudadDAO = CiudadDAO()
+pasajeDAO = PasajeDAO()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -21,14 +22,14 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    pasajero = pDAO.loginPasajero(request.values["dni"], request.values["clave"])
+    pasajero = pasajeroDAO.loginPasajero(request.values["dni"], request.values["clave"])
     print(pasajero)
     return jsonify((200, pasajero))
 
 
 @app.route('/traerCiudades', methods=['GET', 'POST'])
 def traerCiudades():
-    lista = cDAO.traerCiudades()
+    lista = ciudadDAO.traerCiudades()
     lstRefJson = []
     for i in lista:
         if(len(lista) > 0):
@@ -50,7 +51,7 @@ def consulta():
 
 @app.route('/traerPasaje', methods=['GET', 'POST'])
 def traerPasaje():
-    p = pasDAO.traerPasaje(request.values["codigo"])
+    p = pasajeDAO.traerPasaje(request.values["codigo"])
     print(p)
     if p is not None:
         p = (p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago)
@@ -60,12 +61,19 @@ def traerPasaje():
 @app.route('/traerPasajes', methods=['GET', 'POST'])
 def traerPasajes():
     print(request.values["dni"])
-    r = pasDAO.traerPasajesXPasajero(request.values["dni"])
+    r = pasajeDAO.traerPasajesXPasajero(request.values["dni"])
     print(r)
     lstP = []
     for p in r:
         lstP.append((p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago))
     return jsonify((200, lstP))
+
+
+@app.route('/cancelarPasaje', methods=['GET', 'POST'])
+def cancelarPasaje():
+    pasajeDAO.cancelarPasaje(request.values["codigo"])
+    print("hola")
+    return jsonify((200))
 
 
 @app.route('/pasajes', methods=['GET', 'POST'])
