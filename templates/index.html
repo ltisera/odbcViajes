@@ -19,9 +19,14 @@
                     console.log("Eh aqui las respuestas pequeño")
                     console.log(response)
                     for(var i = 0; i < response[1].length; i++){
-                        $("#browsers").append("<option value= \"" + String(response[1][i].idCiudad) + "\" id=\"ciudad" + String(response[1][i].idCiudad) + "\" label=\"" + response[1][i].nombre + "\">")
-                        $("#ciudad"+String(response[1][i].idCiudad)).data("latitud", response[1][i].latitud)
-                        $("#ciudad"+String(response[1][i].idCiudad)).data("longitud", response[1][i].longitud)
+                        $("#lstCiudadOrigen").append("<option id=\"ciudadOrigen" + String(response[1][i].idCiudad) + "\" value=\"" + response[1][i].nombre + "\">")
+                        $("#lstCiudadDestino").append("<option id=\"ciudadDestino" + String(response[1][i].idCiudad) + "\" value=\"" + response[1][i].nombre + "\">")
+                        
+
+                        $("#ciudadOrigen"+String(response[1][i].idCiudad)).data("latitud", response[1][i].latitud)
+                        $("#ciudadOrigen"+String(response[1][i].idCiudad)).data("longitud", response[1][i].longitud)
+                        $("#ciudadDestino"+String(response[1][i].idCiudad)).data("latitud", response[1][i].latitud)
+                        $("#ciudadDestino"+String(response[1][i].idCiudad)).data("longitud", response[1][i].longitud)
                         
                         console.log("NC " + response[1][i].nombre)
                         console.log("Latitu " + response[1][i].latitud)
@@ -37,8 +42,19 @@
         });
 
 $(document).on('click', "#idConfirmarViaje", function() {
-    console.log($("#idCiudadOrigen").val())
-    console.log($("#ciudad"+$("#idCiudadOrigen").val()).data("latitud"))
+    var selector = document.getElementById('lstCiudadOrigen');
+    var idSeleccionado = selector[selector.selectedIndex].id;
+    var opcion = document.getElementById(idSeleccionado)
+
+    console.log("Manera 1, no sirve solo te trae el html") 
+    console.log(opcion) 
+
+
+    console.log("Otra Manera") 
+    console.log($("#"+idSeleccionado).data("latitud"))    
+
+    console.log("Manera Mathov Latitud: ")
+    console.log($("#ciudadOrigen"+$("#lstCiudadOrigen").val()).data("latitud"))
 
 });
     </script>
@@ -86,9 +102,8 @@ $(document).on('click', "#idConfirmarViaje", function() {
                 <div class="container">
                     <h3 class="main__title">Origen</h2>
                     <p class="main__txt">Seleccione el origen de su viaje</p>
-                    <input id="idCiudadOrigen" name="inpListCiudadOrigen" list="browsers">
-                    <datalist id="browsers">
-                    </datalist>
+                    <select id="lstCiudadOrigen">
+                    </select>
                     <input type="date" id="idFechaViaje" name="trip-start"
                         value="2019-09-24"
                         min="2019-09-24" max="2020-12-31">
@@ -99,9 +114,8 @@ $(document).on('click', "#idConfirmarViaje", function() {
                 <div class="container">
                     <h3 class="main__title">Destino</h2>
                     <p class="main__txt">Seleccione el destino de su viaje</p>
-                    <input id="idCiudadDestino" name="inpListCiudadDestino" list="browsers">
-                    <datalist id="browsers">
-                    </datalist>
+                    <select id="lstCiudadDestino">
+                    </select>
                     
                 </div>
             </div>
