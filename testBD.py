@@ -38,9 +38,9 @@ def agregarCiudades(ciudadDAO):
     lstC = []
 
     if ciudadDAO.traerCiudades() == []:
-        lstC.append(Ciudad(nombre="Buenos Aires", latitud="123444", longitud="12"))
-        lstC.append(Ciudad(nombre="Cordoba", latitud="3473794194", longitud="-12"))
-        lstC.append(Ciudad(nombre="Jujuy", latitud="1236828", longitud="12"))
+        lstC.append(Ciudad(nombre="Buenos Aires", latitud="-34.6131500", longitud="-58.3772300"))
+        lstC.append(Ciudad(nombre="Cordoba", latitud="-31.4135000", longitud="-64.1810500"))
+        lstC.append(Ciudad(nombre="Jujuy", latitud="-24.1945700", longitud=" -65.2971200"))
 
         for c in lstC:
             ciudadDAO.agregarCiudad(c)

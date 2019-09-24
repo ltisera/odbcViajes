@@ -29,6 +29,12 @@
 
             });
         });
+
+$(document).on('click', "#idConfirmarViaje", function() {
+    console.log($("#idCiudadOrigen").val())
+    console.log($("#idCiudadDestino").val())
+    console.log($("#idFechaViaje").val())
+});
     </script>
 </head>
 <body>
@@ -70,24 +76,37 @@
     <div class="banner">
         <img src="https://incalake.com/galeria/admin/short-slider/BUSES/TITICACA-BOLIVIA/titicaca-bolivia-bus.png" alt="" class="banner__img">
         <div class="fondo"> 
-
-                <div class="secOrigen">
-                    <div class="container">
-                        <h3 class="main__title">Origen</h2>
-                        <p class="main__txt">Seleccione el origen de su viaje</p>
-                        <input name="inpListCiudadOrigen" list="browsers">
-                        <datalist id="browsers">
-                        </datalist>
-                    </div>
+            <div class="secOrigen">
+                <div class="container">
+                    <h3 class="main__title">Origen</h2>
+                    <p class="main__txt">Seleccione el origen de su viaje</p>
+                    <input id="idCiudadOrigen" name="inpListCiudadOrigen" list="browsers">
+                    <datalist id="browsers">
+                    </datalist>
+                    <input type="date" id="idFechaViaje" name="trip-start"
+                        value="2019-09-24"
+                        min="2019-09-24" max="2020-12-31">
                 </div>
-                <div class="secDestino ">
-                    <div class="container">
-                        <h3 class="group__title">Destino</h3>
-                        <p>asd</p>
-                    </div>
-                </div>
-        
             </div>
+
+            <div class="secDestino ">
+                <div class="container">
+                    <h3 class="main__title">Destino</h2>
+                    <p class="main__txt">Seleccione el destino de su viaje</p>
+                    <input id="idCiudadDestino" name="inpListCiudadDestino" list="browsers">
+                    <datalist id="browsers">
+                    </datalist>
+                    
+                </div>
+            </div>
+            <div class="secNueva ">
+                <div class="container">
+                    <h3 class="group__title">NUEVA</h3>
+                    <input type="button" id="idConfirmarViaje" value="Confirmate">
+                </div>
+            </div>    
+        </div>
+        
     </div>
 
     
