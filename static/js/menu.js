@@ -55,9 +55,13 @@ $(document).on('click', ".cancelar-submit", function() {
 });
 
 function registrarUsuario(){
-    if($("#apellido").val() != "" &&
+    if($("#dni").val() != "" &&
        $("#nombre").val() != "" &&
+       $("#apellido").val() != "" &&
+       $("#nacionalidad").val() != "" &&
+       $("#telefono").val() != "" &&
        $("#email").val() != "" &&
+       $("#direccion").val() != "" &&
        $("#password").val() != ""){
         console.log($("#apellido").val());
         console.log($("#nombre").val());
@@ -65,12 +69,16 @@ function registrarUsuario(){
         console.log($("#password").val());
 
         $.ajax({
-            url : "crearUsuario",
+            url : "registrar",
             type : "POST",
             data : {
-                apellido : $("#apellido").val(),
+                dni : $("#dni").val(),
                 nombre : $("#nombre").val(),
+                apellido : $("#apellido").val(),
+                nacionalidad : $("#nacionalidad").val(),
+                telefono : $("#telefono").val(),
                 email : $("#email").val(),
+                direccion : $("#direccion").val(),
                 password : $("#password").val()
             },
             success: function(response){
@@ -88,7 +96,7 @@ function registrarUsuario(){
 };
 
 function iniciarSesion(){
-    if($("#email").val() == ""){
+    if($("#dni").val() == ""){
         alert("Debe ingresar usuario");
     }
     else if($("#password").val() == ""){
@@ -99,13 +107,13 @@ function iniciarSesion(){
             url : "login",
             type : "POST",
             data : {
-                dni : $("#email").val(),
+                dni : $("#dni").val(),
                 clave : $("#password").val()
             },
             success: function(response){
                 console.log(response);
                 if (response[1] == true){
-                    cambiarPaginaAPasajes($("#email").val())
+                    cambiarPaginaAPasajes($("#dni").val())
                     /*window.location.href = ('http://localhost:5000/pasajes') */
                 }
                 else{

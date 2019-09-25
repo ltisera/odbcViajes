@@ -2,6 +2,7 @@ import sys
 #sys.path.append('D:\DropBox\Dropbox\FAcultad\Sistemas Distribuidos\odbcViajes\odbcViajes')
 sys.path.append(r'C:\Users\Camila\Documents\GitHub\odbcViajes')
 from DAO.pasajeroDAO import PasajeroDAO
+from DAO.pasajero import Pasajero
 from DAO.pasajeDAO import PasajeDAO
 from DAO.ciudadDAO import CiudadDAO
 from DAO.cancelacionDAO import CancelacionDAO
@@ -18,6 +19,22 @@ pasajeDAO = PasajeDAO()
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
+
+
+@app.route('/registrar', methods=['GET', 'POST'])
+def registrar():
+    pasajero = Pasajero(request.values["dni"],
+                 request.values["nombre"],
+                 request.values["apellido"],
+                 request.values["telefono"],
+                 request.values["email"],
+                 0, #millas 
+                 request.values["password"],
+                 request.values["direccion"],
+                 request.values["nacionalidad"])
+    print(pasajero)
+    pasajeroDAO.agregarPasajero(pasajero)
+    return jsonify((200))
 
 
 @app.route('/login', methods=['GET', 'POST'])

@@ -81,14 +81,28 @@ $(document).on('click', "#idConfirmarViaje", function() {
                     <label class="login__link">|</label> 
                     <label class="login__link" id="registro">Registrar</label>
                     <div style="text-align: left;">
+                        <label class="login__txt">DNI: </label>
+                        <input class="login__input" id="dni" type="text"></p>
                         <div id="divRegistro" class="ocultar">
-                            <label class="login__txt">Nombre: </label>
-                            <input class="login__input" id="nombre" type="text"></p>
-                            <label class="login__txt">Apellido: </label>
-                            <input class="login__input" id="apellido" type="text"></p>
+                            <div style="display: flex;flex-wrap: wrap;">
+                                <div style="width: 30%;">
+                                    <label class="login__txt">Nombre: </label>
+                                    <input class="login__input" id="nombre" type="text"></p>
+                                    <label class="login__txt">Apellido: </label>
+                                    <input class="login__input" id="apellido" type="text"></p>
+                                    <label class="login__txt">Nacionalidad: </label>
+                                    <input class="login__input" id="nacionalidad" type="text"></p>
+                                </div>
+                                <div style="width: 66%; margin-left: 4%;">
+                                    <label class="login__txt">Telefono: </label>
+                                    <input class="login__input" id="telefono" type="text"></p>
+                                    <label class="login__txt">Email: </label>
+                                    <input class="login__input" id="email" type="text"></p>   
+                                    <label class="login__txt">Direccion: </label>
+                                    <input class="login__input" id="direccion" type="text"></p>
+                                </div>
+                            </div>
                         </div>
-                        <label class="login__txt">Usuario: </label>
-                        <input class="login__input" id="email" type="text"></p>
                         <label class="login__txt">Password: </label>
                         <input class="login__input" id="password" type="password"></p>
                     </div>                
