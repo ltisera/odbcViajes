@@ -54,7 +54,7 @@ def traerPasaje():
     p = pasajeDAO.traerPasaje(request.values["codigo"])
     print(p)
     if p is not None:
-        p = (p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago)
+        p = (p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago, p.cancelacion)
     return jsonify((200, p))
 
 

@@ -1,4 +1,5 @@
 import sys
+import datetime
 sys.path.append(r'D:\DropBox\Dropbox\FAcultad\Sistemas Distribuidos\odbcViajes\odbcViajes')
 sys.path.append(r'C:\Users\Camila\Documents\GitHub\odbcViajes')
 from DAO.pasajeroDAO import PasajeroDAO
@@ -33,7 +34,7 @@ def agregarPasajeros(pasajeroDAO):
 
 
 def agregarCiudades(ciudadDAO):
-    # idCiudad, nombre, coordenada, baja
+    # idCiudad, nombre, latitud, longitud, baja
     print("\nAgregando ciudades... ", end='')
     lstC = []
 
@@ -49,14 +50,14 @@ def agregarCiudades(ciudadDAO):
 
 
 def agregarPasajes(pasajeDAO):
-    # codigo, fecha, valor, pasajero, origen, destino, formaPago
+    # codigo, fecha, valor, pasajero, origen, destino, formaPago, cancelacion
     print("\nAgregando pasajes... ", end='')
     lstP = []
 
-    lstP.append(Pasaje("1", None, 1000, 5, 1, 2, None))
-    lstP.append(Pasaje("2", None, 1000, 5, 1, 2, None))
-    lstP.append(Pasaje("3", None, 1000, 5, 1, 2, None))
-    lstP.append(Pasaje("4", None, 1000, 1, 2, 3, None))
+    lstP.append(Pasaje("1", datetime.date(2019, 4, 13), 1000, 5, 1, 2, "millas"))
+    lstP.append(Pasaje("2", datetime.date(2019, 4, 13), 1000, 5, 1, 2, "dinero"))
+    lstP.append(Pasaje("3", datetime.date(2019, 4, 13), 1000, 5, 1, 2, "millas"))
+    lstP.append(Pasaje("4", datetime.date(2019, 4, 20), 1000, 1, 2, 3, "dinero"))
 
     for p in lstP:
         pasajeDAO.agregarPasaje(p)

@@ -105,7 +105,11 @@ function iniciarSesion(){
             success: function(response){
                 console.log(response);
                 if (response[1] == true){
-                    window.location.href = ('http://localhost:5000/pasajes')
+                    cambiarPaginaAPasajes($("#email").val())
+                    /*window.location.href = ('http://localhost:5000/pasajes') */
+                }
+                else{
+                    alert("Usuario o clave incorrectos")
                 }
             },
             error: function(response){
@@ -115,12 +119,12 @@ function iniciarSesion(){
     }
 };
 
-function cancelarPasaje(dni){
+function cancelarPasaje(codigo){
     $.ajax({
         url : "cancelarPasaje",
         type : "POST",
         data : {
-            codigo : dni,
+            codigo : codigo,
             fecha: Date()
         },
         success: function(response){
@@ -132,12 +136,12 @@ function cancelarPasaje(dni){
     });
 };
 
-function traerPasajes(){
+function traerPasajes(dni){
     $.ajax({
         url : "traerPasajes",
         type : "POST",
         data : {
-            dni : 5,
+            dni : dni,
         },
         success: function(response){
             if(response[1] == null){
@@ -145,7 +149,8 @@ function traerPasajes(){
             }else{
                 console.log(response[1]);
                 var texthtml = ""
-                for(var i = 0; i < response[1].length; i++){
+                if (response[1].length > 0){
+                    for(var i = 0; i < response[1].length; i++){
                     texthtml = texthtml +
                         "<div class='secOrigen'>"                             +
                             "<div class='container'>"                         +   
@@ -162,6 +167,16 @@ function traerPasajes(){
                                 "</div>"                  +
                             "</div>"                      +
                         "</div>";
+                    }
+                }else{
+                    texthtml = "<div class='secOrigen'>"                        +
+                                    "<div class='container'>"                   +   
+                                        "<h3 class='main__title'>Pasaje</h3>"   +
+                                        "<div>"                                 +
+                                            "<h4> Usted no tiene pasajes </h4>" +
+                                        "</div>"                                +
+                                    "</div>"                                    +
+                                "</div>";
                 }
                 $("#pasajes").html(texthtml);
             }
@@ -170,4 +185,14 @@ function traerPasajes(){
             alert(response.responseJSON.error);
         }
     });
+}
+
+
+function cambiarPaginaAPasajes(dni) {
+    $(".banner").html("<img src='https://incalake.com/galeria/admin/short-slider/BUSES/TITICACA-BOLIVIA/titicaca-bolivia-bus.png' alt='' class='banner__img'>"
+        + "<div id='pasajes' class='fondo'>" +
+        "</div>")
+    $(".login__content").html("<label class='login__link--select login__link' id='login'>Config</label>")
+    $("#menu_login").removeClass("mostrar_login");
+    traerPasajes(dni)
 }
