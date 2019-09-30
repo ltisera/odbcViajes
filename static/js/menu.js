@@ -159,22 +159,8 @@ function traerPasajes(dni){
                 var texthtml = ""
                 if (response[1].length > 0){
                     for(var i = 0; i < response[1].length; i++){
-                    texthtml = texthtml +
-                        "<div class='secOrigen'>"                             +
-                            "<div class='container'>"                         +   
-                                "<h3 class='main__title'>Pasaje</h3>"         +
-                                "<div>"                   +
-                                    "<h4>Codigo: "        + response[1][i][0] + "</h4>" +
-                                    "<h4>Fecha: "         + response[1][i][1] + "</h4>" +
-                                    "<h4>Valor: "         + response[1][i][2] + "</h4>" +
-                                    "<h4>DNI Pasajero: "  + response[1][i][3] + "</h4>" +
-                                    "<h4>Origen: "        + response[1][i][4] + "</h4>" +
-                                    "<h4>Destino: "       + response[1][i][5] + "</h4>" +
-                                    "<h4>Forma de Pago: " + response[1][i][6] + "</h4>" +
-                                    "<button class='cancelar-submit' id='"+response[1][i][0]+"'>Cancelar</button>" +
-                                "</div>"                  +
-                            "</div>"                      +
-                        "</div>";
+                        texthtml = generarTicket(response, texthtml, i);
+                        
                     }
                 }else{
                     texthtml = "<div class='secOrigen'>"                        +
@@ -203,4 +189,24 @@ function cambiarPaginaAPasajes(dni) {
     $(".login__content").html("<label class='login__link--select login__link' id='login'>Config</label>")
     $("#menu_login").removeClass("mostrar_login");
     traerPasajes(dni)
+}
+
+function generarTicket(response, texthtml, i){
+    texthtml = texthtml +
+        "<div class='secTicket'>"                             +
+            "<div class='container'>"                         +   
+                "<h3 class='main__title'>Pasaje</h3>"         +
+                "<div class='secDatosTicket'>"                   +
+                    "<div class='secTabla1'><p class='pSecTextTick'>Codigo: "        + response[1][i][0] + "</p></div>" +
+                    "<div class='secTabla2'><p class='pSecTextTick'>Fecha: "         + response[1][i][1] + "</p></div>" +
+                    "<div class='secTabla1'><p class='pSecTextTick'>Valor: "         + response[1][i][2] + "</p></div>" +
+                    "<div class='secTabla2'><p class='pSecTextTick'>DNI Pasajero: "  + response[1][i][3] + "</p></div>" +
+                    "<div class='secTabla1'><p class='pSecTextTick'>Origen: "        + response[1][i][4] + "</p></div>" +
+                    "<div class='secTabla2'><p class='pSecTextTick'>Destino: "       + response[1][i][5] + "</p></div>" +
+                    "<div class='secTabla1'><p class='pSecTextTick'>Forma de Pago: " + response[1][i][6] + "</p></div>" +
+                    "<button class='cancelar-submit' id='"+response[1][i][0]+"'>Cancelar</button>" +
+                "</div>"                  +
+            "</div>"                      +
+        "</div>";
+    return texthtml
 }
