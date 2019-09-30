@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0">
     <link rel="stylesheet" href="static/css/estilos.css" />
     <link rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+
     <script src="static/js/jquery-3.3.1.js"></script>
     <script src="static/js/menu.js"></script>
 
@@ -21,8 +26,8 @@
                     var strIdCiudad = "0"
                     for(var i = 0; i < response[1].length; i++){
                         strIdCiudad = String(response[1][i].idCiudad)
-                        $("#lstOrigen").append("<option id=\"origen" + strIdCiudad + "\">" + response[1][i].nombre + "</option>")
-                        $("#lstDestino").append("<option id=\"destino" + strIdCiudad + "\">" + response[1][i].nombre + "</option>")
+                        $("#lstOrigen").append("<option class='opcOrigen' id=\"origen" + strIdCiudad + "\">" + response[1][i].nombre + "</option>")
+                        $("#lstDestino").append("<option class='opcDestino' id=\"destino" + strIdCiudad + "\">" + response[1][i].nombre + "</option>")
                         
                         $("#origen"+strIdCiudad).data("latitud", response[1][i].latitud)
                         $("#origen"+strIdCiudad).data("longitud", response[1][i].longitud)
@@ -124,6 +129,7 @@ $(document).on('click', "#idConfirmarViaje", function() {
                     <input type="date" id="idFechaViaje" name="trip-start"
                         value="2019-09-24"
                         min="2019-09-24" max="2020-12-31">
+                    <div class="map" id="mapOrigen"></div>
                 </div>
             </div>
 
@@ -133,7 +139,7 @@ $(document).on('click', "#idConfirmarViaje", function() {
                     <p class="main__txt">Seleccione el destino de su viaje</p>
                     <select id="lstDestino">
                     </select>
-                    
+                    <div class="map" id="mapDestino"></div>
                 </div>
             </div>
             <div class="secNueva ">
@@ -146,7 +152,54 @@ $(document).on('click', "#idConfirmarViaje", function() {
         
     </div>
 
-    
+    <script type="text/javascript">
+        var map = L.map('mapOrigen').setView([51.505, -0.09], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+        L.marker([51.5, -0.09]).addTo(map)
+    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    .openPopup();
+
+        var map2 = L.map('mapDestino').setView([-34.6131500, -58.3772300], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map2);
+
+        L.marker([-34.61, -58.37]).addTo(map2)
+
+
+$(document).on('click', ".opcOrigen", function() {
+    var selector = document.getElementById('lstOrigen');
+    var idSeleccionado = selector[selector.selectedIndex].id; 
+
+    var lat = $("#"+idSeleccionado).data("latitud");
+    var long = $("#"+idSeleccionado).data("longitud");
+
+    map.setView([lat, long], 13);
+
+    L.marker([lat, long]).addTo(map)
+    .bindPopup($("#"+idSeleccionado).html())
+    .openPopup();
+});
+
+$(document).on('click', ".opcDestino", function() {
+    var selector = document.getElementById('lstDestino');
+    var idSeleccionado = selector[selector.selectedIndex].id; 
+
+    var lat = $("#"+idSeleccionado).data("latitud")
+    var long = $("#"+idSeleccionado).data("longitud")
+
+    var map = L.map('mapDestino').setView([lat, long], 13);
+
+    L.marker([lat, long]).addTo(map)
+    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    .openPopup();
+
+});
+    </script>
 
 
 
