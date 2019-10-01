@@ -87,7 +87,7 @@ DROP PROCEDURE IF EXISTS matarTodo//
 create procedure matarTodo()
 begin
 	set SQL_SAFE_UPDATES = 0;
-     delete from pasaje;
+	delete from pasaje;
     delete from cancelacion;
     
     delete from pasajero;

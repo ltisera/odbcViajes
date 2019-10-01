@@ -15,6 +15,8 @@
     <script src="static/js/menu.js"></script>
 
     <script>
+        var map = null
+        var map2 = null
         $(document).ready(function(){
             console.log("FUNCIONO");
             $.ajax({
@@ -45,8 +47,57 @@
                 },
 
             });
-        });
+            /*DESDE ACA*/
+            map = L.map('mapOrigen').setView([-34.61, -58.37], 7);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
 
+                L.marker([-34.61, -58.37]).addTo(map)
+                .bindPopup('Elija un destino')
+                .openPopup();
+
+            map2 = L.map('mapDestino').setView([-34.6131500, -58.3772300], 13);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map2);
+
+                L.marker([-34.61, -58.37]).addTo(map2)
+                console.log("CARGUE MAPA")
+            /*Hasta ACA*/
+            
+        });
+        
+function clickListOrigen(){
+    console.log("CLICK ORIGEN")
+    var selector = document.getElementById('lstOrigen');
+    var idSeleccionado = selector[selector.selectedIndex].id; 
+    var lat = $("#"+idSeleccionado).data("latitud");
+    var long = $("#"+idSeleccionado).data("longitud");
+
+    map.setView([lat, long], 13);
+
+    L.marker([lat, long]).addTo(map)
+    .bindPopup($("#"+idSeleccionado).html())
+    .openPopup();
+}
+
+$(document).on('click', ".opcDestino", function() {
+    var selector = document.getElementById('lstDestino');
+    var idSeleccionado = selector[selector.selectedIndex].id; 
+
+    var lat = $("#"+idSeleccionado).data("latitud")
+    var long = $("#"+idSeleccionado).data("longitud")
+
+    var map = L.map('mapDestino').setView([lat, long], 13);
+
+    L.marker([lat, long]).addTo(map)
+    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    .openPopup();
+
+});
+    
 $(document).on('click', "#idConfirmarViaje", function() {
     var selector = document.getElementById('lstOrigen');
     var idSeleccionado = selector[selector.selectedIndex].id; 
@@ -124,7 +175,7 @@ $(document).on('click', "#idConfirmarViaje", function() {
                 <div class="container">
                     <h3 class="main__title">Origen</h2>
                     <p class="main__txt">Seleccione el origen de su viaje</p>
-                    <select id="lstOrigen">
+                    <select id="lstOrigen" onclick="clickListOrigen()">
                     </select>
                     <input type="date" id="idFechaViaje" name="trip-start"
                         value="2019-09-24"
@@ -153,53 +204,7 @@ $(document).on('click', "#idConfirmarViaje", function() {
     </div>
 
     <script type="text/javascript">
-        var map = L.map('mapOrigen').setView([51.505, -0.09], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
-
-        L.marker([51.5, -0.09]).addTo(map)
-    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-    .openPopup();
-
-        var map2 = L.map('mapDestino').setView([-34.6131500, -58.3772300], 13);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map2);
-
-        L.marker([-34.61, -58.37]).addTo(map2)
-
-
-$(document).on('click', ".opcOrigen", function() {
-    var selector = document.getElementById('lstOrigen');
-    var idSeleccionado = selector[selector.selectedIndex].id; 
-
-    var lat = $("#"+idSeleccionado).data("latitud");
-    var long = $("#"+idSeleccionado).data("longitud");
-
-    map.setView([lat, long], 13);
-
-    L.marker([lat, long]).addTo(map)
-    .bindPopup($("#"+idSeleccionado).html())
-    .openPopup();
-});
-
-$(document).on('click', ".opcDestino", function() {
-    var selector = document.getElementById('lstDestino');
-    var idSeleccionado = selector[selector.selectedIndex].id; 
-
-    var lat = $("#"+idSeleccionado).data("latitud")
-    var long = $("#"+idSeleccionado).data("longitud")
-
-    var map = L.map('mapDestino').setView([lat, long], 13);
-
-    L.marker([lat, long]).addTo(map)
-    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-    .openPopup();
-
-});
-    </script>
+</script>
 
 
 
