@@ -98,6 +98,11 @@ def pasajes():
     return render_template('pasajes.html')
 
 
+@app.route('/confirmarViaje', methods=['GET', 'POST'])
+def confirmarViaje():
+    return jsonify((87)),404
+
+
 @app.route('/static/<path:path>')
 def sirveDirectorioSTATIC(path):
     sPath = path.split("/")
