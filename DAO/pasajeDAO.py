@@ -71,8 +71,21 @@ class PasajeDAO(ConexionBD):
             print("DANGER ALGO OCURRIO: " + str(err))
         finally:
             self.cerrarConexion()
-
+        
         return lstPasajes
+
+    def calcularDistancia(self, idCorigen, idCDestino):
+        try:
+            dita = 2
+            self.crearConexion()
+            self._micur.callproc("calcularDistancia", (idCorigen,idCDestino,dita))
+            for result in self._micur.stored_results():
+                print(result.fetchall()[0][0])
+        except mysql.connector.Error as err:
+            print("DANGER ALGO OCURRIO: " + str(err))
+        finally:
+            self.crearConexion()
+        
 
 
 if __name__ == '__main__':
