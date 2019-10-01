@@ -19,34 +19,60 @@ BEGIN
 	SELECT * FROM pasajero where pasajero.email = email;
 END//
 
+DROP PROCEDURE IF EXISTS calcularDistancia//
+CREATE PROCEDURE calcularDistancia (in origen int, in destino int, out distancia float)
+BEGIN
+	DECLARE latO varchar(45);
+	DECLARE lonO varchar(45);
+	DECLARE latD varchar(45);
+	DECLARE lonD varchar(45);
+	SELECT latO = latitud FROM ciudad where ciudad.idCiudad = origen;
+	SELECT lonO = longitud FROM ciudad where ciudad.idCiudad = origen;
+	SELECT latD = latitud FROM ciudad where ciudad.idCiudad = destino;
+	SELECT lonD = longitud FROM ciudad where ciudad.idCiudad = destino;
+	SET valor = SQRT(POW(latO-latD) + POW(lonO-lonD));
+END//
+
+DROP PROCEDURE IF EXISTS calcularMillas//
+CREATE PROCEDURE calcularMillas (in origen int, in destino int, out millas float)
+BEGIN
+	SELECT millas = configMillas.precioMilla from configMillas;
+	set millas = calcularDistancia(origen, destino) * millas;
+END//
+
 DROP PROCEDURE IF EXISTS calcularValorPasaje//
 CREATE PROCEDURE calcularValorPasaje (in origen int, in destino int, out valor float)
 BEGIN
-	SELECT latitud FROM ciudad where ciudad.idCiudad = idCiudad;
-	set valor = 
+	set valor = calcularDistancia(origen, destino);
 END//
 
 DROP PROCEDURE IF EXISTS altaPasaje//
 CREATE PROCEDURE altaPasaje (in codigo varchar(10), in fecha date, in valor float, in pasajero int, in origen int, in destino int, in formaPago enum('dinero','millas'))
 BEGIN
 	declare millasDePasajero float;
-	set valor = calcularValorPasaje(origen, destino)
-	IF formaPago is "millas" then
-		set millasDePasajero = SELECT pasajero.millas where pasajero.DNI = pasajero;
-		if millasDePasajero > valor 
+	set valor = calcularValorPasaje(origen, destino);
+	IF formaPago = "millas" then
+		SELECT millasDePasajero = configMillas.precioMilla from configMillas;
+		SELECT millasDePasajero = millasDePasajero * pasajero.millas FROM pasajero where pasajero.DNI = pasajero; 
+		if millasDePasajero > valor then
+			select agregarPasaje(codigo, fecha, valor, pasajero, origen, destino, formaPago);
 		end if;
+	ELSE
+		select agregarPasaje(codigo, fecha, valor, pasajero, origen, destino, formaPago);
 	end IF;
 END//
 
 
 DROP PROCEDURE IF EXISTS agregarPasaje//
-CREATE PROCEDURE agregarPasaje (in codigo varchar(10), in fecha date, in valor float, in pasajero int, in origen int, in destino int, in formaPago enum('dinero','millas'), in millas float)
+CREATE PROCEDURE agregarPasaje (in codigo varchar(10), in fecha date, in valor float, in pasajero int, in origen int, in destino int, in formaPago enum('dinero','millas'))
 BEGIN
 	DECLARE clavePasajero INT;
+	DECLARE millas float;
 	insert into pasaje (codigo, fecha, valor, pasajero, origen, destino, formaPago) 
     values(codigo, fecha, valor, pasajero, origen, destino, formaPago);
 	SET clavePasajero = (SELECT clave FROM pasajero where pasajero.DNI = DNI);
     IF clavePasajero is not null then
+		set millas = calcularMillas(origen, destino);
 		update pasajero set pasajero.millas = (pasajero.millas + millas) where pasajero.DNI = pasajero;
 	end if;
 END//
