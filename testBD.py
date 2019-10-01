@@ -39,9 +39,18 @@ def agregarCiudades(ciudadDAO):
     lstC = []
 
     if ciudadDAO.traerCiudades() == []:
-        lstC.append(Ciudad(nombre="Buenos Aires", latitud="-34.6131500", longitud="-58.3772300"))
-        lstC.append(Ciudad(nombre="Cordoba", latitud="-31.4135000", longitud="-64.1810500"))
-        lstC.append(Ciudad(nombre="Jujuy", latitud="-24.1945700", longitud=" -65.2971200"))
+        lstC.append(Ciudad(nombre="Buenos Aires",   latitud="-34.6131500", longitud="-58.3772300"))
+        lstC.append(Ciudad(nombre="Cordoba",        latitud="-31.4135000", longitud="-64.1810500"))
+        lstC.append(Ciudad(nombre="Jujuy",          latitud="-24.1945700", longitud="-65.2971200"))
+        lstC.append(Ciudad(nombre="Rosario",        latitud="-60.6393200", longitud="-32.9468200"))
+        lstC.append(Ciudad(nombre="Mendoza",        latitud="-68.8271700", longitud="-32.8908400"))
+        lstC.append(Ciudad(nombre="Tucuman",        latitud="-65.2226000", longitud="-26.8241400"))
+        lstC.append(Ciudad(nombre="La Plata",       latitud="-57.9545300", longitud="-34.9214500"))
+        lstC.append(Ciudad(nombre="Mar del Plata",  latitud="-57.5575400", longitud="-38.0022800"))
+        lstC.append(Ciudad(nombre="Quilmes",        latitud="-58.2526500", longitud="-34.7241800"))
+        lstC.append(Ciudad(nombre="Arequito",       latitud="-33.1453000", longitud="-33.1453000"))
+        lstC.append(Ciudad(nombre="Salta",          latitud="-65.4116600", longitud="-24.7859000"))
+        lstC.append(Ciudad(nombre="Neuquen",        latitud="-68.0591000", longitud="-38.9516100"))
 
         for c in lstC:
             ciudadDAO.agregarCiudad(c)

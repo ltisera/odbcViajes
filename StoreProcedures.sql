@@ -19,12 +19,38 @@ BEGIN
 	SELECT * FROM pasajero where pasajero.email = email;
 END//
 
+DROP PROCEDURE IF EXISTS calcularValorPasaje//
+CREATE PROCEDURE calcularValorPasaje (in origen int, in destino int, out valor float)
+BEGIN
+	SELECT latitud FROM ciudad where ciudad.idCiudad = idCiudad;
+	set valor = 
+END//
+
 DROP PROCEDURE IF EXISTS altaPasaje//
 CREATE PROCEDURE altaPasaje (in codigo varchar(10), in fecha date, in valor float, in pasajero int, in origen int, in destino int, in formaPago enum('dinero','millas'))
 BEGIN
+	declare millasDePasajero float;
+	set valor = calcularValorPasaje(origen, destino)
+	IF formaPago is "millas" then
+		set millasDePasajero = SELECT pasajero.millas where pasajero.DNI = pasajero;
+		if millasDePasajero > valor 
+		end if;
+	end IF;
+END//
+
+
+DROP PROCEDURE IF EXISTS agregarPasaje//
+CREATE PROCEDURE agregarPasaje (in codigo varchar(10), in fecha date, in valor float, in pasajero int, in origen int, in destino int, in formaPago enum('dinero','millas'), in millas float)
+BEGIN
+	DECLARE clavePasajero INT;
 	insert into pasaje (codigo, fecha, valor, pasajero, origen, destino, formaPago) 
     values(codigo, fecha, valor, pasajero, origen, destino, formaPago);
+	SET clavePasajero = (SELECT clave FROM pasajero where pasajero.DNI = DNI);
+    IF clavePasajero is not null then
+		update pasajero set pasajero.millas = (pasajero.millas + millas) where pasajero.DNI = pasajero;
+	end if;
 END//
+
 
 DROP PROCEDURE IF EXISTS cancelarPasaje//
 CREATE PROCEDURE cancelarPasaje(in codigo varchar(10))
@@ -87,7 +113,7 @@ DROP PROCEDURE IF EXISTS matarTodo//
 create procedure matarTodo()
 begin
 	set SQL_SAFE_UPDATES = 0;
-	delete from pasaje;
+     delete from pasaje;
     delete from cancelacion;
     
     delete from pasajero;
@@ -101,5 +127,3 @@ begin
     set SQL_SAFE_UPDATES = 1;
 end//
 delimiter ;
-
-
