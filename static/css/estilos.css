@@ -125,7 +125,10 @@ h1,h3,h4,h5,h6{
 	border-color: rgb(150, 89, 3);
 	border-width : 2px;
 }
-
+.secNueva:hover{
+	color: rgb(253, 203, 132);
+	
+}
 
 .non-selectable {
    -moz-user-select: none; 
@@ -328,6 +331,10 @@ h1,h3,h4,h5,h6{
 
 .group__title {
 	font-size: 1.5em;
+}
+.group__confirmar {
+	margin: 10px;
+	font-size: 1.3em;
 }
 
 .column__title{

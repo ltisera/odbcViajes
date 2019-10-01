@@ -19,6 +19,8 @@
         var map2 = null
         $(document).ready(function(){
             console.log("FUNCIONO");
+            $("#divSecNueva").click(confirmarViaje);
+
             $.ajax({
                 url:'traerCiudades', 
                 type:'POST',
@@ -79,6 +81,16 @@ function clickListOrigen(){
     map.setView([lat, long], 5);
 
     
+}
+
+function confirmarViaje(){
+    $.ajax({
+        url: 'confirmarViaje',
+        type: 'POST',
+        success: function(response){console.log("Cuando la cosa sale bien")},
+        error: function(response){console.log("ERR")},
+
+    });
 }
 
 function clickListDestino(){
@@ -203,9 +215,9 @@ $(document).on('click', "#idConfirmarViaje", function() {
                     <div class="map" id="mapDestino"></div>
                 </div>
             </div>
-            <div class="secNueva ">
+            <div id="divSecNueva" class="secNueva ">
                 <div class="container">
-                    <h3 class="group__title non-selectable">Confirmar Viaje</h3>
+                    <h3 class="group__confirmar non-selectable">Confirmar Viaje</h3>
                     <!--
                     <input type="button" id="idConfirmarViaje" value="Confirmate">
                     -->
