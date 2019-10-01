@@ -100,7 +100,19 @@ def pasajes():
 
 @app.route('/confirmarViaje', methods=['GET', 'POST'])
 def confirmarViaje():
-    return jsonify((87)),404
+    
+    idCOrigen = request.values["idCiudadOrigen"]
+    idCDestino = request.values["idCiudadDestino"]
+    print("Origen: " + idCOrigen + " Destino: " + idCDestino)
+    dicPasaje = {}
+    dicPasaje["Kilometros"] = 8.7
+    dicPasaje["Precio"] = 97.4
+    dicPasaje["MillasObtenidas"] = 2.7
+    
+    
+    if(idCOrigen != idCDestino):
+        return jsonify(dicPasaje),200
+    return jsonify("No se puede elegir el mismo destino que el origen"), 21
 
 
 @app.route('/static/<path:path>')

@@ -35,9 +35,12 @@
                         
                         $("#origen"+strIdCiudad).data("latitud", response[1][i].latitud)
                         $("#origen"+strIdCiudad).data("longitud", response[1][i].longitud)
+                        $("#origen"+strIdCiudad).data("idCiudad", strIdCiudad)
+
                         $("#destino"+strIdCiudad).data("latitud", response[1][i].latitud)
                         $("#destino"+strIdCiudad).data("longitud", response[1][i].longitud)
-                        
+                        $("#destino"+strIdCiudad).data("idCiudad", strIdCiudad)
+
                         L.marker([response[1][i].latitud, response[1][i].longitud]).addTo(map)
                             .bindPopup(response[1][i].nombre)
                         
@@ -84,10 +87,20 @@ function clickListOrigen(){
 }
 
 function confirmarViaje(){
+    
+    var idCOrigen = document.getElementById('lstOrigen');
+    var idOrigenT = idCOrigen[idCOrigen.selectedIndex].id; 
+    var idOrigen = $("#"+idOrigenT).data("idCiudad");
+
+    var idCDestino = document.getElementById('lstDestino');
+    var idDestinoT = idCDestino[idCDestino.selectedIndex].id; 
+    var idDestino = $("#"+idDestinoT).data("idCiudad");
+
     $.ajax({
         url: 'confirmarViaje',
         type: 'POST',
-        success: function(response){console.log("Cuando la cosa sale bien")},
+        data:{idCiudadOrigen:idOrigen ,idCiudadDestino:idDestino},
+        success: function(response){console.log(response)},
         error: function(response){console.log("ERR")},
 
     });

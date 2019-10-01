@@ -26,18 +26,22 @@ BEGIN
 	DECLARE lonO varchar(45);
 	DECLARE latD varchar(45);
 	DECLARE lonD varchar(45);
-	SELECT latO = latitud FROM ciudad where ciudad.idCiudad = origen;
-	SELECT lonO = longitud FROM ciudad where ciudad.idCiudad = origen;
-	SELECT latD = latitud FROM ciudad where ciudad.idCiudad = destino;
-	SELECT lonD = longitud FROM ciudad where ciudad.idCiudad = destino;
-	SET valor = SQRT(POW(latO-latD) + POW(lonO-lonD));
+	SET latO = (SELECT latitud from ciudad where idCiudad = origen);
+    SET lonO = (SELECT longitud from ciudad where idCiudad = origen);
+    SET latD = (SELECT latitud from ciudad where idCiudad = destino);
+    SET lonD = (SELECT longitud from ciudad where idCiudad = destino);
+    
+    SET distancia = SQRT(POW(latO-latD,2) + POW(lonO-lonD,2));
+	
 END//
 
 DROP PROCEDURE IF EXISTS calcularMillas//
 CREATE PROCEDURE calcularMillas (in origen int, in destino int, out millas float)
 BEGIN
+	set @distancia = 0;
 	SELECT millas = configMillas.precioMilla from configMillas;
-	set millas = calcularDistancia(origen, destino) * millas;
+    call calcularDistancia(origen, destino, @distancia);
+	set millas =   @distancia * millas;
 END//
 
 DROP PROCEDURE IF EXISTS calcularValorPasaje//
@@ -52,8 +56,8 @@ BEGIN
 	declare millasDePasajero float;
 	set valor = calcularValorPasaje(origen, destino);
 	IF formaPago = "millas" then
-		SELECT millasDePasajero = configMillas.precioMilla from configMillas;
-		SELECT millasDePasajero = millasDePasajero * pasajero.millas FROM pasajero where pasajero.DNI = pasajero; 
+		set millasDePasajero = (select configMillas.precioMilla from configMillas);
+		set millasDePasajero = millasDePasajero * (select pasajero.millas FROM pasajero where pasajero.DNI = pasajero); 
 		if millasDePasajero > valor then
 			select agregarPasaje(codigo, fecha, valor, pasajero, origen, destino, formaPago);
 		end if;
