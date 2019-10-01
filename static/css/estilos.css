@@ -99,28 +99,40 @@ h1,h3,h4,h5,h6{
 	border-width : 2px;
 }
 .secDestino{
+	border-radius:5px;
 	background: rgba(237, 151, 31,0.7);
 	color: white;
+	padding:  1%;
 	text-align: center;
-	float:left;
+	padding: 1%;
 	margin : 1%;
-	
+	float:left;
 	width : 45%;
 	border : solid;
+	border-color: black; 
 	border-width : 2px;
 }
 .secNueva{
+	border-radius:20px;
 	background: rgba(237, 151, 31,0.7);
 	color: white;
 	text-align: center;
 
 	margin : 1%;
 
-	width : 45%;
+	width : 20%;
 	border : solid;
+	border-color: rgb(150, 89, 3);
 	border-width : 2px;
 }
 
+
+.non-selectable {
+   -moz-user-select: none; 
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none; 
+}
 /*--------------------------------*/
 
 .main-header{
@@ -269,7 +281,12 @@ h1,h3,h4,h5,h6{
 	color: white;
 }
 
-.map { height: 180px; }
+.map {
+	margin-top: 1%;
+	border: 1px solid black;
+
+	height: 250px;
+}
 
 /*--------------------------------*/
 
@@ -288,7 +305,7 @@ h1,h3,h4,h5,h6{
 }
 .banner__img {
 	width: 100%;
-	/*height: 500px;*/
+	height: 700px;
 	object-fit: cover;
 }
 

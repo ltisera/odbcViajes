@@ -36,6 +36,12 @@
                         $("#destino"+strIdCiudad).data("latitud", response[1][i].latitud)
                         $("#destino"+strIdCiudad).data("longitud", response[1][i].longitud)
                         
+                        L.marker([response[1][i].latitud, response[1][i].longitud]).addTo(map)
+                            .bindPopup(response[1][i].nombre)
+                        
+                        L.marker([response[1][i].latitud, response[1][i].longitud]).addTo(map2)
+                            .bindPopup(response[1][i].nombre)
+                            
                         console.log("NC " + response[1][i].nombre)
                         console.log("Latitu " + response[1][i].latitud)
                         console.log("Longi " + response[1][i].longitud)
@@ -50,21 +56,15 @@
             /*DESDE ACA*/
             map = L.map('mapOrigen').setView([-34.61, -58.37], 7);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    
                 }).addTo(map);
 
-                L.marker([-34.61, -58.37]).addTo(map)
-                .bindPopup('Elija un destino')
-                .openPopup();
-
-            map2 = L.map('mapDestino').setView([-34.6131500, -58.3772300], 13);
+            map2 = L.map('mapDestino').setView([-34.61, -58.37], 3);
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    
                 }).addTo(map2);
 
-                L.marker([-34.61, -58.37]).addTo(map2)
-                console.log("CARGUE MAPA")
             /*Hasta ACA*/
             
         });
@@ -76,11 +76,21 @@ function clickListOrigen(){
     var lat = $("#"+idSeleccionado).data("latitud");
     var long = $("#"+idSeleccionado).data("longitud");
 
-    map.setView([lat, long], 13);
+    map.setView([lat, long], 5);
 
-    L.marker([lat, long]).addTo(map)
-    .bindPopup($("#"+idSeleccionado).html())
-    .openPopup();
+    
+}
+
+function clickListDestino(){
+    console.log("CLICK ORIGEN")
+    var selector = document.getElementById('lstDestino');
+    var idSeleccionado = selector[selector.selectedIndex].id; 
+    var lat = $("#"+idSeleccionado).data("latitud");
+    var long = $("#"+idSeleccionado).data("longitud");
+
+    map2.setView([lat, long], 5);
+
+    
 }
 
 $(document).on('click', ".opcDestino", function() {
@@ -188,15 +198,17 @@ $(document).on('click', "#idConfirmarViaje", function() {
                 <div class="container">
                     <h3 class="main__title">Destino</h2>
                     <p class="main__txt">Seleccione el destino de su viaje</p>
-                    <select id="lstDestino">
+                    <select id="lstDestino"  onclick="clickListDestino()"">
                     </select>
                     <div class="map" id="mapDestino"></div>
                 </div>
             </div>
             <div class="secNueva ">
                 <div class="container">
-                    <h3 class="group__title">NUEVA</h3>
+                    <h3 class="group__title non-selectable">Confirmar Viaje</h3>
+                    <!--
                     <input type="button" id="idConfirmarViaje" value="Confirmate">
+                    -->
                 </div>
             </div>    
         </div>
@@ -212,19 +224,18 @@ $(document).on('click', "#idConfirmarViaje", function() {
     <footer class="main-footer">
         <div class="container container--flex">
             <div class="column column--33">
-                <h2 class="column__title">¿Por que GRC?</h2>
-                <p class="column__txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus nam eaque corporis similique doloremque quidem voluptates voluptatum, pariatur, cum labore laudantium necessitatibus modi optio, molestiae aspernatur consequuntur unde tenetur rem!</p>
+                <h2 class="column__title">¿Por que Viajar con "El Mas rapido del OEste?</h2>
+                <p class="column__txt">Nuestra empresa es reconocida a nivel nacional, por ofrecer los mejores "Sambuches de Mondiola", Asi no llegas con el estomago vacio al destino mas recondito elegido para tus vacaciones.... </p>
             </div>
             <div class="column column--33">
-                <h2 class="column__title">Blablabla</h2>
-                <p class="column__txt">Pos algo</p>
-                <p class="column__txt">Algo</p>
-                <p class="column__txt">Mas algo</p>
-                <p class="column__txt">Yep, algo</p>
+                <h2 class="column__title">Contamos con los Mejores Azafatos</h2>
+                <p class="column__txt">Dos viajes por favor!!!!</p> 
+                
             </div>
             <div class="column column--33">
                 <h2 class="column__title">Y MAS!!</h2>
-                <p class="column__txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi maiores, ab, sapiente labore laboriosam iure cum minima consectetur cupiditate velit aut hic voluptas, nisi! Quidem obcaecati voluptate totam, maiores mollitia.</p>
+                <p class="column__txt">Te Regalamos una cerveza gratis, contamos con un shop de los mas basico, pero Shop al fin!</p>
+                <p class="column__txt">Seccion de fumadores</p>
             </div>
             <p class="copy">2019 Derechos reservados</p>
         </div>
