@@ -98,6 +98,32 @@ def pasajes():
     return render_template('pasajes.html')
 
 
+@app.route('/buscarPasajes', methods=['GET', 'POST'])
+def buscarPasajes():
+    print(request)
+    codigo = None
+    origen = None
+    destino = None
+    desde = None
+    hasta = None
+    if(request.values["codigo"] != ""):
+        codigo = request.values["codigo"]
+    if(request.values["origen"] != "Seleccionar"):
+        origen = request.values["origen"]
+    if(request.values["destino"] != "Seleccionar"):
+        destino = request.values["destino"]
+    if(request.values["desde"] != ""):
+        desde = request.values["desde"]
+    if(request.values["hasta"] != ""):
+        hasta = request.values["hasta"]
+    r = pasajeDAO.traerPasajesXFiltro(request.values["dni"], codigo, origen, destino, desde, hasta)
+    print(r)
+    lstP = []
+    for p in r:
+        lstP.append((p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago))
+    return jsonify(lstP), 200
+
+
 @app.route('/seleccionarViaje', methods=['GET', 'POST'])
 def seleccionarViaje():
     idCOrigen = request.values["idCiudadOrigen"]

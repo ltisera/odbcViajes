@@ -168,7 +168,7 @@ function traerPasajes(dni){
                 var texthtml = ""
                 if (response[1].length > 0){
                     for(var i = 0; i < response[1].length; i++){
-                        texthtml = generarTicket(response, texthtml, i);
+                        texthtml = generarTicket(response[1][i], texthtml);
                         
                     }
                 }else{
@@ -203,20 +203,20 @@ function cambiarPaginaAPasajes(dni) {
 }
 
 
-function generarTicket(response, texthtml, i){
+function generarTicket(response, texthtml){
     texthtml = texthtml +
         "<div class='secTicket'>"                             +
             "<div class='container'>"                         +   
                 "<h3 class='main__title'>Pasaje</h3>"         +
                 "<div class='secDatosTicket'>"                   +
-                    "<div class='secTabla1'><p class='pSecTextTick'>Codigo: "        + response[1][i][0] + "</p></div>" +
-                    "<div class='secTabla2'><p class='pSecTextTick'>Fecha: "         + response[1][i][1] + "</p></div>" +
-                    "<div class='secTabla1'><p class='pSecTextTick'>Valor: "         + response[1][i][2] + "</p></div>" +
-                    "<div class='secTabla2'><p class='pSecTextTick'>DNI Pasajero: "  + response[1][i][3] + "</p></div>" +
-                    "<div class='secTabla1'><p class='pSecTextTick'>Origen: "        + response[1][i][4] + "</p></div>" +
-                    "<div class='secTabla2'><p class='pSecTextTick'>Destino: "       + response[1][i][5] + "</p></div>" +
-                    "<div class='secTabla1'><p class='pSecTextTick'>Forma de Pago: " + response[1][i][6] + "</p></div>" +
-                    "<button class='cancelar-submit' id='"+response[1][i][0]+"'>Cancelar</button>" +
+                    "<div class='secTabla1'><p class='pSecTextTick'>Codigo: "        + response[0] + "</p></div>" +
+                    "<div class='secTabla2'><p class='pSecTextTick'>Fecha: "         + response[1] + "</p></div>" +
+                    "<div class='secTabla1'><p class='pSecTextTick'>Valor: "         + response[2] + "</p></div>" +
+                    "<div class='secTabla2'><p class='pSecTextTick'>DNI Pasajero: "  + response[3] + "</p></div>" +
+                    "<div class='secTabla1'><p class='pSecTextTick'>Origen: "        + response[4] + "</p></div>" +
+                    "<div class='secTabla2'><p class='pSecTextTick'>Destino: "       + response[5] + "</p></div>" +
+                    "<div class='secTabla1'><p class='pSecTextTick'>Forma de Pago: " + response[6] + "</p></div>" +
+                    "<button class='cancelar-submit' id='"+response[0]+"'>Cancelar</button>" +
                 "</div>"                  +
             "</div>"                      +
         "</div>";

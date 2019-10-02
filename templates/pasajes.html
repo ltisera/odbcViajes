@@ -10,11 +10,69 @@
     <script src="static/js/menu.js"></script>
     <script type="text/javascript">
         
+        var dni = 5;
         $(document).ready(function(){
-            var dni = 5;
             console.log(dni)
             traerPasajes(dni);
 
+            $.ajax({
+                url:'traerCiudades', 
+                type:'POST',
+                success: function(response){
+                    var strIdCiudad = "0"
+                    $("#idFiltroOrigen").append("<option class='opcOrigen' id=\"filtroOrigenNULL\"> Seleccionar </option>")
+                    $("#idFiltroDestino").append("<option class='opcDestino' id=\"filtroDestinoNULL\"> Seleccionar </option>")
+                    for(var i = 0; i < response[1].length; i++){
+                        strIdCiudad = String(response[1][i].idCiudad)
+                        $("#idFiltroOrigen").append("<option class='opcOrigen' id=\"filtroOrigen" + strIdCiudad + "\">" + response[1][i].nombre + "</option>")
+                        $("#idFiltroDestino").append("<option class='opcDestino' id=\"filtroDestino" + strIdCiudad + "\">" + response[1][i].nombre + "</option>")
+                        $("#filtroOrigen"+strIdCiudad).data("idCiudad", strIdCiudad)
+                        $("#filtroDestino"+strIdCiudad).data("idCiudad", strIdCiudad)
+                    }
+                },
+                error: function(response){
+                    console.log(response)
+                },
+
+            });
+
+        });
+
+        $(document).on('click', "#idFiltroBuscar", function() {
+            $.ajax({
+                url : "buscarPasajes",
+                type : "POST",
+                data : {
+                    dni : dni,
+                    origen : $("#idFiltroOrigen").val(),
+                    destino : $("#idFiltroDestino").val(),
+                    desde : $("#idFiltroDesde").val(),
+                    hasta : $("#idFiltroHasta").val(),
+                    codigo : $("#idFiltroCodigo").val()
+                },
+                success: function(response){
+                    console.log(response);
+                    var texthtml = ""
+                    if (response.length > 0){
+                        for(var i = 0; i < response.length; i++){
+                            texthtml = generarTicket(response[i], texthtml);
+                        }
+                    }else{
+                        texthtml = "<div class='secTicket'>"                        +
+                                        "<div class='container'>"                   +   
+                                            "<h3 class='main__title'>Pasaje</h3>"   +
+                                            "<div>"                                 +
+                                                "<h4> Pasaje no encontrado </h4>"   +
+                                            "</div>"                                +
+                                        "</div>"                                    +
+                                    "</div>";
+                    }
+                    $("#pasajes").html(texthtml);
+                },
+                error: function(response){
+                    alert(response.responseJSON.error);
+                }
+            });
         });
     </script>
 </head>
@@ -42,7 +100,24 @@
 
     <div class="banner">
         <img src="https://incalake.com/galeria/admin/short-slider/BUSES/TITICACA-BOLIVIA/titicaca-bolivia-bus.png" alt="" class="banner__img">
-        <div id="pasajes" class="fondo">
+        
+        <div class="fondo">
+            <div class="secOrigen">
+                Origen:
+                <select id="idFiltroOrigen" onclick=""></select>
+                Destino:
+                <select id="idFiltroDestino" onclick=""></select>
+                Desde:
+                <input type="date" id="idFiltroDesde" min="2017-09-24" max="2020-12-31">
+                Hasta:
+                <input type="date" id="idFiltroHasta" min="2017-09-24" max="2020-12-31">
+                Codigo: 
+                <input class="" id="idFiltroCodigo" type="text">
+                <button class="" id="idFiltroBuscar">Buscar</button>
+
+            </div>
+            <div class="" id="pasajes">
+            </div>
         </div>
     </div>
 

@@ -73,6 +73,23 @@ class PasajeDAO(ConexionBD):
             self.cerrarConexion()
         return lstPasajes
 
+    def traerPasajesXFiltro(self, dni, codigo, origen, destino, desde, hasta):
+        lstPasajes = []
+        try:
+            self.crearConexion()
+            self._micur.callproc("consultaPasajeXFiltro", (dni, codigo, origen, destino, desde, hasta,))
+            for result in self._micur.stored_results():
+                reg = result.fetchall()
+                if reg is not None:
+                    for r in reg:
+                        lstPasajes.append(Pasaje(registro=r))
+
+        except mysql.connector.Error as err:
+            print("DANGER ALGO OCURRIO: " + str(err))
+        finally:
+            self.cerrarConexion()
+        return lstPasajes
+
     def calcular(self, idCorigen, idCDestino, funcion):
         dato = ""
         try:

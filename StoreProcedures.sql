@@ -106,6 +106,18 @@ BEGIN
 	SELECT * FROM pasaje where pasaje.pasajero = DNI and pasaje.cancelacion is null;
 END//
 
+DROP PROCEDURE IF EXISTS consultaPasajeXFiltro//
+CREATE PROCEDURE consultaPasajeXFiltro(in DNI int, in codigo varchar(10), in origen int, in destino int, in desde date, in hasta date)
+BEGIN
+	SELECT * FROM pasaje where pasaje.pasajero = DNI and pasaje.cancelacion is null
+    and pasaje.codigo = IFNULL(codigo, pasaje.codigo)
+    and pasaje.origen = IFNULL(origen, pasaje.origen)
+    and pasaje.destino = IFNULL(destino, pasaje.destino)
+    and pasaje.fecha >= IFNULL(desde, pasaje.fecha)
+    and pasaje.fecha <= IFNULL(hasta, pasaje.fecha)
+    ;
+END//
+
 DROP PROCEDURE IF EXISTS altaCiudad//
 CREATE PROCEDURE altaCiudad (in nombre varchar(45), in latitud varchar(45), in longitud varchar(45))
 BEGIN
