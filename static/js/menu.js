@@ -125,7 +125,14 @@ function iniciarSesion(){
                 console.log(response);
                 if (response[1] == true){
                     crearCookie("idUsuarioLogueado", $("#dni").val());
-                    window.location.href = ('http://localhost:5000/pasajes')
+                    $(".login__content").html("<label class='login__link--select login__link' id='login'>Salir</label>");
+                    $("#ingreseDatos").removeClass("secDestino");
+                    $("#ingreseDatos").toggleClass("ocultar");
+                    document.getElementById("linkConsultar").setAttribute("name","/pasajes");
+                    $("#menu_nav").removeClass("mostrar_nav");
+                    $("#menu_login").toggleClass("mostrar_login");
+                    $("#metodoPago").removeClass("ocultar");
+                    $("#metodoPago").toggleClass("secDestino");
                 }
                 else{
                     alert("Usuario o clave incorrectos")

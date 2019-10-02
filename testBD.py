@@ -63,10 +63,10 @@ def agregarPasajes(pasajeDAO):
     print("\nAgregando pasajes... ", end='')
     lstP = []
 
-    lstP.append(Pasaje("1", datetime.date(2019, 4, 13), 1000, 5, 1, 2, "dinero"))
-    lstP.append(Pasaje("2", datetime.date(2019, 4, 13), 1000, 5, 1, 3, "dinero"))
-    lstP.append(Pasaje("3", datetime.date(2019, 4, 13), 1000, 5, 2, 3, "dinero"))
-    lstP.append(Pasaje("4", datetime.date(2019, 4, 20), 1000, 1, 2, 3, "dinero"))
+    lstP.append(Pasaje(fecha=datetime.date(2019, 4, 13), pasajero=5, origen=1, destino=2, formaPago="dinero"))
+    lstP.append(Pasaje(fecha=datetime.date(2019, 4, 13), pasajero=5, origen=1, destino=3, formaPago="dinero"))
+    lstP.append(Pasaje(fecha=datetime.date(2019, 4, 13), pasajero=5, origen=2, destino=3, formaPago="dinero"))
+    lstP.append(Pasaje(fecha=datetime.date(2019, 4, 20), pasajero=1, origen=2, destino=3, formaPago="dinero"))
 
     for p in lstP:
         pasajeDAO.agregarPasaje(p)

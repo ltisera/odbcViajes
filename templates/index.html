@@ -23,9 +23,17 @@
 
             if(leerCookie("idUsuarioLogueado") != "null"){
                 $(".login__content").html("<label class='login__link--select login__link' id='login'>Salir</label>");
+                $("#ingreseDatos").removeClass("secDestino");
+                $("#ingreseDatos").toggleClass("ocultar");
+                document.getElementById("linkConsultar").setAttribute("name","/pasajes");
+            }
+            else{
+                $("#metodoPago").removeClass("secDestino");
+                $("#metodoPago").toggleClass("ocultar");   
             }
 
             $("#divSecNueva").click(seleccionarViaje);
+            $("#divConfirmarViaje").click(confirmarViaje);
 
             $.ajax({
                 url:'traerCiudades', 
@@ -139,6 +147,89 @@
             });
         }
 
+
+        function confirmarViaje(){
+            var idCOrigen = document.getElementById('lstOrigen');
+            var idOrigenT = idCOrigen[idCOrigen.selectedIndex].id; 
+            var idOrigen = $("#"+idOrigenT).data("idCiudad");
+
+            var idCDestino = document.getElementById('lstDestino');
+            var idDestinoT = idCDestino[idCDestino.selectedIndex].id; 
+            var idDestino = $("#"+idDestinoT).data("idCiudad");
+
+            if(leerCookie("idUsuarioLogueado") != "null"){
+                viajeUsuario(idOrigen, idDestino);
+            }
+            else{
+                viajeCasual(idOrigen, idDestino);
+            }
+            
+        }
+
+
+        function viajeUsuario(idOrigen, idDestino){
+            $.ajax({
+                url : "confirmarViajeUsuario",
+                type : "POST",
+                data : {
+
+                    idCiudadOrigen: idOrigen,
+                    idCiudadDestino: idDestino,
+                    fecha: $("#idFechaViaje").val(),
+                    formaPago: $("#metodoPagoCV").val(),
+                    dni : leerCookie("idUsuarioLogueado")
+                },
+                success: function(response){
+                    console.log(response);
+                    alert("Bien");
+                    window.location.href = ('http://localhost:5000')
+                },
+                error: function(response){
+                    console.log("Error en algo");
+                }
+            });
+        }
+
+        function viajeCasual(idOrigen, idDestino){
+            if($("#dniCV").val() != "" &&
+                $("#nombreCV").val() != "" &&
+                $("#apellidoCV").val() != "" &&
+                $("#nacionalidadCV").val() != "" &&
+                $("#telefonoCV").val() != "" &&
+                $("#emailCV").val() != "" &&
+                $("#direccionCV").val() != ""){
+
+                $.ajax({
+                    url : "confirmarViajeCasual",
+                    type : "POST",
+                    data : {
+
+                        idCiudadOrigen: idOrigen,
+                        idCiudadDestino: idDestino,
+                        fecha: $("#idFechaViaje").val(),
+                        dni : $("#dniCV").val(),
+                        nombre : $("#nombreCV").val(),
+                        apellido : $("#apellidoCV").val(),
+                        nacionalidad : $("#nacionalidadCV").val(),
+                        telefono : $("#telefonoCV").val(),
+                        email : $("#emailCV").val(),
+                        direccion : $("#direccionCV").val(),
+                    },
+                    success: function(response){
+                        console.log(response);
+                        alert("Bien");
+                        window.location.href = ('http://localhost:5000')
+                    },
+                    error: function(response){
+                        console.log("Error en algo");
+                    }
+                });
+            }
+            else{
+                alert("Completa todos los campos");
+            }
+        }
+
     </script>
 </head>
 <body>
@@ -147,7 +238,7 @@
             <img src="http://www.apacid.com.ar/imagenes/iconos/Menu.png" class="icon-menu" id="btnMenu"></img>
             <ul class="menu menu_nav" id="menu_nav">
                 <li class="menu__item menu__link--select" name="/"><a class="menu__link">Inicio</a></li>
-                <li class="menu__item" name="/consulta"><a class="menu__link">Consultar Pasaje</a></li>
+                <li class="menu__item" id="linkConsultar" name="/consulta"><a class="menu__link">Consultar Pasaje</a></li>
                 <li class="menu__item" name="/"><a class="menu__link">Contacto</a></li>
             </ul>
             <div class="logo-container">
@@ -194,16 +285,6 @@
     <div class="banner">
         <img src="https://incalake.com/galeria/admin/short-slider/BUSES/TITICACA-BOLIVIA/titicaca-bolivia-bus.png" alt="" class="banner__img">
         <div class="fondo" id="selecDestinos"> 
-            <!--
-            <div class="secLogin">
-                    <p class="clsTxtLogin">Login</p>
-                    <p class="clsTxtLogin">DNI: </p>
-                    <input class="login__input2" id="dni" type="text">
-                    <p class="clsTxtLogin">Password: </p>
-                    <input class="login__input2" id="password" type="password">
-                
-            </div>
-            -->
             <div class="secOrigen">
                 <div class="container">
                     <h3 class="main__title">Origen</h3>
@@ -236,15 +317,22 @@
         <div class="ocultar" id="confirmViaje"> 
             <div class="secOrigen" id="confirmDatosTicket">
             </div>
-            <div class="secDestino ">
+            <div class="secDestino" id="ingreseDatos">
                 <div class="container">
                     <h3 class="main__title">Ingrese datos</h3>
                     <div class="DP">
                         <div class="filaCentrada D1">
+                            <p>DNI</p> 
+                        </div>
+                        <div class="D2">
+                            <input id="dniCV" type="text">
+                        </div>
+                    </div><div class="DP">
+                        <div class="filaCentrada D1">
                             <p>Nombre</p> 
                         </div>
                         <div class="D2">
-                            <input  type="text">
+                            <input id="nombreCV" type="text">
                         </div>
                     </div>
                     <div class="DP">
@@ -252,7 +340,7 @@
                             <p>Apellido</p> 
                         </div>
                         <div class="D2">
-                            <input  type="text">
+                            <input id="apellidoCV" type="text">
                         </div>
                     </div>
                     <div class="DP">
@@ -260,7 +348,7 @@
                             <p>Telefono</p> 
                         </div>
                         <div class="D2">
-                            <input  type="text">
+                            <input id="telefonoCV"  type="text">
                         </div>
                     </div>
                     
@@ -269,7 +357,7 @@
                             <p>Email</p> 
                         </div>
                         <div class="D2">
-                            <input  type="text">
+                            <input id="emailCV" type="text">
                         </div>
                     </div>
                     
@@ -278,22 +366,31 @@
                             <p>Direccion</p> 
                         </div>
                         <div class="D2">
-                            <input  type="text">
+                            <input id="direccionCV" type="text">
                         </div>
                     </div>
                     
                     <div class="DP">
                         <div class="filaCentrada D1">
-                            <p>nacionalidad</p> 
+                            <p>Nacionalidad</p> 
                         </div>
                         <div class="D2">
-                            <input  type="text">
+                            <input id="nacionalidadCV" type="text">
                         </div>
                     </div>
                     
                 </div>
             </div>
-            <div class="secNueva ">
+            <div class="secDestino" id="metodoPago">
+                <div class="container">
+                    <h3 class="main__title">Ingrese metodo de pago</h3>
+                    <select id="metodoPagoCV">
+                        <option>Dinero</option>
+                        <option>Millas</option>
+                    </select>
+                </div>
+            </div>
+            <div class="secNueva" id="divConfirmarViaje">
                 <div class="container">
                     <h3 class="group__confirmar non-selectable">Confirmar Viaje</h3>
                 </div>

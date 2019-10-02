@@ -54,11 +54,24 @@ BEGIN
     select valor;
 END//
 
+DROP PROCEDURE IF EXISTS calcularCodigoPasaje//
+CREATE PROCEDURE calcularCodigoPasaje (out codigoNuevo varchar(10))
+BEGIN
+	set codigoNuevo = (SELECT substring(codigo,2) FROM pasaje WHERE substring(codigo,2)=(SELECT MAX(CAST(SUBSTRING(codigo,2) AS SIGNED)) FROM pasaje));
+    if codigoNuevo is null then
+		set codigoNuevo = CONCAT("C", LPAD(1, 9, "0"));
+	else
+		set codigoNuevo = CONCAT("C", LPAD((codigoNuevo + 1), 9, "0"));
+	end if;
+    select codigoNuevo;
+END//
+
 DROP PROCEDURE IF EXISTS altaPasaje//
-CREATE PROCEDURE altaPasaje (in codigo varchar(10), in fecha date, in valor float, in pasajero int, in origen int, in destino int, in formaPago enum('dinero','millas'))
+CREATE PROCEDURE altaPasaje (out codigo varchar(10), in fecha date, out valor float, in pasajero int, in origen int, in destino int, in formaPago enum('dinero','millas'))
 BEGIN
 	declare millasDePasajero float;
 	call calcularValorPasaje(origen, destino, valor);
+    call calcularCodigoPasaje(codigo);
 	IF formaPago = "millas" then
 		set millasDePasajero = (select MAX(configMillas.precioMilla) from configMillas) * (select pasajero.millas FROM pasajero where pasajero.DNI = pasajero); 
 		if millasDePasajero > valor then
@@ -113,7 +126,7 @@ BEGIN
     and pasaje.codigo = IFNULL(codigo, pasaje.codigo)
     and pasaje.origen = IFNULL(origen, pasaje.origen)
     and pasaje.destino = IFNULL(destino, pasaje.destino)
-    and pasaje.fecha >= IFNULL(desde, pasaje.fecha)
+    and pasaje.fecha > IFNULL(desde, pasaje.fecha)
     and pasaje.fecha <= IFNULL(hasta, pasaje.fecha)
     ;
 END//

@@ -3,6 +3,7 @@ import sys
 sys.path.append(r'C:\Users\Camila\Documents\GitHub\odbcViajes')
 from DAO.pasajeroDAO import PasajeroDAO
 from DAO.pasajero import Pasajero
+from DAO.pasaje import Pasaje
 from DAO.pasajeDAO import PasajeDAO
 from DAO.ciudadDAO import CiudadDAO
 from DAO.cancelacionDAO import CancelacionDAO
@@ -73,6 +74,40 @@ def traerPasaje():
     if p is not None:
         p = (p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago, p.cancelacion)
     return jsonify((200, p))
+
+
+@app.route('/confirmarViajeCasual', methods=['GET', 'POST'])
+def confirmarViajeCasual():
+    pasajero = Pasajero(request.values["dni"],
+                        request.values["nombre"],
+                        request.values["apellido"],
+                        request.values["telefono"],
+                        request.values["email"],
+                        None,
+                        None,
+                        request.values["direccion"],
+                        request.values["nacionalidad"])
+    pasaje = Pasaje(fecha=request.values["fecha"],
+                    pasajero=request.values["dni"],
+                    origen=request.values["idCiudadOrigen"],
+                    destino=request.values["idCiudadDestino"],
+                    formaPago="dinero")
+    print(pasajero)
+    pasajeroDAO.agregarPasajero(pasajero)
+    print(pasaje)
+    pasajeDAO.agregarPasaje(pasaje)
+    return jsonify(()), 200
+
+
+@app.route('/confirmarViajeUsuario', methods=['GET', 'POST'])
+def confirmarViajeUsuario():
+    pasaje = Pasaje(fecha=request.values["fecha"],
+                    pasajero=request.values["dni"],
+                    origen=request.values["idCiudadOrigen"],
+                    destino=request.values["idCiudadDestino"],
+                    formaPago=request.values["formaPago"])
+    pasajeDAO.agregarPasaje(pasaje)
+    return jsonify(()), 200
 
 
 @app.route('/traerPasajes', methods=['GET', 'POST'])
