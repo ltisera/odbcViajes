@@ -41,7 +41,8 @@ CREATE PROCEDURE calcularMillas (in origen int, in destino int, out millas float
 BEGIN
 	set @distancia = 0;
     call calcularDistancia(origen, destino, @distancia);
-	set millas = @distancia * (SELECT MAX(configMillas.precioMilla) from configMillas);
+	set millas = @distancia * (SELECT MAX(configMillas.millaXKilometro) from configMillas);
+    select millas;
 END//
 
 DROP PROCEDURE IF EXISTS calcularValorPasaje//
@@ -50,6 +51,7 @@ BEGIN
 	set @distancia = 0;
     call calcularDistancia(origen, destino, @distancia);
 	set valor = @distancia * 1000;
+    select valor;
 END//
 
 DROP PROCEDURE IF EXISTS altaPasaje//

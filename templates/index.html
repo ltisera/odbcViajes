@@ -19,7 +19,7 @@
         var map2 = null
         $(document).ready(function(){
             console.log("FUNCIONO");
-            $("#divSecNueva").click(confirmarViaje);
+            $("#divSecNueva").click(seleccionarViaje);
 
             $.ajax({
                 url:'traerCiudades', 
@@ -47,10 +47,10 @@
                         L.marker([response[1][i].latitud, response[1][i].longitud]).addTo(map2)
                             .bindPopup(response[1][i].nombre)
                             
-                        console.log("NC " + response[1][i].nombre)
+                        /*console.log("NC " + response[1][i].nombre)
                         console.log("Latitu " + response[1][i].latitud)
                         console.log("Longi " + response[1][i].longitud)
-                        
+                        */
                     }
                 },
                 error: function(response){
@@ -59,7 +59,7 @@
 
             });
             /*DESDE ACA*/
-            map = L.map('mapOrigen').setView([-34.61, -58.37], 7);
+            map = L.map('mapOrigen').setView([-34.61, -58.37], 3);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     
                 }).addTo(map);
@@ -74,83 +74,65 @@
             
         });
         
-function clickListOrigen(){
-    console.log("CLICK ORIGEN")
-    var selector = document.getElementById('lstOrigen');
-    var idSeleccionado = selector[selector.selectedIndex].id; 
-    var lat = $("#"+idSeleccionado).data("latitud");
-    var long = $("#"+idSeleccionado).data("longitud");
+        function clickListOrigen(){
+            var selector = document.getElementById('lstOrigen');
+            var idSeleccionado = selector[selector.selectedIndex].id; 
+            var lat = $("#"+idSeleccionado).data("latitud");
+            var long = $("#"+idSeleccionado).data("longitud");
 
-    map.setView([lat, long], 5);
+            map.setView([lat, long], 6);   
+        }
 
-    
-}
+        function clickListDestino(){
+            var selector = document.getElementById('lstDestino');
+            var idSeleccionado = selector[selector.selectedIndex].id; 
+            var lat = $("#"+idSeleccionado).data("latitud");
+            var long = $("#"+idSeleccionado).data("longitud");
 
-function confirmarViaje(){
-    
-    var idCOrigen = document.getElementById('lstOrigen');
-    var idOrigenT = idCOrigen[idCOrigen.selectedIndex].id; 
-    var idOrigen = $("#"+idOrigenT).data("idCiudad");
+            map2.setView([lat, long], 6);
+        }
 
-    var idCDestino = document.getElementById('lstDestino');
-    var idDestinoT = idCDestino[idCDestino.selectedIndex].id; 
-    var idDestino = $("#"+idDestinoT).data("idCiudad");
 
-    $.ajax({
-        url: 'confirmarViaje',
-        type: 'POST',
-        data:{idCiudadOrigen:idOrigen ,idCiudadDestino:idDestino},
-        success: function(response){console.log(response)},
-        error: function(response){console.log("ERR")},
+        function seleccionarViaje(){
+            
+            var idCOrigen = document.getElementById('lstOrigen');
+            var idOrigenT = idCOrigen[idCOrigen.selectedIndex].id; 
+            var idOrigen = $("#"+idOrigenT).data("idCiudad");
 
-    });
-}
+            var idCDestino = document.getElementById('lstDestino');
+            var idDestinoT = idCDestino[idCDestino.selectedIndex].id; 
+            var idDestino = $("#"+idDestinoT).data("idCiudad");
 
-function clickListDestino(){
-    console.log("CLICK ORIGEN")
-    var selector = document.getElementById('lstDestino');
-    var idSeleccionado = selector[selector.selectedIndex].id; 
-    var lat = $("#"+idSeleccionado).data("latitud");
-    var long = $("#"+idSeleccionado).data("longitud");
+            $.ajax({
+                url: 'seleccionarViaje',
+                type: 'POST',
+                data:{
+                    idCiudadOrigen: idOrigen,
+                    idCiudadDestino: idDestino
+                },
+                success: function(response){
+                    $("#selecDestinos").toggleClass("fondo");
+                    $("#selecDestinos").toggleClass("ocultar");
+                    $("#confirmViaje").toggleClass("ocultar");
+                    $("#confirmViaje").toggleClass("fondo");
 
-    map2.setView([lat, long], 5);
+                    texthtml =
+                    "<h3 class='main__title'>Pasaje</h3>"         +
+                    "<div class='secDatosTicket'>"                   +
+                        "<div class='secTabla1'><p class='pSecTextTick'>Valor: "   + response.valor + "</p></div>" +
+                        "<div class='secTabla2'><p class='pSecTextTick'>Origen: "  + $("#"+idOrigenT).html() + "</p></div>" +
+                        "<div class='secTabla1'><p class='pSecTextTick'>Destino: " + $("#"+idDestinoT).html()  + "</p></div>" +
+                        "<div class='secTabla2'><p class='pSecTextTick'>Millas Obtenidas: " + response.millas + "</p></div>" +
+                    "</div>";
+                    $("#confirmDatosTicket").html(texthtml);
+                    console.log(response)
+                },
+                error: function(response){
+                    console.log("ERR")
+                },
+            });
+        }
 
-    
-}
-
-$(document).on('click', ".opcDestino", function() {
-    var selector = document.getElementById('lstDestino');
-    var idSeleccionado = selector[selector.selectedIndex].id; 
-
-    var lat = $("#"+idSeleccionado).data("latitud")
-    var long = $("#"+idSeleccionado).data("longitud")
-
-    var map = L.map('mapDestino').setView([lat, long], 13);
-
-    L.marker([lat, long]).addTo(map)
-    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-    .openPopup();
-
-});
-    
-$(document).on('click', "#idConfirmarViaje", function() {
-    var selector = document.getElementById('lstOrigen');
-    var idSeleccionado = selector[selector.selectedIndex].id; 
-
-    console.log("----------Origen-----------") 
-    console.log($("#"+idSeleccionado).html())
-    console.log("Latitud: " + $("#"+idSeleccionado).data("latitud"))
-    console.log("Longitud: " + $("#"+idSeleccionado).data("longitud"))
-
-    var selector = document.getElementById('lstDestino');
-    var idSeleccionado = selector[selector.selectedIndex].id; 
-
-    console.log("----------Destino----------") 
-    console.log($("#"+idSeleccionado).html())
-    console.log("Latitud: " + $("#"+idSeleccionado).data("latitud"))
-    console.log("Longitud: " + $("#"+idSeleccionado).data("longitud"))
-
-});
     </script>
 </head>
 <body>
@@ -205,10 +187,19 @@ $(document).on('click', "#idConfirmarViaje", function() {
 
     <div class="banner">
         <img src="https://incalake.com/galeria/admin/short-slider/BUSES/TITICACA-BOLIVIA/titicaca-bolivia-bus.png" alt="" class="banner__img">
-        <div class="fondo"> 
+        <div class="fondo" id="selecDestinos"> 
+            <div class="secLogin">
+                <div class="container">
+                    <h3 class="floatLeft">Login</h3>
+                    <h3 class="floatLeft">DNI: </h3>
+                    <input class="login__input2" id="dni" type="text">
+                    <h3 class="floatLeft">Password: </h3>
+                    <input class="login__input2" id="password" type="password">
+                </div>
+            </div>
             <div class="secOrigen">
                 <div class="container">
-                    <h3 class="main__title">Origen</h2>
+                    <h3 class="main__title">Origen</h3>
                     <p class="main__txt">Seleccione el origen de su viaje</p>
                     <select id="lstOrigen" onclick="clickListOrigen()">
                     </select>
@@ -219,21 +210,33 @@ $(document).on('click', "#idConfirmarViaje", function() {
                 </div>
             </div>
 
-            <div class="secDestino ">
+            <div class="secDestino">
                 <div class="container">
-                    <h3 class="main__title">Destino</h2>
+                    <h3 class="main__title">Destino</h3>
                     <p class="main__txt">Seleccione el destino de su viaje</p>
-                    <select id="lstDestino"  onclick="clickListDestino()"">
+                    <select id="lstDestino" onclick="clickListDestino()"">
                     </select>
                     <div class="map" id="mapDestino"></div>
                 </div>
             </div>
-            <div id="divSecNueva" class="secNueva ">
+            <div id="divSecNueva" class="secNueva">
+                <div class="container">
+                    <h3 class="group__confirmar non-selectable">Siguiente</h3>
+                </div>
+            </div>    
+        </div>
+
+        <div class="ocultar" id="confirmViaje"> 
+            <div class="secOrigen" id="confirmDatosTicket">
+            </div>
+            <div class="secDestino ">
+                <div class="container">
+                    <h3 class="main__title">Ingrese datos</h3>
+                </div>
+            </div>
+            <div class="secNueva ">
                 <div class="container">
                     <h3 class="group__confirmar non-selectable">Confirmar Viaje</h3>
-                    <!--
-                    <input type="button" id="idConfirmarViaje" value="Confirmate">
-                    -->
                 </div>
             </div>    
         </div>
