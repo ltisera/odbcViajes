@@ -112,20 +112,31 @@ h1,h3,h4,h5,h6{
 	border-color: black; 
 	border-width : 2px;
 }
-.secLogin{
+.secLogin {
+
 	border-radius:5px;
 	background: rgba(237, 151, 31,0.7);
 	color: white;
 	padding:  1%;
 	text-align: center;
-	display: flex;
-	flex-wrap: wrap;
+	display: felx;
+	/*flex-wrap: wrap;*/
 	margin : 1%;
-	float:left;
-	width : 90%;
+	/*float: left;*/
+	width : 93%;
 	border : solid;
 	border-color: black; 
 	border-width : 2px;
+	align-items: center;
+	vertical-align: middle;
+}
+
+.secLogin > *{
+	color: white;
+	margin:auto;
+	padding: 0.5%;
+	
+	
 }
 .secNueva{
 	border-radius:20px;
@@ -150,6 +161,31 @@ h1,h3,h4,h5,h6{
    -webkit-user-select: none;
    -ms-user-select: none;
    user-select: none; 
+}
+
+.filaCentrada{
+	float: left;
+	
+}
+.DP{
+	margin: 0;
+	padding: 0;
+	display: flex;
+	align-items: center;
+}
+.D1{
+	
+	height: 30px;
+	display: flex;
+	align-items: center;
+}
+
+.D2{
+	height: 30px;
+	
+	display: flex;
+	align-items: center;
+	margin-left: 5px;
 }
 /*--------------------------------*/
 
@@ -277,6 +313,7 @@ h1,h3,h4,h5,h6{
 	display: block;
 	width: 100%;
 	border-radius: 10px;
+	
 }
 
 .login__input2 {
@@ -287,11 +324,13 @@ h1,h3,h4,h5,h6{
 	float:left;
 	width: 30%;
 	border-radius: 10px;
+	vertical-align: middle;
 }
 
-.floatLeft{
+.clsTxtLogin{
 	float:left;
 	margin-left: 15px;
+	
 }
 
 .login__btn {

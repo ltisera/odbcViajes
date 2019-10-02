@@ -14,6 +14,15 @@ $(document).on('click', "#btnMenu", function() {
     $("#menu_login").removeClass("mostrar_login");
     $("#menu_nav").toggleClass("mostrar_nav");
 });
+
+
+$(document).on('click', "#login", function() {
+   console.log("SALIIIIIIIIIII");
+   crearCookie("idUsuarioLogueado", null);
+});
+
+
+
 $(document).on('click', "#btnMenu2", function() {
     $("#menu_nav").removeClass("mostrar_nav");
     $("#menu_login").toggleClass("mostrar_login");
@@ -121,7 +130,7 @@ function iniciarSesion(){
                 }
             },
             error: function(response){
-                alert(response.responseJSON.error);
+                alert("response.responseJSON.error");
             }
         });
     }
@@ -186,10 +195,13 @@ function cambiarPaginaAPasajes(dni) {
     $(".banner").html("<img src='https://incalake.com/galeria/admin/short-slider/BUSES/TITICACA-BOLIVIA/titicaca-bolivia-bus.png' alt='' class='banner__img'>"
         + "<div id='pasajes' class='fondo'>" +
         "</div>")
-    $(".login__content").html("<label class='login__link--select login__link' id='login'>Config</label>")
+    $(".login__content").html("<label class='login__link--select login__link' id='login'>Salir</label>")
     $("#menu_login").removeClass("mostrar_login");
     traerPasajes(dni)
+    crearCookie("idUsuarioLogueado", dni);
+    
 }
+
 
 function generarTicket(response, texthtml, i){
     texthtml = texthtml +
@@ -209,4 +221,23 @@ function generarTicket(response, texthtml, i){
             "</div>"                      +
         "</div>";
     return texthtml
+}
+
+function crearCookie(nombre, valorCookie) {
+    var nuevaCookie = nombre + "=" + valorCookie + ";";
+    document.cookie = nuevaCookie;
+}
+
+function leerCookie(nombre) {
+    var Nombre = nombre + "=";
+    var cRy = document.cookie.split(';');// el array de las cookies
+    for(var i=0;i < cRy.length;i++) {
+        var c = cRy[i];// la cookie
+        //recorta cualquier espacio en blanco al inicio:
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        // devuelve el valor de la cookie
+        if (c.indexOf(Nombre) == 0) return c.substring(Nombre.length,c.length);
+    }
+    // si ninguna cookie no fue encontrada
+    return null;
 }

@@ -19,6 +19,7 @@
         var map2 = null
         $(document).ready(function(){
             console.log("FUNCIONO");
+            console.log(leerCookie("idUsuarioLogueado"));
             $("#divSecNueva").click(seleccionarViaje);
 
             $.ajax({
@@ -145,7 +146,7 @@
                 <li class="menu__item" name="/"><a class="menu__link">Contacto</a></li>
             </ul>
             <div class="logo-container">
-                <h1 class="logo">El mas rapido del oeste</h1>
+                <label class="logo">El mas rapido del oeste</label>
             </div>
             <img src="http://www.apacid.com.ar/imagenes/iconos/Menu.png" class="icon-menu" id="btnMenu2"></img>
             <div class="menu menu_login" id="menu_login">
@@ -188,15 +189,16 @@
     <div class="banner">
         <img src="https://incalake.com/galeria/admin/short-slider/BUSES/TITICACA-BOLIVIA/titicaca-bolivia-bus.png" alt="" class="banner__img">
         <div class="fondo" id="selecDestinos"> 
+            <!--
             <div class="secLogin">
-                <div class="container">
-                    <h3 class="floatLeft">Login</h3>
-                    <h3 class="floatLeft">DNI: </h3>
+                    <p class="clsTxtLogin">Login</p>
+                    <p class="clsTxtLogin">DNI: </p>
                     <input class="login__input2" id="dni" type="text">
-                    <h3 class="floatLeft">Password: </h3>
+                    <p class="clsTxtLogin">Password: </p>
                     <input class="login__input2" id="password" type="password">
-                </div>
+                
             </div>
+            -->
             <div class="secOrigen">
                 <div class="container">
                     <h3 class="main__title">Origen</h3>
@@ -232,6 +234,58 @@
             <div class="secDestino ">
                 <div class="container">
                     <h3 class="main__title">Ingrese datos</h3>
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>Nombre</p> 
+                        </div>
+                        <div class="D2">
+                            <input  type="text">
+                        </div>
+                    </div>
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>Apellido</p> 
+                        </div>
+                        <div class="D2">
+                            <input  type="text">
+                        </div>
+                    </div>
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>Telefono</p> 
+                        </div>
+                        <div class="D2">
+                            <input  type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>Email</p> 
+                        </div>
+                        <div class="D2">
+                            <input  type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>Direccion</p> 
+                        </div>
+                        <div class="D2">
+                            <input  type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>nacionalidad</p> 
+                        </div>
+                        <div class="D2">
+                            <input  type="text">
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
             <div class="secNueva ">
