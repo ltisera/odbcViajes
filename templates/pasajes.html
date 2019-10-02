@@ -10,7 +10,7 @@
     <script src="static/js/menu.js"></script>
     <script type="text/javascript">
         
-        var dni = 5;
+        var dni = leerCookie("idUsuarioLogueado");
         $(document).ready(function(){
             console.log(dni)
             traerPasajes(dni);

@@ -196,10 +196,8 @@ function cambiarPaginaAPasajes(dni) {
         + "<div id='pasajes' class='fondo'>" +
         "</div>")
     $(".login__content").html("<label class='login__link--select login__link' id='login'>Salir</label>")
-    $("#menu_login").removeClass("mostrar_login");
-    traerPasajes(dni)
     crearCookie("idUsuarioLogueado", dni);
-    
+    window.location.href = ('http://localhost:5000/pasajes')
 }
 
 
