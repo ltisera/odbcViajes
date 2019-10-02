@@ -19,6 +19,8 @@ $(document).on('click', "#btnMenu", function() {
 $(document).on('click', "#login", function() {
    console.log("SALIIIIIIIIIII");
    crearCookie("idUsuarioLogueado", null);
+   window.location.href = ('http://localhost:5000')
+
 });
 
 
@@ -122,8 +124,8 @@ function iniciarSesion(){
             success: function(response){
                 console.log(response);
                 if (response[1] == true){
-                    cambiarPaginaAPasajes($("#dni").val())
-                    /*window.location.href = ('http://localhost:5000/pasajes') */
+                    crearCookie("idUsuarioLogueado", $("#dni").val());
+                    window.location.href = ('http://localhost:5000/pasajes')
                 }
                 else{
                     alert("Usuario o clave incorrectos")
@@ -188,16 +190,6 @@ function traerPasajes(dni){
             alert(response.responseJSON.error);
         }
     });
-}
-
-
-function cambiarPaginaAPasajes(dni) {
-    $(".banner").html("<img src='https://incalake.com/galeria/admin/short-slider/BUSES/TITICACA-BOLIVIA/titicaca-bolivia-bus.png' alt='' class='banner__img'>"
-        + "<div id='pasajes' class='fondo'>" +
-        "</div>")
-    $(".login__content").html("<label class='login__link--select login__link' id='login'>Salir</label>")
-    crearCookie("idUsuarioLogueado", dni);
-    window.location.href = ('http://localhost:5000/pasajes')
 }
 
 

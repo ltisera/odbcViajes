@@ -20,6 +20,11 @@
         $(document).ready(function(){
             console.log("FUNCIONO");
             console.log(leerCookie("idUsuarioLogueado"));
+
+            if(leerCookie("idUsuarioLogueado") != "null"){
+                $(".login__content").html("<label class='login__link--select login__link' id='login'>Salir</label>");
+            }
+
             $("#divSecNueva").click(seleccionarViaje);
 
             $.ajax({
