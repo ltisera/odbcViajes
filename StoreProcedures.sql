@@ -126,7 +126,7 @@ BEGIN
     and pasaje.codigo = IFNULL(codigo, pasaje.codigo)
     and pasaje.origen = IFNULL(origen, pasaje.origen)
     and pasaje.destino = IFNULL(destino, pasaje.destino)
-    and pasaje.fecha > IFNULL(desde, pasaje.fecha)
+    and pasaje.fecha >= IFNULL(desde, pasaje.fecha)
     and pasaje.fecha <= IFNULL(hasta, pasaje.fecha)
     ;
 END//

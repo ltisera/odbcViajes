@@ -39,13 +39,32 @@
         });
 
         $(document).on('click', "#idFiltroBuscar", function() {
+            var PidCOrigen = document.getElementById('idFiltroOrigen');
+            var PidOrigenT = PidCOrigen[PidCOrigen.selectedIndex].id; 
+            var PidOrigen = $("#"+PidOrigenT).data("idCiudad");
+
+            var PidCDestino = document.getElementById('idFiltroDestino');
+            var PidDestinoT = PidCDestino[PidCDestino.selectedIndex].id; 
+            var PidDestino = $("#"+PidDestinoT).data("idCiudad");
+
+
+            if (PidOrigen == null){
+                PidOrigen = "Seleccionar"
+            }
+            if (PidDestino == null){
+                PidDestino = "Seleccionar"
+            }
+
+
+            console.log(PidOrigen)
+            console.log(PidDestino)
             $.ajax({
                 url : "buscarPasajes",
                 type : "POST",
                 data : {
                     dni : dni,
-                    origen : $("#idFiltroOrigen").val(),
-                    destino : $("#idFiltroDestino").val(),
+                    origen : PidOrigen,
+                    destino : PidDestino,
                     desde : $("#idFiltroDesde").val(),
                     hasta : $("#idFiltroHasta").val(),
                     codigo : $("#idFiltroCodigo").val()

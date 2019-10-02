@@ -135,12 +135,13 @@ def pasajes():
 
 @app.route('/buscarPasajes', methods=['GET', 'POST'])
 def buscarPasajes():
-    print(request)
     codigo = None
     origen = None
     destino = None
     desde = None
     hasta = None
+    print(request.values["codigo"])
+    print(request.values["desde"])
     if(request.values["codigo"] != ""):
         codigo = request.values["codigo"]
     if(request.values["origen"] != "Seleccionar"):

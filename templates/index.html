@@ -21,6 +21,21 @@
             console.log("FUNCIONO");
             console.log(leerCookie("idUsuarioLogueado"));
 
+            var today = new Date();
+            var day = today.getDate();
+            var mes = today.getMonth()+1;
+            if (day < 9){
+                day = "0" + day;
+            }
+            if (mes < 9){
+                mes = "0" + mes;
+            }
+            var minFecha = today.getFullYear()+'-'+mes+'-'+day;
+            var maxFecha = (today.getFullYear()+2)+'-'+mes+'-'+day;
+
+            $("#idFechaViaje").attr("value", minFecha)
+            $("#idFechaViaje").attr("min", minFecha)
+            $("#idFechaViaje").attr("max", maxFecha)
             if(leerCookie("idUsuarioLogueado") != "null"){
                 $(".login__content").html("<label class='login__link--select login__link' id='login'>Salir</label>");
                 $("#ingreseDatos").removeClass("secDestino");
