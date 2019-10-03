@@ -86,7 +86,7 @@ END//
 DROP PROCEDURE IF EXISTS agregarPasaje//
 CREATE PROCEDURE agregarPasaje (in codigo varchar(10), in fecha date, in valor float, in pasajero int, in origen int, in destino int, in formaPago enum('dinero','millas'))
 BEGIN
-	DECLARE clavePasajero INT;
+	DECLARE clavePasajero varchar(45);
 	DECLARE millas float;
     set millas = null;
 	SET clavePasajero = (SELECT pasajero.clave FROM pasajero where pasajero.DNI = pasajero);

@@ -17,6 +17,8 @@ ciudadDAO = CiudadDAO()
 pasajeDAO = PasajeDAO()
 
 
+# Index
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
@@ -25,55 +27,36 @@ def index():
 @app.route('/registrar', methods=['GET', 'POST'])
 def registrar():
     pasajero = Pasajero(request.values["dni"],
-                 request.values["nombre"],
-                 request.values["apellido"],
-                 request.values["telefono"],
-                 request.values["email"],
-                 0, #millas 
-                 request.values["password"],
-                 request.values["direccion"],
-                 request.values["nacionalidad"])
-    print(pasajero)
+                        request.values["nombre"],
+                        request.values["apellido"],
+                        request.values["telefono"],
+                        request.values["email"],
+                        0,  # millas
+                        request.values["password"],
+                        request.values["direccion"],
+                        request.values["nacionalidad"])
     pasajeroDAO.agregarPasajero(pasajero)
-    return jsonify((200))
+    return 200
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    pasajero = pasajeroDAO.loginPasajero(request.values["dni"], request.values["clave"])
-    print(pasajero)
-    return jsonify((200, pasajero))
+    logueado = pasajeroDAO.loginPasajero(request.values["dni"], request.values["clave"])
+    return jsonify(logueado), 200
 
 
-@app.route('/traerCiudades', methods=['GET', 'POST'])
-def traerCiudades():
-    lista = ciudadDAO.traerCiudades()
-    lstRefJson = []
-    for i in lista:
-        if(len(lista) > 0):
-            refJson = {}
-            refJson["idCiudad"] = i.idCiudad
-            refJson["nombre"] = i.nombre
-            refJson["latitud"] = i.latitud
-            refJson["longitud"] = i.longitud
-            refJson["baja"] = i.baja
-
-            lstRefJson.append(refJson)
-    return jsonify((200, lstRefJson))
-
-
-@app.route('/consulta', methods=['GET', 'POST'])
-def consulta():
-    return render_template('consulta.html')
-
-
-@app.route('/traerPasaje', methods=['GET', 'POST'])
-def traerPasaje():
-    p = pasajeDAO.traerPasaje(request.values["codigo"])
-    print(p)
-    if p is not None:
-        p = (p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago, p.cancelacion)
-    return jsonify((200, p))
+@app.route('/seleccionarViaje', methods=['GET', 'POST'])
+def seleccionarViaje():
+    idCOrigen = request.values["idCiudadOrigen"]
+    idCDestino = request.values["idCiudadDestino"]
+    print("Origen: " + idCOrigen + " Destino: " + idCDestino)
+    if(idCOrigen != idCDestino):
+        dicPasaje = {}
+        dicPasaje["km"] = pasajeDAO.calcular(idCOrigen,idCDestino, "calcularDistancia")
+        dicPasaje["valor"] = pasajeDAO.calcular(idCOrigen,idCDestino, "calcularValorPasaje")
+        dicPasaje["millas"] = pasajeDAO.calcular(idCOrigen,idCDestino, "calcularMillas")
+        return jsonify(dicPasaje), 200
+    return jsonify("No se puede elegir el mismo destino que el origen"), 21
 
 
 @app.route('/confirmarViajeCasual', methods=['GET', 'POST'])
@@ -92,11 +75,9 @@ def confirmarViajeCasual():
                     origen=request.values["idCiudadOrigen"],
                     destino=request.values["idCiudadDestino"],
                     formaPago="dinero")
-    print(pasajero)
     pasajeroDAO.agregarPasajero(pasajero)
-    print(pasaje)
     pasajeDAO.agregarPasaje(pasaje)
-    return jsonify(()), 200
+    return 200
 
 
 @app.route('/confirmarViajeUsuario', methods=['GET', 'POST'])
@@ -107,30 +88,29 @@ def confirmarViajeUsuario():
                     destino=request.values["idCiudadDestino"],
                     formaPago=request.values["formaPago"])
     pasajeDAO.agregarPasaje(pasaje)
-    return jsonify(()), 200
+    return 200
+
+
+# Pasajes
+
+@app.route('/pasajes', methods=['GET', 'POST'])
+def pasajes():
+    return render_template('pasajes.html')
 
 
 @app.route('/traerPasajes', methods=['GET', 'POST'])
 def traerPasajes():
-    print(request.values["dni"])
     r = pasajeDAO.traerPasajesXPasajero(request.values["dni"])
-    print(r)
     lstP = []
     for p in r:
-        lstP.append((p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago))
-    return jsonify((200, lstP))
+        lstP.append((p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago, None))
+    return jsonify(lstP), 200
 
 
 @app.route('/cancelarPasaje', methods=['GET', 'POST'])
 def cancelarPasaje():
     pasajeDAO.cancelarPasaje(request.values["codigo"])
-    print("hola")
-    return jsonify((200))
-
-
-@app.route('/pasajes', methods=['GET', 'POST'])
-def pasajes():
-    return render_template('pasajes.html')
+    return 200
 
 
 @app.route('/buscarPasajes', methods=['GET', 'POST'])
@@ -156,23 +136,27 @@ def buscarPasajes():
     print(r)
     lstP = []
     for p in r:
-        lstP.append((p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago))
+        lstP.append((p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago, None))
     return jsonify(lstP), 200
 
 
-@app.route('/seleccionarViaje', methods=['GET', 'POST'])
-def seleccionarViaje():
-    idCOrigen = request.values["idCiudadOrigen"]
-    idCDestino = request.values["idCiudadDestino"]
-    print("Origen: " + idCOrigen + " Destino: " + idCDestino)
-    if(idCOrigen != idCDestino):
-        dicPasaje = {}
-        dicPasaje["km"] = pasajeDAO.calcular(idCOrigen,idCDestino, "calcularDistancia")
-        dicPasaje["valor"] = pasajeDAO.calcular(idCOrigen,idCDestino, "calcularValorPasaje")
-        dicPasaje["millas"] = pasajeDAO.calcular(idCOrigen,idCDestino, "calcularMillas")
-        return jsonify(dicPasaje), 200
-    return jsonify("No se puede elegir el mismo destino que el origen"), 21
+# Consulta de pasaje
 
+@app.route('/consulta', methods=['GET', 'POST'])
+def consulta():
+    return render_template('consulta.html')
+
+
+@app.route('/traerPasaje', methods=['GET', 'POST'])
+def traerPasaje():
+    p = pasajeDAO.traerPasaje(request.values["codigo"])
+    print(p)
+    if p is not None:
+        p = (p.codigo, p.fecha, p.valor, p.pasajero, p.origen, p.destino, p.formaPago, p.cancelacion)
+    return jsonify(p), 200
+
+
+# Otros
 
 @app.route('/static/<path:path>')
 def sirveDirectorioSTATIC(path):
@@ -188,6 +172,23 @@ def sirveDirectorioSTATIC(path):
         arc = sPath[len(sPath) - 1]
     directorio = "static/" + directorio
     return send_from_directory(directorio, arc)
+
+
+@app.route('/traerCiudades', methods=['GET', 'POST'])
+def traerCiudades():
+    lista = ciudadDAO.traerCiudades()
+    lstRefJson = []
+    for i in lista:
+        if(len(lista) > 0):
+            refJson = {}
+            refJson["idCiudad"] = i.idCiudad
+            refJson["nombre"] = i.nombre
+            refJson["latitud"] = i.latitud
+            refJson["longitud"] = i.longitud
+            refJson["baja"] = i.baja
+
+            lstRefJson.append(refJson)
+    return jsonify(lstRefJson), 200
 
 
 app.run(debug=True)

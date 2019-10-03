@@ -7,48 +7,8 @@
     <link rel="stylesheet" href="static/css/estilos.css" />
     <link rel="shortcut icon" type="image/x-icon">
     <script src="static/js/jquery-3.3.1.js"></script>
-    <script src="static/js/menu.js"></script>
-    <script type="text/javascript">
-        
-        $(document).on('click', "#consulta-submit", function() {
-            if($("#codigo").val() == ""){
-                alert("Debe ingresar el codigo");
-            }
-            else{
-                $.ajax({
-                    url : "traerPasaje",
-                    type : "POST",
-                    data : {
-                        codigo : $("#codigo").val(),
-                    },
-                    success: function(response){
-                        if(response[1] == null){
-                            $("#pasaje").html("Pasaje no encontrado");
-                        }else{
-                            console.log(response[1]);
-                            var text =  "<h4>Codigo: "        + response[1][0] + "</h4>" +
-                                        "<h4>Fecha: "         + response[1][1] + "</h4>" +
-                                        "<h4>Valor: "         + response[1][2] + "</h4>" +
-                                        "<h4>DNI Pasajero: "  + response[1][3] + "</h4>" +
-                                        "<h4>Origen: "        + response[1][4] + "</h4>" +
-                                        "<h4>Destino: "       + response[1][5] + "</h4>" +
-                                        "<h4>Forma de Pago: " + response[1][6] + "</h4>"
-                            if(response[1][7] == null){
-                                text += "<button class='cancelar-submit' id='"+response[1][0]+"'>Cancelar</button>"
-                            }
-                            else{
-                                text += "<h4>El pasaje ha sido cancelado: </h4>"
-                            }
-                            $("#pasaje").html(text);
-                        }
-                    },
-                    error: function(response){
-                        alert(response.responseJSON.error);
-                    }
-                });
-            }
-        });
-    </script>
+    <script src="static/js/paraTodos.js"></script>
+    <script src="static/js/consulta.js"></script>
 </head>
 <body>
     <nav class="main-nav">
@@ -77,11 +37,7 @@
                     <button class="" id="consulta-submit">Buscar</button>
                 </div>
             </div>
-            <div class="secDestino">
-                <div class="container">
-                    <h3 class="main__title">Pasaje</h3>
-                    <div id="pasaje"></div>
-                </div>
+            <div class="secDestino" id="idPasajeContenido">
             </div>
         </div>
     </div>

@@ -7,93 +7,8 @@
     <link rel="stylesheet" href="static/css/estilos.css" />
     <link rel="shortcut icon" type="image/x-icon">
     <script src="static/js/jquery-3.3.1.js"></script>
-    <script src="static/js/menu.js"></script>
-    <script type="text/javascript">
-        
-        var dni = leerCookie("idUsuarioLogueado");
-        $(document).ready(function(){
-            console.log(dni)
-            traerPasajes(dni);
-
-            $.ajax({
-                url:'traerCiudades', 
-                type:'POST',
-                success: function(response){
-                    var strIdCiudad = "0"
-                    $("#idFiltroOrigen").append("<option class='opcOrigen' id=\"filtroOrigenNULL\"> Seleccionar </option>")
-                    $("#idFiltroDestino").append("<option class='opcDestino' id=\"filtroDestinoNULL\"> Seleccionar </option>")
-                    for(var i = 0; i < response[1].length; i++){
-                        strIdCiudad = String(response[1][i].idCiudad)
-                        $("#idFiltroOrigen").append("<option class='opcOrigen' id=\"filtroOrigen" + strIdCiudad + "\">" + response[1][i].nombre + "</option>")
-                        $("#idFiltroDestino").append("<option class='opcDestino' id=\"filtroDestino" + strIdCiudad + "\">" + response[1][i].nombre + "</option>")
-                        $("#filtroOrigen"+strIdCiudad).data("idCiudad", strIdCiudad)
-                        $("#filtroDestino"+strIdCiudad).data("idCiudad", strIdCiudad)
-                    }
-                },
-                error: function(response){
-                    console.log(response)
-                },
-
-            });
-
-        });
-
-        $(document).on('click', "#idFiltroBuscar", function() {
-            var PidCOrigen = document.getElementById('idFiltroOrigen');
-            var PidOrigenT = PidCOrigen[PidCOrigen.selectedIndex].id; 
-            var PidOrigen = $("#"+PidOrigenT).data("idCiudad");
-
-            var PidCDestino = document.getElementById('idFiltroDestino');
-            var PidDestinoT = PidCDestino[PidCDestino.selectedIndex].id; 
-            var PidDestino = $("#"+PidDestinoT).data("idCiudad");
-
-
-            if (PidOrigen == null){
-                PidOrigen = "Seleccionar"
-            }
-            if (PidDestino == null){
-                PidDestino = "Seleccionar"
-            }
-
-
-            console.log(PidOrigen)
-            console.log(PidDestino)
-            $.ajax({
-                url : "buscarPasajes",
-                type : "POST",
-                data : {
-                    dni : dni,
-                    origen : PidOrigen,
-                    destino : PidDestino,
-                    desde : $("#idFiltroDesde").val(),
-                    hasta : $("#idFiltroHasta").val(),
-                    codigo : $("#idFiltroCodigo").val()
-                },
-                success: function(response){
-                    console.log(response);
-                    var texthtml = ""
-                    if (response.length > 0){
-                        for(var i = 0; i < response.length; i++){
-                            texthtml = generarTicket(response[i], texthtml);
-                        }
-                    }else{
-                        texthtml = "<div class='secTicket'>"                        +
-                                        "<div class='container'>"                   +   
-                                            "<h3 class='main__title'>Pasaje</h3>"   +
-                                            "<div>"                                 +
-                                                "<h4> Pasaje no encontrado </h4>"   +
-                                            "</div>"                                +
-                                        "</div>"                                    +
-                                    "</div>";
-                    }
-                    $("#pasajes").html(texthtml);
-                },
-                error: function(response){
-                    alert(response.responseJSON.error);
-                }
-            });
-        });
-    </script>
+    <script src="static/js/paraTodos.js"></script>
+    <script src="static/js/pasajes.js"></script>
 </head>
 <body>
     <nav class="main-nav">
@@ -101,8 +16,8 @@
             <img src="http://www.apacid.com.ar/imagenes/iconos/Menu.png" class="icon-menu" id="btnMenu"></img>
             <ul class="menu menu_nav" id="menu_nav">
                 <li class="menu__item" name="/"><a class="menu__link">Inicio</a></li>
-                <li class="menu__item menu__link--select" name="/pasajes"><a class="menu__link">Consultar Pasajes</a></li>
-                <li class="menu__item" name="/"><a class="menu__link">Cambiar informacion</a></li>
+                <li class="menu__item menu__link--select" name="/pasajes"><a class="menu__link">Consultar Pasaje</a></li>
+                <li class="menu__item" name="/"><a class="menu__link">Contacto</a></li>
             </ul>
             <div class="logo-container">
                 <label class="logo">El mas rapido del oeste</label>
@@ -123,9 +38,9 @@
         <div class="fondo">
             <div class="secOrigen">
                 Origen:
-                <select id="idFiltroOrigen" onclick=""></select>
+                <select id="idSelFiltroO" onclick=""></select>
                 Destino:
-                <select id="idFiltroDestino" onclick=""></select>
+                <select id="idSelFiltroD" onclick=""></select>
                 Desde:
                 <input type="date" id="idFiltroDesde" min="2017-09-24" max="2020-12-31">
                 Hasta:
