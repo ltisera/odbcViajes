@@ -275,8 +275,7 @@ function viajeUsuario(idOrigen, idDestino){
             dni: leerCookie("idUsuarioLogueado")
         },
         success: function(response){
-            alert("Codigo de pasaje: ");
-            window.location.href = ('http://localhost:5000')
+            viajeCreado(response)
         },
         error: function(response){
             console.log("Error en algo");
@@ -310,8 +309,7 @@ function viajeCasual(idOrigen, idDestino){
                 direccion: $("#direccionCV").val(),
             },
             success: function(response){
-                alert("Codigo de pasaje: ");
-                window.location.href = ('http://localhost:5000')
+                viajeCreado(response)
             },
             error: function(response){
                 console.log("Error en algo");
@@ -321,4 +319,9 @@ function viajeCasual(idOrigen, idDestino){
     else{
         alert("Complete todos los campos");
     }
+}
+
+function viajeCreado(response){
+    alert("Codigo de pasaje: " + response);
+    window.location.href = ('http://localhost:5000')
 }

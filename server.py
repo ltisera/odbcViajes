@@ -36,7 +36,7 @@ def registrar():
                         request.values["direccion"],
                         request.values["nacionalidad"])
     pasajeroDAO.agregarPasajero(pasajero)
-    return 200
+    return jsonify(""), 200
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -76,8 +76,8 @@ def confirmarViajeCasual():
                     destino=request.values["idCiudadDestino"],
                     formaPago="dinero")
     pasajeroDAO.agregarPasajero(pasajero)
-    pasajeDAO.agregarPasaje(pasaje)
-    return 200
+    codigo = pasajeDAO.agregarPasaje(pasaje)
+    return jsonify(codigo), 200
 
 
 @app.route('/confirmarViajeUsuario', methods=['GET', 'POST'])
@@ -87,8 +87,8 @@ def confirmarViajeUsuario():
                     origen=request.values["idCiudadOrigen"],
                     destino=request.values["idCiudadDestino"],
                     formaPago=request.values["formaPago"])
-    pasajeDAO.agregarPasaje(pasaje)
-    return 200
+    codigo = pasajeDAO.agregarPasaje(pasaje)
+    return jsonify(codigo), 200
 
 
 # Pasajes
@@ -110,7 +110,7 @@ def traerPasajes():
 @app.route('/cancelarPasaje', methods=['GET', 'POST'])
 def cancelarPasaje():
     pasajeDAO.cancelarPasaje(request.values["codigo"])
-    return 200
+    return jsonify(""), 200
 
 
 @app.route('/buscarPasajes', methods=['GET', 'POST'])

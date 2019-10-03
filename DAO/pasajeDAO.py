@@ -8,12 +8,13 @@ class PasajeDAO(ConexionBD):
         pass
 
     def agregarPasaje(self, pasaje):
-        valido = False
+        codigo = None
         try:
             self.crearConexion()
             self._micur.callproc("altaPasaje", pasaje.datos())
             self._bd.commit()
-            valido = True
+            for res in self._micur.stored_results():
+                codigo = res.fetchone()
 
         except mysql.connector.errors.IntegrityError as e:
             print(e)
@@ -21,7 +22,7 @@ class PasajeDAO(ConexionBD):
         finally:
             self.cerrarConexion()
 
-        return valido
+        return codigo
 
     def cancelarPasaje(self, codigo):
         valido = False

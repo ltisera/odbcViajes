@@ -67,19 +67,23 @@ BEGIN
 END//
 
 DROP PROCEDURE IF EXISTS altaPasaje//
-CREATE PROCEDURE altaPasaje (out codigo varchar(10), in fecha date, out valor float, in pasajero int, in origen int, in destino int, in formaPago enum('dinero','millas'))
+CREATE PROCEDURE altaPasaje (in codigo varchar(10), in fecha date, out valor float, in pasajero int, in origen int, in destino int, in formaPago enum('dinero','millas'))
 BEGIN
 	declare millasDePasajero float;
+	set codigo = null;
 	call calcularValorPasaje(origen, destino, valor);
     call calcularCodigoPasaje(codigo);
 	IF formaPago = "millas" then
 		set millasDePasajero = (select MAX(configMillas.precioMilla) from configMillas) * (select pasajero.millas FROM pasajero where pasajero.DNI = pasajero); 
 		if millasDePasajero > valor then
 			call agregarPasaje(codigo, fecha, valor, pasajero, origen, destino, formaPago);
-		end if;
+		else
+			set codigo = "Err:Millas";
+        end if;
 	ELSE
 		call agregarPasaje(codigo, fecha, valor, pasajero, origen, destino, formaPago);
 	end IF;
+    select codigo;
 END//
 
 
@@ -110,25 +114,36 @@ END//
 DROP PROCEDURE IF EXISTS consultaPasaje//
 CREATE PROCEDURE consultaPasaje(in codigo varchar(10))
 BEGIN
-	SELECT * FROM pasaje where pasaje.codigo = codigo;
+	SELECT P.codigo, P.fecha, P.valor, P.pasajero, cOrigen.nombre, cDestino.nombre, P.formaPago, P.cancelacion, P.millas 
+    FROM pasaje as P 
+    inner join Ciudad as cOrigen on cOrigen.idCiudad = P.origen 
+    inner join Ciudad as cDestino on cDestino.idCiudad = P.destino 
+    where P.codigo = codigo;
 END//
 
 DROP PROCEDURE IF EXISTS consultaPasajeXPasajero//
 CREATE PROCEDURE consultaPasajeXPasajero(in DNI int)
 BEGIN
-	SELECT * FROM pasaje where pasaje.pasajero = DNI and pasaje.cancelacion is null;
+	SELECT P.codigo, P.fecha, P.valor, P.pasajero, cOrigen.nombre, cDestino.nombre, P.formaPago, P.cancelacion, P.millas 
+    FROM pasaje as P 
+    inner join Ciudad as cOrigen on cOrigen.idCiudad = P.origen 
+    inner join Ciudad as cDestino on cDestino.idCiudad = P.destino 
+	where P.pasajero = DNI and P.cancelacion is null;
 END//
 
 DROP PROCEDURE IF EXISTS consultaPasajeXFiltro//
 CREATE PROCEDURE consultaPasajeXFiltro(in DNI int, in codigo varchar(10), in origen int, in destino int, in desde date, in hasta date)
 BEGIN
-	SELECT * FROM pasaje where pasaje.pasajero = DNI and pasaje.cancelacion is null
-    and pasaje.codigo = IFNULL(codigo, pasaje.codigo)
-    and pasaje.origen = IFNULL(origen, pasaje.origen)
-    and pasaje.destino = IFNULL(destino, pasaje.destino)
-    and pasaje.fecha >= IFNULL(desde, pasaje.fecha)
-    and pasaje.fecha <= IFNULL(hasta, pasaje.fecha)
-    ;
+	SELECT P.codigo, P.fecha, P.valor, P.pasajero, cOrigen.nombre, cDestino.nombre, P.formaPago, P.cancelacion, P.millas 
+    FROM pasaje as P 
+    inner join Ciudad as cOrigen on cOrigen.idCiudad = P.origen 
+    inner join Ciudad as cDestino on cDestino.idCiudad = P.destino
+	where P.pasajero = DNI and P.cancelacion is null
+    and P.codigo = IFNULL(codigo, P.codigo)
+    and P.origen = IFNULL(origen, P.origen)
+    and P.destino = IFNULL(destino, P.destino)
+    and P.fecha >= IFNULL(desde, P.fecha)
+    and P.fecha <= IFNULL(hasta, P.fecha);
 END//
 
 DROP PROCEDURE IF EXISTS altaCiudad//
