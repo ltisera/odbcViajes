@@ -43,10 +43,14 @@ h1,h3,h4,h5,h6{
 	display: flex;
 	flex-wrap: wrap;
 	justify-content:center;
-	
-	
-	
 }
+
+.clsLstPasajes{
+	width:90%;
+  	height:440px;
+  	overflow-y:scroll;
+}
+
 .secTicket{
 	background: rgba(237, 151, 31,0.7);
 	color: white;

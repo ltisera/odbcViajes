@@ -1,7 +1,12 @@
 
 $(document).ready(function(){
-    traerCiudadesConVacio("idSelFiltroO", "idSelFiltroD", "filtroOrigen", "filtroDestino");
-    traerPasajes(leerCookie("idUsuarioLogueado"));
+    if(leerCookie("idUsuarioLogueado") != "null"){
+        traerCiudadesConVacio("idSelFiltroO", "idSelFiltroD", "filtroOrigen", "filtroDestino");
+        traerPasajes(leerCookie("idUsuarioLogueado"));
+    }
+    else{
+        window.location.href = ('http://localhost:5000/consulta')
+    }
 });
 
 $(document).on('click', "#idFiltroBuscar", function() {

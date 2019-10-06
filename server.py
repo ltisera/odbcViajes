@@ -156,6 +156,35 @@ def traerPasaje():
     return jsonify(p), 200
 
 
+# Cambiar Informacion
+
+@app.route('/cambiarInformacion', methods=['GET', 'POST'])
+def cambiarInformacion():
+    return render_template('cambiarInformacion.html')
+
+
+@app.route('/traerPasajero', methods=['GET', 'POST'])
+def traerPasajero():
+    p = pasajeroDAO.traerPasajero(request.values["dni"])
+    pasajero = (p.nombre, p.apellido, p.nacionalidad, p.telefono, p.email, p.direccion)
+    return jsonify(pasajero), 200
+
+
+@app.route('/updateUsuario', methods=['GET', 'POST'])
+def updateUsuario():
+    pasajero = Pasajero(request.values["dni"],
+                        request.values["nombre"],
+                        request.values["apellido"],
+                        request.values["telefono"],
+                        request.values["email"],
+                        None,
+                        request.values["password"],
+                        request.values["direccion"],
+                        request.values["nacionalidad"])
+    pasajeroDAO.updatePasajero(pasajero)
+    return jsonify(""), 200
+
+
 # Otros
 
 @app.route('/static/<path:path>')

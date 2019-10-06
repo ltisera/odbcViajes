@@ -7,6 +7,13 @@ BEGIN
     values(dni, nombre, apellido, telefono, email, millas, clave, direccion, nacionalidad);
 END//
 
+DROP PROCEDURE IF EXISTS updatePasajero//
+CREATE PROCEDURE updatePasajero (in dni int, in nombre varchar(45), in apellido varchar(45), in telefono varchar(45), in email varchar(45), in millas float, in clave varchar(45), in direccion varchar(45), in nacionalidad varchar(45))
+BEGIN
+	update pasajero as p set p.nombre = nombre, p.apellido = apellido, p.telefono = telefono, p.email = email, p.clave = clave, p.direccion = p.direccion, p.nacionalidad = nacionalidad
+    where p.dni = dni;
+END//
+
 DROP PROCEDURE IF EXISTS consultaPasajero//
 CREATE PROCEDURE consultaPasajero(in DNI int)
 BEGIN

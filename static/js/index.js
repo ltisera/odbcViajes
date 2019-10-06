@@ -12,6 +12,8 @@ $(document).ready(function(){
         $("#ingreseDatos").removeClass("secDestino");
         $("#ingreseDatos").toggleClass("ocultar");
         document.getElementById("linkConsultar").setAttribute("name","/pasajes");
+        document.getElementById("linkContacto").setAttribute("name","/cambiarInformacion");
+        $("#linkContacto").html("<a class='menu__link'>Cambiar Informacion</a>");
     }
     else{
         $("#metodoPago").removeClass("secDestino");
@@ -79,6 +81,8 @@ function iniciarSesion(){
                     $("#ingreseDatos").removeClass("secDestino");
                     $("#ingreseDatos").toggleClass("ocultar");
                     document.getElementById("linkConsultar").setAttribute("name","/pasajes");
+                    document.getElementById("linkContacto").setAttribute("name","/cambiarInformacion");
+                    $("#linkContacto").html("<a class='menu__link'>Cambiar Informacion</a>");
                     $("#menu_nav").removeClass("mostrar_nav");
                     $("#menu_login").toggleClass("mostrar_login");
                     $("#metodoPago").removeClass("ocultar");

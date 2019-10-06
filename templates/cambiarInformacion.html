@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>GRC</title>
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="static/css/estilos.css" />
+    <link rel="shortcut icon" type="image/x-icon">
+    <script src="static/js/jquery-3.3.1.js"></script>
+    <script src="static/js/paraTodos.js"></script>
+    <script src="static/js/cambiarInformacion.js"></script>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="container container--flex">
+            <img src="http://www.apacid.com.ar/imagenes/iconos/Menu.png" class="icon-menu" id="btnMenu"></img>
+            <ul class="menu menu_nav" id="menu_nav">
+                <li class="menu__item" name="/"><a class="menu__link">Inicio</a></li>
+                <li class="menu__item" name="/pasajes"><a class="menu__link">Consultar Pasaje</a></li>
+                <li class="menu__item menu__link--select" name="/cambiarInformacion"><a class="menu__link">Cambiar Informacion</a></li>
+            </ul>
+            <div class="logo-container">
+                <label class="logo">El mas rapido del oeste</label>
+            </div>
+            <img src="http://www.apacid.com.ar/imagenes/iconos/Menu.png" class="icon-menu" id="btnMenu2"></img>
+            <div class="menu menu_login" id="menu_login">
+                <div class="login__content">
+                    <label class='login__link--select login__link' id='login'>Salir</label>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="banner">
+        <img src="https://incalake.com/galeria/admin/short-slider/BUSES/TITICACA-BOLIVIA/titicaca-bolivia-bus.png" alt="" class="banner__img">
+        
+        <div class="fondo">
+            <div class="secOrigen">
+                <div class="container">
+                    <h3 class="main__title">Cambie sus datos</h3>
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>Nombre</p> 
+                        </div>
+                        <div class="D2">
+                            <input id="nombreUP" type="text">
+                        </div>
+                    </div>
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>Apellido</p> 
+                        </div>
+                        <div class="D2">
+                            <input id="apellidoUP" type="text">
+                        </div>
+                    </div>
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>Telefono</p> 
+                        </div>
+                        <div class="D2">
+                            <input id="telefonoUP"  type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>Email</p> 
+                        </div>
+                        <div class="D2">
+                            <input id="emailUP" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>Direccion</p> 
+                        </div>
+                        <div class="D2">
+                            <input id="direccionUP" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>Nacionalidad</p> 
+                        </div>
+                        <div class="D2">
+                            <input id="nacionalidadUP" type="text">
+                        </div>
+                    </div>
+
+                    <div class="DP">
+                        <div class="filaCentrada D1">
+                            <p>Nueva Password</p> 
+                        </div>
+                        <div class="D2">
+                            <input id="passwordUP" type="password">
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="secNueva" id="divConfirmarUpdate">
+                <div class="container" style="text-align: center;">
+                    <h3 style="margin-top: 50%" class="group__confirmar non-selectable">Confirmar</h3>
+                </div>
+            </div> 
+        </div>
+    </div>
+
+
+    <footer class="main-footer">
+        <div class="container container--flex">
+            <div class="column column--33">
+                <h2 class="column__title">¿Por que GRC?</h2>
+                <p class="column__txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus nam eaque corporis similique doloremque quidem voluptates voluptatum, pariatur, cum labore laudantium necessitatibus modi optio, molestiae aspernatur consequuntur unde tenetur rem!</p>
+            </div>
+            <div class="column column--33">
+                <h2 class="column__title">Blablabla</h2>
+                <p class="column__txt">Pos algo</p>
+                <p class="column__txt">Algo</p>
+                <p class="column__txt">Mas algo</p>
+                <p class="column__txt">Yep, algo</p>
+            </div>
+            <div class="column column--33">
+                <h2 class="column__title">Y MAS!!</h2>
+                <p class="column__txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi maiores, ab, sapiente labore laboriosam iure cum minima consectetur cupiditate velit aut hic voluptas, nisi! Quidem obcaecati voluptate totam, maiores mollitia.</p>
+            </div>
+            <p class="copy">2019 Derechos reservados</p>
+        </div>
+    </footer>
+</body>
+</html>

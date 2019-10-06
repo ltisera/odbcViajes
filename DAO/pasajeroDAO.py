@@ -43,6 +43,29 @@ class PasajeroDAO(ConexionBD):
 
         return valido
 
+    def updatePasajero(self, pasajero):
+        valido = False
+        try:
+            self.crearConexion()
+            mailValido = False
+            for i in pasajero.email:
+                if(i == "@"):
+                    mailValido = True
+            if(mailValido is True):
+                self._micur.callproc("updatePasajero", pasajero.datos())
+                self._bd.commit()
+                valido = True
+            else:
+                valido = "No lo se rick, parece falso"
+
+        except mysql.connector.errors.IntegrityError as e:
+            valido = "Usuario Usuario Duplicado" + str(e)
+
+        finally:
+            self.cerrarConexion()
+
+        return valido
+
     def traerPasajero(self, DNI):
         pTraido = None
         try:
