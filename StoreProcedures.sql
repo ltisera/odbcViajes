@@ -113,9 +113,51 @@ END//
 DROP PROCEDURE IF EXISTS cancelarPasaje//
 CREATE PROCEDURE cancelarPasaje(in codigo varchar(10))
 BEGIN
-	insert into cancelacion (fecha, montoReintegro)
-	values(NOW(), 1);
-	update pasaje set pasaje.cancelacion = LAST_INSERT_ID() where pasaje.codigo = codigo;
+	declare dniPasajero int; 
+	declare fechaPasaje datetime;
+	declare yaFueCancelado int;
+    declare reintegro float;
+    declare monto float;
+    declare millasPasaje float;
+    
+	select p.pasajero, p.fecha, p.cancelacion, p.valor, p.millas 
+    into dniPasajero, fechaPasaje, yaFueCancelado, monto , millasPasaje
+    from pasaje as p where p.codigo = codigo;
+    
+    if fechaPasaje is not null and fechaPasaje > NOW() then
+		if yaFueCancelado is null then
+			call calcularReintegro(fechaPasaje, monto, reintegro);
+			insert into cancelacion (fecha, montoReintegro) values(NOW(), reintegro);
+			update pasaje set pasaje.cancelacion = LAST_INSERT_ID() where pasaje.codigo = codigo;
+            if millasPasaje is not null and (select clave from pasajero where pasajero.dni = dniPasajero) is not null then
+				update pasajero as p set p.millas = p.millas - millasPasaje;
+			end if;
+            select reintegro;
+		else
+			select "ERR:El pasaje ya fue cancelado";
+        end if;
+	else
+		select "ERR:La fecha del pasaje ya ha pasado";
+	end if;
+END//
+
+DROP PROCEDURE IF EXISTS calcularReintegro//
+CREATE PROCEDURE calcularReintegro(in fecha datetime, in monto float, out reintegro float)
+BEGIN
+	declare difEnDias float;
+    set difEnDias = TIMESTAMPDIFF(DAY,now(),fecha);
+    if  difEnDias <  1 then
+		set reintegro =  0;
+    elseif difEnDias <=  15 then
+		set reintegro =  monto * ((3 * TIMESTAMPDIFF(DAY,now(),fecha)) / 100);
+    elseif difEnDias <=  30 then
+		set reintegro =  monto * 0.5;
+	elseif difEnDias <=  60 then
+		set reintegro =  monto * 0.7;
+	else
+		set reintegro =  monto * 0.9;
+    end if;
+    select reintegro;
 END//
 
 DROP PROCEDURE IF EXISTS consultaPasaje//

@@ -220,35 +220,39 @@ function seleccionarViaje(){
 
     var idDestinoT = getIdDeOpcion("lstDestino");
     var idDestino = $("#"+idDestinoT).data("idCiudad");
+    if(idOrigen != idDestino){
+        $.ajax({
+            url: 'seleccionarViaje',
+            type: 'POST',
+            data:{
+                idCiudadOrigen: idOrigen,
+                idCiudadDestino: idDestino
+            },
+            success: function(response){
+                $("#selecDestinos").toggleClass("fondo");
+                $("#selecDestinos").toggleClass("ocultar");
+                $("#confirmViaje").toggleClass("ocultar");
+                $("#confirmViaje").toggleClass("fondo");
 
-    $.ajax({
-        url: 'seleccionarViaje',
-        type: 'POST',
-        data:{
-            idCiudadOrigen: idOrigen,
-            idCiudadDestino: idDestino
-        },
-        success: function(response){
-            $("#selecDestinos").toggleClass("fondo");
-            $("#selecDestinos").toggleClass("ocultar");
-            $("#confirmViaje").toggleClass("ocultar");
-            $("#confirmViaje").toggleClass("fondo");
-
-            texthtml =
-            "<h3 class='main__title'>Pasaje</h3>"         +
-            "<div class='secDatosTicket'>"                   +
-                "<div class='secTabla1'><p class='pSecTextTick'>Valor: "   + response.valor + "</p></div>" +
-                "<div class='secTabla2'><p class='pSecTextTick'>Origen: "  + $("#"+idOrigenT).html() + "</p></div>" +
-                "<div class='secTabla1'><p class='pSecTextTick'>Destino: " + $("#"+idDestinoT).html()  + "</p></div>" +
-                "<div class='secTabla2'><p class='pSecTextTick'>Millas Obtenidas: " + response.millas + "</p></div>" +
-            "</div>";
-            $("#confirmDatosTicket").html(texthtml);
-            console.log(response)
-        },
-        error: function(response){
-            console.log("ERR")
-        },
-    });
+                texthtml =
+                "<h3 class='main__title'>Pasaje</h3>"         +
+                "<div class='secDatosTicket'>"                   +
+                    "<div class='secTabla1'><p class='pSecTextTick'>Valor: "   + response.valor + "</p></div>" +
+                    "<div class='secTabla2'><p class='pSecTextTick'>Origen: "  + $("#"+idOrigenT).html() + "</p></div>" +
+                    "<div class='secTabla1'><p class='pSecTextTick'>Destino: " + $("#"+idDestinoT).html()  + "</p></div>" +
+                    "<div class='secTabla2'><p class='pSecTextTick'>Millas Obtenidas: " + response.millas + "</p></div>" +
+                "</div>";
+                $("#confirmDatosTicket").html(texthtml);
+                console.log(response)
+            },
+            error: function(response){
+                console.log("ERR")
+            },
+        });
+    }else{
+        alert("La ciudad de destino y origen no pueden ser la misma")
+    }
+    
 }
 
 

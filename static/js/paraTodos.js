@@ -56,15 +56,22 @@ function generarTicket(response, texthtml){
 
 $(document).on('click', ".cancelar-submit", function() {
     if(window.confirm("Esta seguro que quiere cancelar su pasaje?")){
+        var codPasaje = $(this).attr("id")
         $.ajax({
             url : "cancelarPasaje",
             type : "POST",
             data : {
-                codigo : $(this).attr("id"),
+                codigo : codPasaje,
                 fecha: Date()
             },
             success: function(response){
-                window.location.reload(false);
+                if(response[0] === "string"){
+                    alert(response[0].substring(4));
+                }
+                else{
+                    alert("El pasaje " + codPasaje + " ha sido cancelado, su reintegro es de: " + response[0]);
+                    window.location.reload(false);
+                }
             },
             error: function(response){
                 alert(response.responseJSON.error);

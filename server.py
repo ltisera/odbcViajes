@@ -50,13 +50,11 @@ def seleccionarViaje():
     idCOrigen = request.values["idCiudadOrigen"]
     idCDestino = request.values["idCiudadDestino"]
     print("Origen: " + idCOrigen + " Destino: " + idCDestino)
-    if(idCOrigen != idCDestino):
-        dicPasaje = {}
-        dicPasaje["km"] = pasajeDAO.calcular(idCOrigen,idCDestino, "calcularDistancia")
-        dicPasaje["valor"] = pasajeDAO.calcular(idCOrigen,idCDestino, "calcularValorPasaje")
-        dicPasaje["millas"] = pasajeDAO.calcular(idCOrigen,idCDestino, "calcularMillas")
-        return jsonify(dicPasaje), 200
-    return jsonify("No se puede elegir el mismo destino que el origen"), 21
+    dicPasaje = {}
+    dicPasaje["km"] = pasajeDAO.calcular(idCOrigen,idCDestino, "calcularDistancia")
+    dicPasaje["valor"] = pasajeDAO.calcular(idCOrigen,idCDestino, "calcularValorPasaje")
+    dicPasaje["millas"] = pasajeDAO.calcular(idCOrigen,idCDestino, "calcularMillas")
+    return jsonify(dicPasaje), 200
 
 
 @app.route('/confirmarViajeCasual', methods=['GET', 'POST'])
@@ -109,8 +107,8 @@ def traerPasajes():
 
 @app.route('/cancelarPasaje', methods=['GET', 'POST'])
 def cancelarPasaje():
-    pasajeDAO.cancelarPasaje(request.values["codigo"])
-    return jsonify(""), 200
+    reintegro = pasajeDAO.cancelarPasaje(request.values["codigo"])
+    return jsonify(reintegro), 200
 
 
 @app.route('/buscarPasajes', methods=['GET', 'POST'])
