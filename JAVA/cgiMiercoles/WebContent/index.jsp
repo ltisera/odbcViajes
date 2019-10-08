@@ -13,9 +13,11 @@ function llama(){
 	$.ajax({
 		url:"IniciarSesion",
 		type:"POST",
-		data: {"usuario":"lucas", "pass":"1234"},
+		data: {
+			"usuario": $("#idInpUser").val(), 
+			"pass":$("#idInpPass").val()},
 		success: function(response){console.log("Lo que se te cante " + response.logueado)},
-		error: function(response){console.log("ERROR" + response)}
+		error: function(response){alert("Usuario y/o contraseña incorrectos")}
 	});
 }
 </script>
@@ -24,11 +26,9 @@ function llama(){
 </head>
 <body>
 <div>
-	Ingrese Usuario: <input>
-	<br>
-	Ingrese Password: <input>
-	<br>
-	<input type="button" value="Click me" onclick="llama()">
+	<p>Ingrese Usuario: <input id="idInpUser"></input> </p>
+	<p>Ingrese Password: <input id="idInpPass" type="password"></input> </p>
+	<p><input type="button" value="Click me" onclick="llama()"></input> </p>
 </div>
 
 </body>

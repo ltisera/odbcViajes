@@ -47,7 +47,7 @@ public class ControladorIniciarSesion extends HttpServlet {
 		String pass =request.getParameter("pass");
 	
 		AdminDAO adao = new AdminDAO(); 
-		boolean u = adao.loginAdmin("lucas", "1234");
+		boolean u = adao.loginAdmin(user, pass);
 		System.out.println("Boolean: " + u);
 		response.setContentType("application/json");
 		String salidaJson="{";
