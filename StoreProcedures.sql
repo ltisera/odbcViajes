@@ -1,5 +1,15 @@
 use odbcViajes;
 delimiter //
+DROP PROCEDURE IF EXISTS configurarMillas//
+CREATE PROCEDURE configurarMillas(in precio float, in kilometro float)
+BEGIN
+	set SQL_SAFE_UPDATES = 0;
+	update configmillas set configmillas.precioMilla = precio;
+	update configmillas set configmillas.millaXKilometro = kilometro;
+	
+    set SQL_SAFE_UPDATES = 1;
+END//
+
 DROP PROCEDURE IF EXISTS altaPasajero//
 CREATE PROCEDURE altaPasajero (in dni int, in nombre varchar(45), in apellido varchar(45), in telefono varchar(45), in email varchar(45), in millas float, in clave varchar(45), in direccion varchar(45), in nacionalidad varchar(45))
 BEGIN
