@@ -34,4 +34,21 @@ public class AdminDAO {
 		return respuesta;
 		
 	}
+	
+	public boolean configMillas(float valor, float km){
+		boolean respuesta = false;
+		try {
+			Statement miStatement;
+			miStatement = (Statement) connect.createStatement();
+			String miQuery = "call configurarMillas(\""+ valor +"\",\""+ km +"\")";
+			System.out.println("Query en ejecucion: " + miQuery);
+			miStatement.executeQuery(miQuery);
+			respuesta = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return respuesta;
+		
+	}
 }

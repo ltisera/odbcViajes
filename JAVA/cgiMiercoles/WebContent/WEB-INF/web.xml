@@ -13,4 +13,13 @@
     <servlet-name>ControladorIniciarSesion</servlet-name>
     <url-pattern>/IniciarSesion</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ControladorConfigMillas</servlet-name>
+    <servlet-class>controladores.ControladorConfigMillas</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorConfigMillas</servlet-name>
+    <url-pattern>/configMillas</url-pattern>
+  </servlet-mapping>
 </web-app>
