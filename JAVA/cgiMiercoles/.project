@@ -30,9 +30,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>WebContent/js/jquery-3.4.1.min.js</name>
+			<name>WebContent/WEB-INF/lib/mysql-connector-java-5.1.48-bin.jar</name>
 			<type>1</type>
-			<location>D:/DropBox/Dropbox/FAcultad/Sistemas Distribuidos/TPCGI1/jquery/jquery-3.4.1.min.js</location>
+			<locationURI>PARENT-1-PROJECT_LOC/mysql-connector-java-5.1.48-bin.jar</locationURI>
+		</link>
+		<link>
+			<name>WebContent/WEB-INF/lib/odbc.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/odbc.jar</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

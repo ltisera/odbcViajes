@@ -47,20 +47,23 @@ public class ControladorIniciarSesion extends HttpServlet {
 		String pass =request.getParameter("pass");
 	
 		AdminDAO adao = new AdminDAO(); 
-		System.out.println(adao.loginAdmin("lucas", "1234"));
 		boolean u = adao.loginAdmin("lucas", "1234");
+		System.out.println("Boolean: " + u);
 		response.setContentType("application/json");
 		String salidaJson="{";
 		
 		if(u==true) {
-			
+
+			System.out.println("u == true");
 			PrintWriter salida = response.getWriter();
-			salidaJson = salidaJson + u + "}";
+			salidaJson += "\"logueado\":" + "\"" + u + "\"" + "}";
 			salida.println(salidaJson);
 			
 			response.setStatus(200);//Usuario y contraseña correctos
 		}
 		else {
+
+			System.out.println("Error");
 			response.setStatus(500);//Usuario y/o contraseña incorrectos
 		}
 	}

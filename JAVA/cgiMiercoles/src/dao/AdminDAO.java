@@ -15,8 +15,8 @@ public class AdminDAO {
 	
 	public boolean loginAdmin(String ussr, String pass){
 		boolean respuesta = false;
-		Statement miStatement;
 		try {
+			Statement miStatement;
 			miStatement = (Statement) connect.createStatement();
 			ResultSet miResultset;
 			String miQuery = "call loginAdmin(\""+ ussr +"\",\""+ pass +"\")";

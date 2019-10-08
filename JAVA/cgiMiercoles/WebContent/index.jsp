@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,7 +14,7 @@ function llama(){
 		url:"IniciarSesion",
 		type:"POST",
 		data: {"usuario":"lucas", "pass":"1234"},
-		success: function(response){console.log("Lo que se te cante" + response)},
+		success: function(response){console.log("Lo que se te cante " + response.logueado)},
 		error: function(response){console.log("ERROR" + response)}
 	});
 }
