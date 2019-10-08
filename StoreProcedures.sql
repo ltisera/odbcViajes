@@ -232,6 +232,18 @@ BEGIN
 	end if;
 END//
 
+DROP PROCEDURE IF EXISTS loginAdmin//
+CREATE PROCEDURE loginAdmin(in usuario varchar(45), in clave varchar(45))
+BEGIN
+	DECLARE id int;
+    SET id = (SELECT a.idAdmin from Admin as a where a.usuario = usuario and a.clave = clave);
+    IF registro IS NOT NULL THEN 
+		SELECT TRUE;
+    ELSE
+		SELECT FALSE;
+	end if;
+END//
+
 DROP PROCEDURE IF EXISTS matarTodo//
 create procedure matarTodo()
 begin
