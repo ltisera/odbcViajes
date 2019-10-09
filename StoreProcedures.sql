@@ -230,6 +230,12 @@ BEGIN
 	SELECT * FROM ciudad where ciudad.baja = False;
 END//
 
+DROP PROCEDURE IF EXISTS consultaCiudadesConBaja//
+CREATE PROCEDURE consultaCiudades()
+BEGIN
+	SELECT * FROM ciudad where ciudad.baja = True;
+END//
+
 DROP PROCEDURE IF EXISTS loginPasajero//
 CREATE PROCEDURE loginPasajero(in DNI int, in clave varchar(45))
 BEGIN

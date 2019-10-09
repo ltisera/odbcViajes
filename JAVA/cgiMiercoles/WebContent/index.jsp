@@ -68,7 +68,7 @@ function configMillas(){
 
 function altaCiudad(){
 	$.ajax({
-		url:"configMillas",
+		url:"altaCiudad",
 		type:"POST",
 		data: {
 			"nombre": $("#idInpAltaNombre").val(), 
