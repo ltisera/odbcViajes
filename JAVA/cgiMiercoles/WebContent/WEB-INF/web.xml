@@ -22,4 +22,13 @@
     <servlet-name>ControladorConfigMillas</servlet-name>
     <url-pattern>/configMillas</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ControladorTraerCiudades</servlet-name>
+    <servlet-class>controladores.ControladorTraerCiudades</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorTraerCiudades</servlet-name>
+    <url-pattern>/traerCiudades</url-pattern>
+  </servlet-mapping>
 </web-app>

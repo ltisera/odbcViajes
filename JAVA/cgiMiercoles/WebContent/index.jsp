@@ -43,6 +43,7 @@ function login(){
 		success: function(response){
 			console.log("Lo que se te cante " + response.logueado);
 			hideAll();
+			traerCiudades();
 			$("#divOpc").show();
 		},
 		error: function(response){alert("Usuario y/o contraseña incorrectos")}
@@ -79,7 +80,7 @@ function altaCiudad(){
 			$("#idInpAltaLong").val("");
 			alert("Ciudad dada de alta con exito");
 		},
-		error: function(response){alert("Error")}
+		error: function(response){alert("Error");}
 	});
 }
 
@@ -88,11 +89,11 @@ function bajaCiudad(){
 		url:"configMillas",
 		type:"POST",
 		data: {
-			"id": $("#").val()
+			"id": $("#").val()},
 		success: function(response){
 			alert("Ciudad dada de baja con exito");
 		},
-		error: function(response){alert("Error")}
+		error: function(response){alert("Error");}
 	});
 }
 	
@@ -104,12 +105,12 @@ function traerCiudades(){
             var strIdCiudad = "0"
             $("#idSelectBaja").append("<option id='idOpcBajaNull'> Seleccionar </option>")
 			for(var i = 0; i < response.length; i++){
-                strIdCiudad = String(response[i].idCiudad)
-                $("#" + idSecO).append("<option class='idOpcBaja' id='" + strIdCiudad + "'>" + response[i].nombre + "</option>")
+                strIdCiudad = String(response[i].id);
+                $("#idSelectBaja").append("<option class='idOpcBaja' id='" + strIdCiudad + "'>" + response[i].nombre + "</option>")
             }
         },
         error: function(response){
-            console.log(response)
+            console.log("ERR Traer Ciudades " + response);
         },
 
     });
@@ -117,14 +118,14 @@ function traerCiudades(){
 
 function traerCiudadesConBaja(){
     $.ajax({
-       url:'traerCiudades', 
+       url:'traerCiudadesConBaja', 
        type:'POST',
        success: function(response){
            var strIdCiudad = "0"
            $("#idSelectAlta").append("<option id='idOpcAltaNull'> Seleccionar </option>")
 			for(var i = 0; i < response.length; i++){
                strIdCiudad = String(response[i].idCiudad)
-               $("#" + idSecO).append("<option class='idOpcAlta' id='" + strIdCiudad + "'>" + response[i].nombre + "</option>")
+               $("#idSelectAlta").append("<option class='idOpcAlta' id='" + strIdCiudad + "'>" + response[i].nombre + "</option>")
            }
        },
        error: function(response){
@@ -158,15 +159,16 @@ function traerCiudadesConBaja(){
 	<p>Nombre de ciudad: <input id="idInpAltaNombre"></input> </p>
 	<p>Longitud: <input id="idInpAltaLong"></input> </p>
 	<p>Latitud: <input id="idInpAltaLat"></input> </p>
-	<p><input type="button" value="Dar Alta" onclick="altaCiudad()"></input> </p>
+	<p><input type="button" value="Dar de Alta" onclick="altaCiudad()"></input> </p>
 	
 	<select id="idSelectAlta"></select>
-	<p><input type="button" value="Dar Alta" onclick="altaCiudadConBaja()"></input> </p>
+	<p><input type="button" value="Dar de Alta" onclick="altaCiudadConBaja()"></input> </p>
 	<p><input type="button" value="Volver" onclick="volverOpc()"></input> </p>
 </div>
 <div id="divBajaCiudad">
 	<p>Baja ciudad</p>
 	<select id="idSelectBaja"></select>
+	<p><input type="button" value="Dar de Baja" onclick="bajaCiudad()"></input> </p>
 	<p><input type="button" value="Volver" onclick="volverOpc()"></input> </p>
 </div>
 <div id="divConfigMillas">

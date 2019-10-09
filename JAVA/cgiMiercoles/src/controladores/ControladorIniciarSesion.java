@@ -58,7 +58,7 @@ public class ControladorIniciarSesion extends HttpServlet {
 			PrintWriter salida = response.getWriter();
 			salidaJson += "\"logueado\":" + "\"" + u + "\"" + "}";
 			salida.println(salidaJson);
-			
+			System.out.println(salidaJson);
 			response.setStatus(200);//Usuario y contraseña correctos
 		}
 		else {
