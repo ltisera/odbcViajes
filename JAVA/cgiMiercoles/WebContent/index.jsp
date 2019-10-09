@@ -56,7 +56,7 @@ function configMillas(){
 		type:"POST",
 		data: {
 			"valor": $("#idInpMillaValor").val(), 
-			"Km": $("#idInpMillaKm").val()},
+			"km": $("#idInpMillaKm").val()},
 		success: function(response){
 			$("#idInpMillaValor").val(""); 
 			$("#idInpMillaKm").val("");
@@ -67,6 +67,7 @@ function configMillas(){
 }
 
 function altaCiudad(){
+	console.log("Llamando a alta ciudad")
 	$.ajax({
 		url:"altaCiudad",
 		type:"POST",
@@ -102,6 +103,7 @@ function traerCiudades(){
         url:'traerCiudades', 
         type:'POST',
         success: function(response){
+        	console.log("")
             var strIdCiudad = "0"
             $("#idSelectBaja").append("<option id='idOpcBajaNull'> Seleccionar </option>")
 			for(var i = 0; i < response.length; i++){

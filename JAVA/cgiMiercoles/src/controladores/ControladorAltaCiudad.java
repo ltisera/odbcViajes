@@ -36,7 +36,7 @@ public class ControladorAltaCiudad extends HttpServlet {
 	
 		CiudadDAO cdao = new CiudadDAO(); 
 		int u = cdao.altaCiudad(nombre, latitud, longitud);
-		response.setContentType("application/json");
+		//response.setContentType("application/json");
 		if(u != -1) {
 			response.setStatus(200);//Ciudad dada de Alta
 		}

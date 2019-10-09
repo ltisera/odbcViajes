@@ -62,7 +62,7 @@ public class CiudadDAO {
 			Statement miStatement;
 			miStatement = (Statement) connect.createStatement();
 			ResultSet rSet;
-			String miQuery = "call altaCiudad("+ nombre +","+ latitud +","+ longitud +")";
+			String miQuery = "call altaCiudad(\""+ nombre +"\",\""+ latitud +"\",\""+ longitud +"\")";
 			System.out.println("Query en ejecucion: " + miQuery);
 			rSet = miStatement.executeQuery(miQuery);
 			//recorrer el resultado de la query

@@ -36,7 +36,7 @@ public class ControladorTraerCiudades extends HttpServlet {
 		System.out.println("Soy Controlador Traer Ciudades");
 
 		response.setContentType("application/json");
-		String salidaJson="{[";
+		String salidaJson="[";
 		CiudadDAO cdao = new CiudadDAO(); 
 		List<Ciudad> ciudades = cdao.traerCiudades();
 		
@@ -45,7 +45,7 @@ public class ControladorTraerCiudades extends HttpServlet {
 			for(Ciudad c : ciudades) {
 				salidaJson += "{\"id\":\"" + c.getIdCiudad() + "\",\"nombre\":\"" + c.getNombre() + "\"},";
 			}
-			salidaJson = salidaJson.substring(0, salidaJson.length() - 1) + "]}";
+			salidaJson = salidaJson.substring(0, salidaJson.length() - 1) + "]";
 			
 			System.out.println(salidaJson);
 			PrintWriter salida = response.getWriter();

@@ -31,10 +31,16 @@ public class ControladorConfigMillas extends HttpServlet {
 	{
 		String valor = request.getParameter("valor");
 		String km = request.getParameter("km");
-	
+		System.out.println("Antes de romper: " + valor);
+		float vmillas = Float.parseFloat(valor);
+		float vkm = Float.parseFloat(km);
+		
+		System.out.println("NO ALCANZA: " + vmillas);
+		
 		AdminDAO adao = new AdminDAO(); 
-		boolean u = adao.configMillas(Float.parseFloat(valor), Float.parseFloat(km));
-		response.setContentType("application/json");
+		boolean u = adao.configMillas(vmillas, vkm);
+		System.out.println("Valor de u: " + u);
+		//response.setContentType("application/json");
 		if(u==true) {
 			response.setStatus(200);//Millas modificadas
 		}
