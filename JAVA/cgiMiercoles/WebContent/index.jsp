@@ -79,6 +79,7 @@ function altaCiudad(){
 			$("#idInpAltaNombre").val(""); 
 			$("#idInpAltaLat").val("");
 			$("#idInpAltaLong").val("");
+			traerCiudades();
 			alert("Ciudad dada de alta con exito");
 		},
 		error: function(response){alert("Error");}
@@ -86,16 +87,26 @@ function altaCiudad(){
 }
 
 function bajaCiudad(){
-	$.ajax({
-		url:"configMillas",
-		type:"POST",
-		data: {
-			"id": $("#").val()},
-		success: function(response){
-			alert("Ciudad dada de baja con exito");
-		},
-		error: function(response){alert("Error");}
-	});
+	var seleccion = document.getElementById("idSelectBaja");
+    var idOpcion = seleccion[seleccion.selectedIndex].id; 
+    var idOpcBaja = idOpcion.substring(9);
+    console.log(idOpcBaja);
+	if(idOpcBaja != null){
+		$.ajax({
+			url:"bajaCiudad",
+			type:"POST",
+			data: {
+				"id": idOpcBaja},
+			success: function(response){
+				traerCiudadesConBaja();
+				alert("Ciudad dada de baja con exito");
+			},
+			error: function(response){alert("Error");}
+		});
+	}else{
+		alert("Seleccione una ciudad");
+	}
+   
 }
 	
 function traerCiudades(){
@@ -103,18 +114,15 @@ function traerCiudades(){
         url:'traerCiudades', 
         type:'POST',
         success: function(response){
-        	console.log("")
-            var strIdCiudad = "0"
-            $("#idSelectBaja").append("<option id='idOpcBajaNull'> Seleccionar </option>")
+        	$("#idSelectBaja").html("");
+            $("#idSelectBaja").append("<option id='idOpcBajaNull'> Seleccionar </option>");
 			for(var i = 0; i < response.length; i++){
-                strIdCiudad = String(response[i].id);
-                $("#idSelectBaja").append("<option class='idOpcBaja' id='" + strIdCiudad + "'>" + response[i].nombre + "</option>")
+                $("#idSelectBaja").append("<option class='idOpcBaja' id='" + response[i].id + "'>" + response[i].nombre + "</option>");
             }
         },
         error: function(response){
             console.log("ERR Traer Ciudades " + response);
         },
-
     });
 };
 
@@ -123,11 +131,10 @@ function traerCiudadesConBaja(){
        url:'traerCiudadesConBaja', 
        type:'POST',
        success: function(response){
-           var strIdCiudad = "0"
-           $("#idSelectAlta").append("<option id='idOpcAltaNull'> Seleccionar </option>")
+    	   $("#idSelectAlta").html("");
+           $("#idSelectAlta").append("<option id='idOpcAltaNull'> Seleccionar </option>");
 			for(var i = 0; i < response.length; i++){
-               strIdCiudad = String(response[i].idCiudad)
-               $("#idSelectAlta").append("<option class='idOpcAlta' id='" + strIdCiudad + "'>" + response[i].nombre + "</option>")
+               $("#idSelectAlta").append("<option class='idOpcAlta' id='" + response[i].id + "'>" + response[i].nombre + "</option>");
            }
        },
        error: function(response){
@@ -137,7 +144,11 @@ function traerCiudadesConBaja(){
    });
 };
 </script>
-
+<style>
+.opc:hover {
+  background-color: orange;
+}
+</style>
 
 </head>
 <body>

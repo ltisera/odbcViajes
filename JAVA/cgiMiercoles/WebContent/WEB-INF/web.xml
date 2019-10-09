@@ -31,6 +31,24 @@
     <servlet-name>ControladorTraerCiudades</servlet-name>
     <url-pattern>/traerCiudades</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ControladorTraerCiudadesConBaja</servlet-name>
+    <servlet-class>controladores.ControladorTraerCiudadesConBaja</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorTraerCiudadesConBaja</servlet-name>
+    <url-pattern>/traerCiudadesConBaja</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ControladorBajaCiudad</servlet-name>
+    <servlet-class>controladores.ControladorBajaCiudad</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorBajaCiudad</servlet-name>
+    <url-pattern>/bajaCiudad</url-pattern>
+  </servlet-mapping>
  
 	<servlet>
     	<servlet-name>ControladorAltaCiudad</servlet-name>

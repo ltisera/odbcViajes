@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import dao.CiudadDAO;
 
 @WebServlet("/ControladorAltaCiudad")
-public class ControladorAltaCiudad extends HttpServlet {
+public class ControladorBajaCiudad extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ControladorAltaCiudad() {
+    public ControladorBajaCiudad() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,15 +29,14 @@ public class ControladorAltaCiudad extends HttpServlet {
 	
 	protected void procesaSolicitud(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		String nombre = request.getParameter("nombre");
-		String latitud = request.getParameter("latitud");
-		String longitud = request.getParameter("longitud");
+		System.out.println(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter("id"));
 	
 		CiudadDAO cdao = new CiudadDAO(); 
-		int u = cdao.altaCiudad(nombre, latitud, longitud);
+		int u = cdao.bajaCiudad(id);
 		//response.setContentType("application/json");
 		if(u != -1) {
-			response.setStatus(200);//Ciudad dada de Alta
+			response.setStatus(200);//Ciudad dada de Bajas
 		}
 		else {
 			System.out.println("Error");
