@@ -34,88 +34,98 @@ function hideAll(){
 
 
 function login(){
-	$.ajax({
-		url:"IniciarSesion",
-		type:"POST",
-		data: {
-			"usuario": $("#idInpUser").val(), 
-			"pass":$("#idInpPass").val()},
-		success: function(response){
-			console.log("Lo que se te cante " + response.logueado);
-			hideAll();
-			traerCiudades();
-			traerCiudadesConBaja();
-			$("#divOpc").show();
-		},
-		error: function(response){alert("Usuario y/o contraseña incorrectos")}
-	});
+	if($("#idInpUser").val() != "" && $("#idInpPass").val() != ""){
+		$.ajax({
+			url:"IniciarSesion",
+			type:"POST",
+			data: {
+				"usuario": $("#idInpUser").val(), 
+				"pass":$("#idInpPass").val()},
+			success: function(response){
+				hideAll();
+				traerCiudades();
+				$("#divOpc").show();
+			},
+			error: function(response){alert("Usuario y/o contraseña incorrectos")}
+		});
+	} else{
+		alert("Ingrese todos los datos");
+	}
 }
 
 function configMillas(){
-	$.ajax({
-		url:"configMillas",
-		type:"POST",
-		data: {
-			"valor": $("#idInpMillaValor").val(), 
-			"km": $("#idInpMillaKm").val()},
-		success: function(response){
-			$("#idInpMillaValor").val(""); 
-			$("#idInpMillaKm").val("");
-			alert("Millas modificadas con exito");
-		},
-		error: function(response){alert("Error")}
-	});
+	if($("#idInpMillaValor").val() != "" && $("#idInpMillaKm").val() != ""){
+		$.ajax({
+			url:"configMillas",
+			type:"POST",
+			data: {
+				"valor": $("#idInpMillaValor").val(), 
+				"km": $("#idInpMillaKm").val()},
+			success: function(response){
+				$("#idInpMillaValor").val(""); 
+				$("#idInpMillaKm").val("");
+				alert("Millas modificadas con exito");
+			},
+			error: function(response){alert("Error")}
+		});
+	}else{
+		alert("Ingrese todos los datos");
+	}
 }
 
 function altaCiudad(){
-	console.log("Llamando a alta ciudad")
-	$.ajax({
-		url:"altaCiudad",
-		type:"POST",
-		data: {
-			"nombre": $("#idInpAltaNombre").val(), 
-			"latitud": $("#idInpAltaLat").val(), 
-			"longitud": $("#idInpAltaLong").val()},
-		success: function(response){
-			$("#idInpAltaNombre").val(""); 
-			$("#idInpAltaLat").val("");
-			$("#idInpAltaLong").val("");
-			traerCiudades();
-			alert("Ciudad dada de alta con exito");
-		},
-		error: function(response){alert("Error");}
-	});
+	if($("#idInpAltaNombre").val() != "" && $("#idInpAltaLat").val() != "" && $("#idInpAltaLong").val() != ""){
+		$.ajax({
+			url:"altaCiudad",
+			type:"POST",
+			data: {
+				"nombre": $("#idInpAltaNombre").val(), 
+				"latitud": $("#idInpAltaLat").val(), 
+				"longitud": $("#idInpAltaLong").val()},
+			success: function(response){
+				$("#idInpAltaNombre").val(""); 
+				$("#idInpAltaLat").val("");
+				$("#idInpAltaLong").val("");
+				traerCiudades();
+				alert("Ciudad dada de alta con exito");
+			},
+			error: function(response){alert("Error");}
+		});	
+	}else{
+		alert("Ingrese todos los datos");
+	}
+	
 }
 
 function altaCiudadConBaja(){
 	var seleccion = document.getElementById("idSelectAlta");
     var idOpcion = seleccion[seleccion.selectedIndex].id; 
-	$.ajax({
-		url:"altaCiudadConBaja",
-		type:"POST",
-		data: {
-			"id": idOpcion
-		},
-		success: function(response){
-			traerCiudadesConBaja();
-			traerCiudades();
-			alert("Ciudad dada de alta con exito");
-		},
-		error: function(response){alert("Error");}
-	});
+    if(idOpcion != "Null"){
+		$.ajax({
+			url:"altaCiudadConBaja",
+			type:"POST",
+			data: {
+				"id": idOpcion
+			},
+			success: function(response){
+				traerCiudades();
+				alert("Ciudad dada de alta con exito");
+			},
+			error: function(response){alert("Error");}
+		});
+    }
 }
 
 function bajaCiudad(){
 	var seleccion = document.getElementById("idSelectBaja");
     var idOpcion = seleccion[seleccion.selectedIndex].id; 
-	if(idOpcion != ""){
+	if(idOpcion != "Null"){
 		$.ajax({
 			url:"bajaCiudad",
 			type:"POST",
 			data: {
 				"id": idOpcion},
 			success: function(response){
-				traerCiudadesConBaja();
 				traerCiudades();
 				alert("Ciudad dada de baja con exito");
 			},
@@ -133,9 +143,21 @@ function traerCiudades(){
         type:'POST',
         success: function(response){
         	$("#idSelectBaja").html("");
-            $("#idSelectBaja").append("<option id='idOpcBajaNull'> Seleccionar </option>");
+            $("#idSelectBaja").append("<option id='Null'> Seleccionar </option>");
+            $("#idSelectAlta").html("");
+            $("#idSelectAlta").append("<option id='Null'> Seleccionar </option>");
+            $("#idSelectReporteOrigen").html("");
+            $("#idSelectReporteOrigen").append("<option id='Null'> Origen </option>");
+            $("#idSelectReporteDestino").html("");
+            $("#idSelectReporteDestino").append("<option id='Null'> Destino </option>");
 			for(var i = 0; i < response.length; i++){
-                $("#idSelectBaja").append("<option class='idOpcBaja' id='" + response[i].id + "'>" + response[i].nombre + "</option>");
+				if(response[i].baja == "false"){
+					$("#idSelectBaja").append("<option class='idOpcBaja' id='" + response[i].id + "'>" + response[i].nombre + "</option>");
+				}else{
+					$("#idSelectAlta").append("<option class='idOpcAlta' id='" + response[i].id + "'>" + response[i].nombre + "</option>");
+				}
+				$("#idSelectReporteOrigen").append("<option class='idOpcReporteOrigen' id='" + response[i].id + "'>" + response[i].nombre + "</option>");
+				$("#idSelectReporteDestino").append("<option class='idOpcReporteDestino' id='" + response[i].id + "'>" + response[i].nombre + "</option>");
             }
         },
         error: function(response){
@@ -144,23 +166,10 @@ function traerCiudades(){
     });
 };
 
-function traerCiudadesConBaja(){
-    $.ajax({
-       url:'traerCiudadesConBaja', 
-       type:'POST',
-       success: function(response){
-    	   $("#idSelectAlta").html("");
-           $("#idSelectAlta").append("<option id='idOpcAltaNull'> Seleccionar </option>");
-			for(var i = 0; i < response.length; i++){
-               $("#idSelectAlta").append("<option class='idOpcAlta' id='" + response[i].id + "'>" + response[i].nombre + "</option>");
-           }
-       },
-       error: function(response){
-           console.log(response)
-       },
+function reporteCancelaciones(){
+	console.log("Reportar");
+}
 
-   });
-};
 </script>
 <style>
 .opc:hover {
@@ -183,6 +192,10 @@ function traerCiudadesConBaja(){
 </div>
 <div id="divEmitirReportes">
 	<p>Emitir reportes</p>
+	<select id="idSelectReporteOrigen"></select>
+	<select id="idSelectReporteDestino"></select>
+	
+	<p><input type="button" value="Generar Reporte" onclick="reporteCancelaciones()"></input> </p>
 	<p><input type="button" value="Volver" onclick="volverOpc()"></input> </p>
 </div>
 <div id="divAltaCiudad">
@@ -204,8 +217,8 @@ function traerCiudadesConBaja(){
 </div>
 <div id="divConfigMillas">
 	<p>Configurar Millas</p>
-	<p>Valor por milla: <input id="idInpMillaValor"></input> </p>
-	<p>Milla por kilometro: <input id="idInpMillaKm"></input> </p>
+	<p>Valor por milla: <input type="number" id="idInpMillaValor"></input> </p>
+	<p>Milla por kilometro: <input type="number" id="idInpMillaKm"></input> </p>
 	<p><input type="button" value="Modificar" onclick="configMillas()"></input> </p>
 	<p><input type="button" value="Volver" onclick="volverOpc()"></input> </p>
 </div>

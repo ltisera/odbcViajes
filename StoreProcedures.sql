@@ -205,6 +205,21 @@ BEGIN
     and P.fecha <= IFNULL(hasta, P.fecha);
 END//
 
+DROP PROCEDURE IF EXISTS reporteCancelaciones//
+CREATE PROCEDURE reporteCancelaciones(in origen int, in destino int, in desde date, in hasta date)
+BEGIN
+	SELECT P.codigo, P.fecha, P.valor, P.pasajero, cOrigen.nombre, cDestino.nombre, P.formaPago, P.cancelacion, cancel.fecha, cancel.montoReintegro, P.millas 
+    FROM pasaje as P 
+    inner join Ciudad as cOrigen on cOrigen.idCiudad = P.origen 
+    inner join Ciudad as cDestino on cDestino.idCiudad = P.destino
+    inner join Cancelacion as cancel on cancel.idCancelacion = P.cancelacion
+	where P.cancelacion is not null
+    and P.origen = IFNULL(origen, P.origen)
+    and P.destino = IFNULL(destino, P.destino)
+    and cancel.fecha >= IFNULL(desde, cancel.fecha)
+    and cancel.fecha <= IFNULL(hasta, cancel.fecha);
+END//
+
 DROP PROCEDURE IF EXISTS altaCiudad//
 CREATE PROCEDURE altaCiudad (in nombre varchar(45), in latitud varchar(45), in longitud varchar(45))
 BEGIN
@@ -240,6 +255,12 @@ DROP PROCEDURE IF EXISTS consultaCiudadesConBaja//
 CREATE PROCEDURE consultaCiudadesConBaja()
 BEGIN
 	SELECT * FROM ciudad where ciudad.baja = True;
+END//
+
+DROP PROCEDURE IF EXISTS consultaTodasLasCiudades//
+CREATE PROCEDURE consultaTodasLasCiudades()
+BEGIN
+	SELECT * FROM ciudad;
 END//
 
 DROP PROCEDURE IF EXISTS loginPasajero//

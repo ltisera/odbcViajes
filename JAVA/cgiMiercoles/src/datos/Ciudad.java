@@ -5,16 +5,18 @@ public class Ciudad {
 	private String nombre;
 	private String longitud;
 	private String latitud;
+	private boolean baja; 
 	
 	public Ciudad() {
 	}
 	
-	public Ciudad(int idCiudad, String nombre, String longitud, String latitud) {
+	public Ciudad(int idCiudad, String nombre, String longitud, String latitud, boolean baja) {
 		super();
 		this.idCiudad = idCiudad;
 		this.nombre = nombre;
 		this.longitud = longitud;
 		this.latitud = latitud;
+		this.baja = baja;
 	}
 	public int getIdCiudad() {
 		return idCiudad;
@@ -39,6 +41,14 @@ public class Ciudad {
 	}
 	public void setLatitud(String latitud) {
 		this.latitud = latitud;
+	}
+
+	public boolean isBaja() {
+		return baja;
+	}
+
+	public void setBaja(boolean baja) {
+		this.baja = baja;
 	}
 	
 	

@@ -4,7 +4,6 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
     <servlet-name>ControladorIniciarSesion</servlet-name>
     <servlet-class>controladores.ControladorIniciarSesion</servlet-class>
@@ -13,7 +12,6 @@
     <servlet-name>ControladorIniciarSesion</servlet-name>
     <url-pattern>/IniciarSesion</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ControladorConfigMillas</servlet-name>
     <servlet-class>controladores.ControladorConfigMillas</servlet-class>
@@ -22,7 +20,6 @@
     <servlet-name>ControladorConfigMillas</servlet-name>
     <url-pattern>/configMillas</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ControladorTraerCiudades</servlet-name>
     <servlet-class>controladores.ControladorTraerCiudades</servlet-class>
@@ -31,16 +28,14 @@
     <servlet-name>ControladorTraerCiudades</servlet-name>
     <url-pattern>/traerCiudades</url-pattern>
   </servlet-mapping>
-  
   <servlet>
-    <servlet-name>ControladorTraerCiudadesConBaja</servlet-name>
-    <servlet-class>controladores.ControladorTraerCiudadesConBaja</servlet-class>
+    <servlet-name>ControladorReporteCancelaciones</servlet-name>
+    <servlet-class>controladores.ControladorReporteCancelaciones</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ControladorTraerCiudadesConBaja</servlet-name>
-    <url-pattern>/traerCiudadesConBaja</url-pattern>
+    <servlet-name>ControladorReporteCancelaciones</servlet-name>
+    <url-pattern>/reporteCancelaciones</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ControladorBajaCiudad</servlet-name>
     <servlet-class>controladores.ControladorBajaCiudad</servlet-class>
@@ -49,23 +44,20 @@
     <servlet-name>ControladorBajaCiudad</servlet-name>
     <url-pattern>/bajaCiudad</url-pattern>
   </servlet-mapping>
- 
-	<servlet>
-    	<servlet-name>ControladorAltaCiudad</servlet-name>
-    	<servlet-class>controladores.ControladorAltaCiudad</servlet-class>
-  	</servlet>
-  	<servlet-mapping>
-    	<servlet-name>ControladorAltaCiudad</servlet-name>
-    	<url-pattern>/altaCiudad</url-pattern>
-  	</servlet-mapping>
-  	
-  	<servlet>
-    	<servlet-name>ControladorAltaCiudadConBaja</servlet-name>
-    	<servlet-class>controladores.ControladorAltaCiudadConBaja</servlet-class>
-  	</servlet>
-  	<servlet-mapping>
-    	<servlet-name>ControladorAltaCiudadConBaja</servlet-name>
-    	<url-pattern>/altaCiudadConBaja</url-pattern>
-  	</servlet-mapping>
- 
+  <servlet>
+    <servlet-name>ControladorAltaCiudad</servlet-name>
+    <servlet-class>controladores.ControladorAltaCiudad</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorAltaCiudad</servlet-name>
+    <url-pattern>/altaCiudad</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ControladorAltaCiudadConBaja</servlet-name>
+    <servlet-class>controladores.ControladorAltaCiudadConBaja</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorAltaCiudadConBaja</servlet-name>
+    <url-pattern>/altaCiudadConBaja</url-pattern>
+  </servlet-mapping>
 </web-app>

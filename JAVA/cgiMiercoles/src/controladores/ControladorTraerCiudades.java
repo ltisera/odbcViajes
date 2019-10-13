@@ -43,7 +43,7 @@ public class ControladorTraerCiudades extends HttpServlet {
 		
 		if(ciudades.size() > 0) {
 			for(Ciudad c : ciudades) {
-				salidaJson += "{\"id\":\"" + c.getIdCiudad() + "\",\"nombre\":\"" + c.getNombre() + "\"},";
+				salidaJson += "{\"id\":\"" + c.getIdCiudad() + "\",\"nombre\":\"" + c.getNombre() + "\",\"baja\":\"" + c.isBaja() + "\"},";
 			}
 			salidaJson = salidaJson.substring(0, salidaJson.length() - 1) + "]";
 			

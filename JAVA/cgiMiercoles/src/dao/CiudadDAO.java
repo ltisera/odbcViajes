@@ -19,12 +19,12 @@ public class CiudadDAO {
 			Statement miStatement;
 			miStatement = (Statement) connect.createStatement();
 			ResultSet rSet;
-			String miQuery = "call consultaCiudades()";
+			String miQuery = "call consultaTodasLasCiudades()";
 			System.out.println("Query en ejecucion: " + miQuery);
 			rSet = miStatement.executeQuery(miQuery);
 			//recorrer el resultado de la query
 			while (rSet.next() == true) {
-				ciudades.add(new Ciudad(rSet.getInt(1), rSet.getString(2), rSet.getString(3), rSet.getString(4)));
+				ciudades.add(new Ciudad(rSet.getInt(1), rSet.getString(2), rSet.getString(3), rSet.getString(4), rSet.getBoolean(5)));
 			}
 			
 		} catch (SQLException e) {
@@ -32,28 +32,6 @@ public class CiudadDAO {
 			e.printStackTrace();
 		}
 		return ciudades;
-		
-	}
-	public List<Ciudad> traerCiudadesConBaja(){
-		List<Ciudad> ciudades = new ArrayList<Ciudad>();
-		try {
-			Statement miStatement;
-			miStatement = (Statement) connect.createStatement();
-			ResultSet rSet;
-			String miQuery = "call consultaCiudadesConBaja()";
-			System.out.println("Query en ejecucion: " + miQuery);
-			rSet = miStatement.executeQuery(miQuery);
-			//recorrer el resultado de la query
-			while (rSet.next() == true) {
-				ciudades.add(new Ciudad(rSet.getInt(1), rSet.getString(2), rSet.getString(3), rSet.getString(4)));
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return ciudades;
-		
 	}
 	
 	public int altaCiudad(String nombre, String latitud, String longitud){
