@@ -101,5 +101,26 @@ public class CiudadDAO {
 		return idCiudad;
 		
 	}
+	public int altaCiudadConBaja(int id) {
+		int idCiudad = -1;
+		try {
+			Statement miStatement;
+			miStatement = (Statement) connect.createStatement();
+			ResultSet rSet;
+			String miQuery = "call altaCiudadConBaja(\""+ id +"\")";
+			System.out.println("Query en ejecucion: " + miQuery);
+			rSet = miStatement.executeQuery(miQuery);
+			//recorrer el resultado de la query
+			/*if (rSet.next() == true) {
+				idCiudad = rSet.getInt(1);
+			}*/
+			idCiudad = 10;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return idCiudad;
+	}
 
 }

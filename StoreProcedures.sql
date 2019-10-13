@@ -212,6 +212,12 @@ BEGIN
     values(nombre, latitud, longitud);
 END// 
 
+DROP PROCEDURE IF EXISTS altaCiudadConBaja//
+CREATE PROCEDURE altaCiudadConBaja (in idCiudad int)
+BEGIN
+	update ciudad set ciudad.baja = false where ciudad.idCiudad = idCiudad;
+END// 
+
 DROP PROCEDURE IF EXISTS bajaCiudad//
 CREATE PROCEDURE bajaCiudad (in idCiudad int)
 BEGIN
@@ -231,7 +237,7 @@ BEGIN
 END//
 
 DROP PROCEDURE IF EXISTS consultaCiudadesConBaja//
-CREATE PROCEDURE consultaCiudades()
+CREATE PROCEDURE consultaCiudadesConBaja()
 BEGIN
 	SELECT * FROM ciudad where ciudad.baja = True;
 END//

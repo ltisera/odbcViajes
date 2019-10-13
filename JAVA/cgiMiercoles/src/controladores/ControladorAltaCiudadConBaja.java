@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.CiudadDAO;
 
-@WebServlet("/ControladorBajaCiudad")
-public class ControladorBajaCiudad extends HttpServlet {
+@WebServlet("/ControladorAltaCiudadConBaja")
+public class ControladorAltaCiudadConBaja extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ControladorBajaCiudad() {
+    public ControladorAltaCiudadConBaja() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,10 +32,10 @@ public class ControladorBajaCiudad extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 	
 		CiudadDAO cdao = new CiudadDAO(); 
-		int u = cdao.bajaCiudad(id);
+		int u = cdao.altaCiudadConBaja(id);
 		//response.setContentType("application/json");
 		if(u != -1) {
-			response.setStatus(200);//Ciudad dada de Bajas
+			response.setStatus(200);//Ciudad dada de Alta
 		}
 		else {
 			System.out.println("Error");

@@ -58,5 +58,14 @@
     	<servlet-name>ControladorAltaCiudad</servlet-name>
     	<url-pattern>/altaCiudad</url-pattern>
   	</servlet-mapping>
+  	
+  	<servlet>
+    	<servlet-name>ControladorAltaCiudadConBaja</servlet-name>
+    	<servlet-class>controladores.ControladorAltaCiudadConBaja</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>ControladorAltaCiudadConBaja</servlet-name>
+    	<url-pattern>/altaCiudadConBaja</url-pattern>
+  	</servlet-mapping>
  
 </web-app>

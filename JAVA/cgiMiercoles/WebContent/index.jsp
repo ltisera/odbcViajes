@@ -44,6 +44,7 @@ function login(){
 			console.log("Lo que se te cante " + response.logueado);
 			hideAll();
 			traerCiudades();
+			traerCiudadesConBaja();
 			$("#divOpc").show();
 		},
 		error: function(response){alert("Usuario y/o contraseña incorrectos")}
@@ -86,19 +87,36 @@ function altaCiudad(){
 	});
 }
 
+function altaCiudadConBaja(){
+	var seleccion = document.getElementById("idSelectAlta");
+    var idOpcion = seleccion[seleccion.selectedIndex].id; 
+	$.ajax({
+		url:"altaCiudadConBaja",
+		type:"POST",
+		data: {
+			"id": idOpcion
+		},
+		success: function(response){
+			traerCiudadesConBaja();
+			traerCiudades();
+			alert("Ciudad dada de alta con exito");
+		},
+		error: function(response){alert("Error");}
+	});
+}
+
 function bajaCiudad(){
 	var seleccion = document.getElementById("idSelectBaja");
     var idOpcion = seleccion[seleccion.selectedIndex].id; 
-    var idOpcBaja = idOpcion.substring(9);
-    console.log(idOpcBaja);
-	if(idOpcBaja != null){
+	if(idOpcion != ""){
 		$.ajax({
 			url:"bajaCiudad",
 			type:"POST",
 			data: {
-				"id": idOpcBaja},
+				"id": idOpcion},
 			success: function(response){
 				traerCiudadesConBaja();
+				traerCiudades();
 				alert("Ciudad dada de baja con exito");
 			},
 			error: function(response){alert("Error");}
