@@ -13,7 +13,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="D:/DropBox/Dropbox/FAcultad/Sistemas Distribuidos/TPCGI1/mysql-connector-java-5.1.48/mysql-connector-java-5.1.48/mysql-connector-java-5.1.48-bin.jar"/>
-	<classpathentry kind="lib" path="D:/DropBox/Dropbox/FAcultad/Sistemas Distribuidos/TPCGI1/java_odbc/odbc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Camila/Documents/GitHub/odbcViajes/JAVA/odbc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Camila/Documents/GitHub/odbcViajes/JAVA/mysql-connector-java-5.1.48-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

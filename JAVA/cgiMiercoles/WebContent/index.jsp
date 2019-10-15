@@ -147,9 +147,9 @@ function traerCiudades(){
             $("#idSelectAlta").html("");
             $("#idSelectAlta").append("<option id='Null'> Seleccionar </option>");
             $("#idSelectReporteOrigen").html("");
-            $("#idSelectReporteOrigen").append("<option id='Null'> Origen </option>");
+            $("#idSelectReporteOrigen").append("<option id='null'> Origen </option>");
             $("#idSelectReporteDestino").html("");
-            $("#idSelectReporteDestino").append("<option id='Null'> Destino </option>");
+            $("#idSelectReporteDestino").append("<option id='null'> Destino </option>");
 			for(var i = 0; i < response.length; i++){
 				if(response[i].baja == "false"){
 					$("#idSelectBaja").append("<option class='idOpcBaja' id='" + response[i].id + "'>" + response[i].nombre + "</option>");
@@ -168,14 +168,24 @@ function traerCiudades(){
 
 function reporteCancelaciones(){
 	console.log("Reportar");
-	
+	var seleccionOrigen = document.getElementById("idSelectReporteOrigen");
+    var idOpcionOrigen = seleccionOrigen[seleccionOrigen.selectedIndex].id; 
+    
+    var seleccionDestino = document.getElementById("idSelectReporteDestino");
+    var idOpcionDestino = seleccionDestino[seleccionDestino.selectedIndex].id;
 	$.ajax({
 		url: "reporteCancelaciones",
 		type: "POST",
-		data:{"fechaA":$("#idFechaReporteInicio").val(),
+		data:{
+			"fechaA":$("#idFechaReporteInicio").val(),
 			"fechaB":$("#idFechaReporteFin").val(),
+			"origen" : idOpcionOrigen,
+			"destino" : idOpcionDestino,
 			},
-		success: function(response){console.log("Genero para bien")},
+		success: function(response){
+			console.log("Genero para bien");
+			console.log(response);
+		},
 		error: function(response){console.log("Genero para mal")},
 	});
 }

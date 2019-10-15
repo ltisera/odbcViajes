@@ -14,13 +14,23 @@ public class CancelacionDAO {
 	Conexion conexionmysql = new Conexion();
 	Connection connect = (Connection) conexionmysql.Conectar();
 	
-	public List<Cancelacion> traerCancelaciones(Date fechaA, Date fechaB){
+	public List<Cancelacion> traerCancelaciones(String origen, String destino, String fechaA, String fechaB){
 		List<Cancelacion> cancelacion = new ArrayList<Cancelacion>();
+		if(fechaA == "" || fechaA == null) {
+			fechaA = null;
+		}else {
+			fechaA = "\"" + fechaA + "\"";
+		} 
+		if(fechaB == "" || fechaB == null) {
+			fechaB = null;
+		}else {
+			fechaB = "\"" + fechaB + "\"";
+		}
 		try {
 			Statement miStatement;
 			miStatement = (Statement) connect.createStatement();
 			ResultSet rSet;
-			String miQuery = "call reporteCancelaciones(null,null,null,null)";
+			String miQuery = "call reporteCancelaciones(" + origen + "," + destino + "," + fechaA + "," + fechaB + ")";
 			System.out.println("Query en ejecucion: " + miQuery);
 			rSet = miStatement.executeQuery(miQuery);
 			//recorrer el resultado de la query
