@@ -27,7 +27,7 @@ public class ControladorReporteCancelaciones extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -35,7 +35,13 @@ public class ControladorReporteCancelaciones extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		System.out.println("LLEGUEEEEE GATO");
+		System.out.println("tengo en FA:" + request.getParameter("fechaA"));
+		System.out.println("tengo en FB:" + request.getParameter("fechaB"));
+		
+		response.setStatus(200);
+		
 	}
 
 }

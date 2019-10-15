@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>CGI</title>
-
+<link rel="stylesheet" type="text/css" href="css/estilos.css">
 <script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script>
 
@@ -168,6 +168,16 @@ function traerCiudades(){
 
 function reporteCancelaciones(){
 	console.log("Reportar");
+	
+	$.ajax({
+		url: "reporteCancelaciones",
+		type: "POST",
+		data:{"fechaA":$("#idFechaReporteInicio").val(),
+			"fechaB":$("#idFechaReporteFin").val(),
+			},
+		success: function(response){console.log("Genero para bien")},
+		error: function(response){console.log("Genero para mal")},
+	});
 }
 
 </script>
@@ -192,10 +202,17 @@ function reporteCancelaciones(){
 </div>
 <div id="divEmitirReportes">
 	<p>Emitir reportes</p>
-	<select id="idSelectReporteOrigen"></select>
-	<select id="idSelectReporteDestino"></select>
+	<div class="clsCajita">
+		<p>Seleccione las fechas entre las cuales se generara el reporte de cancelaciones</p>
+		<input type="date" id="idFechaReporteInicio" name="trip-start" value="2019-09-24">
+		<input type="date" id="idFechaReporteFin" name="trip-start" value="2019-09-24">
+		<p>Seleccione ciudades de destino y origen</p>
+		<select id="idSelectReporteOrigen"></select>
+		<select id="idSelectReporteDestino"></select>
+		<p><input type="button" value="Generar Reporte" onclick="reporteCancelaciones()"></input> </p>
+	</div>
 	
-	<p><input type="button" value="Generar Reporte" onclick="reporteCancelaciones()"></input> </p>
+	
 	<p><input type="button" value="Volver" onclick="volverOpc()"></input> </p>
 </div>
 <div id="divAltaCiudad">
