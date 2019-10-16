@@ -9,27 +9,28 @@
 <script>
 
 $(document).ready(function(){
-	hideAll();
-	$("#divLogin").show();
-	
 	$(".opc").click(function() {
-		hideAll();
-		$("#div" + this.id).show();
+		if(this.id == "Logout"){
+			location.reload();
+		}else{
+			hideAll();
+			$("#div" + this.id).removeClass("ocultar");	
+		}
 	});
 });
 
 function volverOpc(){
 	hideAll();
-	$("#divOpc").show();
+	$("#divOpc").removeClass("ocultar");
 }
 
 function hideAll(){
-	$("#divLogin").hide();
-	$("#divOpc").hide();
-	$("#divEmitirReportes").hide();
-	$("#divAltaCiudad").hide();
-	$("#divBajaCiudad").hide();
-	$("#divConfigMillas").hide();
+	$("#divLogin").addClass("ocultar");
+	$("#divOpc").addClass("ocultar");
+	$("#divEmitirReportes").addClass("ocultar");
+	$("#divAltaCiudad").addClass("ocultar");
+	$("#divBajaCiudad").addClass("ocultar");
+	$("#divConfigMillas").addClass("ocultar");
 }
 
 
@@ -44,7 +45,7 @@ function login(){
 			success: function(response){
 				hideAll();
 				traerCiudades();
-				$("#divOpc").show();
+				$("#divOpc").removeClass("ocultar");
 			},
 			error: function(response){alert("Usuario y/o contraseña incorrectos")}
 		});
@@ -185,33 +186,49 @@ function reporteCancelaciones(){
 		success: function(response){
 			console.log("Genero para bien");
 			console.log(response);
+			var total = 0;
+			var text = "<tr> <th>Pasaje</th> <th>Origen</th> <th>Destino</th> <th>Fecha</th> <th>Reintegro</th> </tr>";
+			for(var i = 0; i < response.length; i++){
+				text += "<tr> <td>" + response[i].id + "</td>";
+				text += "<td>" + response[i].origen + "</td>";
+				text += "<td>" + response[i].destino + "</td>";
+				text += "<td>" + response[i].fecha + "</td>";
+				text += "<td>" + response[i].reintegro + "</td> </tr>";
+				total += parseFloat(response[i].reintegro);
+			}
+			text += "<tr> <td></td> <td></td> <td></td> <td>Total</td> <td>" + total + "</td> </tr>";
+			$("#idContenidoReporte").html(text);
 		},
 		error: function(response){console.log("Genero para mal")},
 	});
 }
 
 </script>
-<style>
-.opc:hover {
-  background-color: orange;
-}
-</style>
 
 </head>
 <body>
 <div id="divLogin">
-	<p>Ingrese Usuario: <input id="idInpUser"></input> </p>
-	<p>Ingrese Password: <input id="idInpPass" type="password"></input> </p>
-	<p><input type="button" value="Click me" onclick="login()"></input> </p>
+	<div class="clsBarraOpc">
+		<p>Login</p>
+	</div>
+	<div class="clsCajita">
+		<p>Ingrese Usuario: <input id="idInpUser"></input> </p>
+		<p>Ingrese Password: <input id="idInpPass" type="password"></input> </p>
+		<p><input type="button" value="Conectar" onclick="login()"></input> </p>
+	</div>
 </div>
-<div id="divOpc">
-	<p id="EmitirReportes" class="opc">Emitir reportes</p>
-	<p id="AltaCiudad" class="opc">Dar de alta ciudades</p>
-	<p id="BajaCiudad" class="opc">Dar de baja ciudades</p>
-	<p id="ConfigMillas" class="opc">Modificar millas</p>
+<div class="ocultar" id="divOpc">
+	<div class="clsBarraOpc"><p>Seleccione una opcion</p></div>
+	<div id="EmitirReportes" class="opc"><p>Emitir reportes</p></div>
+	<div id="AltaCiudad" class="opc"><p>Dar de alta ciudades</p></div>
+	<div id="BajaCiudad" class="opc"><p>Dar de baja ciudades</p></div>
+	<div id="ConfigMillas" class="opc"><p>Modificar millas</p></div>
+	<div id="Logout" class="opc"><p>Cerrar Sesion</p></div>
 </div>
-<div id="divEmitirReportes">
-	<p>Emitir reportes</p>
+<div class="ocultar" id="divEmitirReportes">
+	<div class="clsBarraOpc">
+		<p>Emitir reportes</p>
+	</div>
 	<div class="clsCajita">
 		<p>Seleccione las fechas entre las cuales se generara el reporte de cancelaciones</p>
 		<input type="date" id="idFechaReporteInicio" name="trip-start" value="2019-09-24">
@@ -220,34 +237,46 @@ function reporteCancelaciones(){
 		<select id="idSelectReporteOrigen"></select>
 		<select id="idSelectReporteDestino"></select>
 		<p><input type="button" value="Generar Reporte" onclick="reporteCancelaciones()"></input> </p>
+		<table id="idContenidoReporte"></table>
 	</div>
-	
-	
-	<p><input type="button" value="Volver" onclick="volverOpc()"></input> </p>
+	<p><input class="clsBtnVolver" type="button" value="Volver" onclick="volverOpc()"></input> </p>
 </div>
-<div id="divAltaCiudad">
-	<p>Alta ciudad</p>
-	<p>Nombre de ciudad: <input id="idInpAltaNombre"></input> </p>
-	<p>Longitud: <input id="idInpAltaLong"></input> </p>
-	<p>Latitud: <input id="idInpAltaLat"></input> </p>
-	<p><input type="button" value="Dar de Alta" onclick="altaCiudad()"></input> </p>
-	
-	<select id="idSelectAlta"></select>
-	<p><input type="button" value="Dar de Alta" onclick="altaCiudadConBaja()"></input> </p>
-	<p><input type="button" value="Volver" onclick="volverOpc()"></input> </p>
+<div class="ocultar" id="divAltaCiudad">
+	<div class="clsBarraOpc">
+		<p>Alta Ciudad</p>
+	</div>
+	<div class="clsCajita">
+		<p>Nombre: <input id="idInpAltaNombre"></input> </p>
+		<p>Longitud: <input id="idInpAltaLong"></input> </p>
+		<p>Latitud: <input id="idInpAltaLat"></input> </p>
+		<p><input type="button" value="Dar de Alta" onclick="altaCiudad()"></input> </p>
+	</div>
+	<div class="clsCajita">
+		<select id="idSelectAlta"></select>
+		<p><input type="button" value="Dar de Alta" onclick="altaCiudadConBaja()"></input> </p>
+	</div>
+	<p><input class="clsBtnVolver" type="button" value="Volver" onclick="volverOpc()"></input> </p>
 </div>
-<div id="divBajaCiudad">
-	<p>Baja ciudad</p>
-	<select id="idSelectBaja"></select>
-	<p><input type="button" value="Dar de Baja" onclick="bajaCiudad()"></input> </p>
-	<p><input type="button" value="Volver" onclick="volverOpc()"></input> </p>
+<div class="ocultar" id="divBajaCiudad">
+	<div class="clsBarraOpc">
+		<p>Baja Ciudad</p>
+	</div>
+	<div class="clsCajita">
+		<select id="idSelectBaja"></select>
+		<p><input type="button" value="Dar de Baja" onclick="bajaCiudad()"></input> </p>
+	</div>
+	<p><input class="clsBtnVolver" type="button" value="Volver" onclick="volverOpc()"></input> </p>
 </div>
-<div id="divConfigMillas">
-	<p>Configurar Millas</p>
-	<p>Valor por milla: <input type="number" id="idInpMillaValor"></input> </p>
-	<p>Milla por kilometro: <input type="number" id="idInpMillaKm"></input> </p>
-	<p><input type="button" value="Modificar" onclick="configMillas()"></input> </p>
-	<p><input type="button" value="Volver" onclick="volverOpc()"></input> </p>
+<div class="ocultar" id="divConfigMillas">
+	<div class="clsBarraOpc">
+		<p>Configurar Millas</p>
+	</div>
+	<div class="clsCajita">
+		<p>Valor por milla: <input type="number" id="idInpMillaValor"></input> </p>
+		<p>Milla por kilometro: <input type="number" id="idInpMillaKm"></input> </p>
+		<p><input type="button" value="Modificar" onclick="configMillas()"></input> </p>
+	</div>
+	<p><input class="clsBtnVolver" type="button" value="Volver" onclick="volverOpc()"></input> </p>
 </div>
 
 </body>

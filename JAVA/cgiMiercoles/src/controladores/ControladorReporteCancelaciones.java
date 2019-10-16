@@ -70,7 +70,9 @@ public class ControladorReporteCancelaciones extends HttpServlet {
 			}
 			salidaJson = salidaJson.substring(0, salidaJson.length() - 1) + "]";
 			
-			System.out.println("JSON " + salidaJson);
+			System.out.println("JSON-" + salidaJson + "-FinJSON");
+			
+			response.setContentType("application/json");
 			PrintWriter salida = response.getWriter();
 			salida.println(salidaJson);
 			
