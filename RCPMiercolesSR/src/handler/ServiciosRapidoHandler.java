@@ -2,8 +2,12 @@ package handler;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.lang.model.type.NullType;
+
 import org.apache.thrift.TException;
 
+import DAO.CiudadDAO;
 import ejnamespace.Ciudad;
 import ejnamespace.CiudadExc;
 import ejnamespace.Pasajero;
@@ -22,6 +26,12 @@ public class ServiciosRapidoHandler implements Iface {
 
     public Ciudad traerCiudad(int idCiudad) throws CiudadExc, org.apache.thrift.TException{
     	Ciudad c = new Ciudad();
+    	CiudadDAO cDao = new CiudadDAO();
+		
+		c=cDao.traerCiudad(idCiudad);
+		if(c == null) {
+			throw new CiudadExc(1, "ciudad no encontrada");
+		}
     	return c;
     }
 

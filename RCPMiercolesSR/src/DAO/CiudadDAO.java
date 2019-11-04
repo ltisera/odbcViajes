@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DAO.Conexion;
-import datos.Ciudad;
+import ejnamespace.Ciudad;
 
 public class CiudadDAO {
 	Conexion conexionmysql = new Conexion();
