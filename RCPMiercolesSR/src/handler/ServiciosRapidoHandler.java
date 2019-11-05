@@ -38,7 +38,7 @@ public class ServiciosRapidoHandler implements Iface {
 
     public java.util.List<Ciudad> traerCiudades() throws org.apache.thrift.TException{
     	CiudadDAO cDao = new CiudadDAO();
-    	return cDao.traerCiudades();s
+    	return cDao.traerCiudades();
     	
     }
 
