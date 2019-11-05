@@ -15,11 +15,17 @@ import ejnamespace.serviciosRapido.Iface;
 public class ServiciosRapidoHandler implements Iface {
 
 	public java.lang.String traerNombre(int idCiudad) throws CiudadExc, org.apache.thrift.TException{
-		return "";
+		CiudadDAO cDao = new CiudadDAO();
+    	Ciudad c = cDao.traerCiudad(idCiudad);
+		if(c == null)throw new CiudadExc(1, "ciudad no encontrada");
+    	return c.getNombre();
 	}
 
     public java.lang.String traerLatitud(int idCiudad) throws CiudadExc, org.apache.thrift.TException{
-    	return "";
+    	CiudadDAO cDao = new CiudadDAO();
+    	Ciudad c = cDao.traerCiudad(idCiudad);
+		if(c == null)throw new CiudadExc(1, "ciudad no encontrada");
+    	return c.getLatitud();
     }
 
     public Ciudad traerCiudad(int idCiudad) throws CiudadExc, org.apache.thrift.TException{

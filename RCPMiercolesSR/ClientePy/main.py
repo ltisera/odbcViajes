@@ -42,7 +42,7 @@ if __name__ == '__main__':
         print("Elija una ocion")
         print("1) traer Ciudad")
         print("2) traer latitud")
-        print("3) traer longitud")
+        print("3) traer nombre")
         print("4) traer Ciudades")
         print("5) traer pasaje")
         print("6) traer pasajes")
@@ -55,17 +55,54 @@ if __name__ == '__main__':
             try:
                 print(client.traerCiudad(int(idCiudad)))
             except CiudadExc as e:
-                print("LA EX: ", e)
+                print("Ocurrio un error: ", e)
+            except ValueError as e:
+                print("Error: ", e)
         elif(salir == "2"):
-            print("2) traer latitud")
+            print("Ingrese el id de la ciudad: ", end='')
+            idCiudad = input()
+            try:
+                print(client.traerLatitud(int(idCiudad)))
+            except CiudadExc as e:
+                print("Ocurrio un error: ", e)
+            except ValueError as e:
+                print("Error: ", e)
         elif(salir == "3"):
-            print("3) traer longitud")
+            print("Ingrese el id de la ciudad: ", end='')
+            idCiudad = input()
+            try:
+                print(client.traerNombre(int(idCiudad)))
+            except CiudadExc as e:
+                print("Ocurrio un error: ", e)
+            except ValueError as e:
+                print("Error: ", e)
         elif(salir == "4"):
-            print("4) traer Ciudades")
+            try:
+                ciudades = client.traerCiudades()
+                for c in ciudades:
+                    print(c)
+            except CiudadExc as e:
+                print("Ocurrio un error: ", e)
+            except ValueError as e:
+                print("Error: ", e)
         elif(salir == "5"):
-            print("5) traer pasaje")
+            print("Ingrese el DNI del pasajero: ", end='')
+            idPasajero = input()
+            try:
+                print(client.traerPasajero(int(idPasajero)))
+            except PasajeroExc as e:
+                print("Ocurrio un error: ", e)
+            except ValueError as e:
+                print("Error: ", e)
         elif(salir == "6"):
-            print("6) traer pasajes")
+            try:
+                pasajeros = client.traerPasajeros()
+                for p in pasajeros:
+                    print(p)
+            except CiudadExc as e:
+                print("Ocurrio un error: ", e)
+            except ValueError as e:
+                print("Error: ", e)
         elif(salir == "7"):
             print("ADIO!!!")
             transport.close()
