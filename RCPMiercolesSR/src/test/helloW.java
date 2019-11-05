@@ -1,29 +1,27 @@
 package test;
 
-import DAO.CiudadDAO;
-import ejnamespace.CiudadExc;
+import ejnamespace.Pasajero;
 import handler.ServiciosRapidoHandler;
+
 public class helloW {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("HOLA JAVA");
-		
-		
+		ServiciosRapidoHandler s =new ServiciosRapidoHandler();
 		try {
-			ServiciosRapidoHandler sHandler = new ServiciosRapidoHandler();
-			System.out.println(sHandler.traerCiudad(1123));
-			
-		}
-		catch (Exception e){
-			System.out.println("NO LLEGA");
+			System.out.println(s.traerPasajero(300));
+		}catch (Exception e){
 			System.out.println(e);
-			
 		}
-		finally {
-			System.out.println("Fin");
+		System.out.println("--------------------------------------------");
+		try {
+			for(Pasajero p : s.traerPasajeros()) {
+				System.out.println(p);
+			}
+		}catch (Exception e){
+			System.out.println(e);
 		}
-		
 	}
 
 }

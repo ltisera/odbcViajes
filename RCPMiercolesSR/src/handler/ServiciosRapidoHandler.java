@@ -2,12 +2,10 @@ package handler;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.lang.model.type.NullType;
-
 import org.apache.thrift.TException;
 
 import DAO.CiudadDAO;
+import DAO.PasajeroDAO;
 import ejnamespace.Ciudad;
 import ejnamespace.CiudadExc;
 import ejnamespace.Pasajero;
@@ -25,30 +23,28 @@ public class ServiciosRapidoHandler implements Iface {
     }
 
     public Ciudad traerCiudad(int idCiudad) throws CiudadExc, org.apache.thrift.TException{
-    	Ciudad c = new Ciudad();
     	CiudadDAO cDao = new CiudadDAO();
-		
-		c=cDao.traerCiudad(idCiudad);
-		if(c == null) {
-			throw new CiudadExc(1, "ciudad no encontrada");
-		}
+    	Ciudad c = cDao.traerCiudad(idCiudad);
+		if(c == null)throw new CiudadExc(1, "ciudad no encontrada");
     	return c;
     }
 
     public Pasajero traerPasajero(int DNI) throws PasajeroExc, org.apache.thrift.TException{
-    	Pasajero p = new Pasajero();
+    	PasajeroDAO pDao = new PasajeroDAO();
+    	Pasajero p = pDao.traerPasajero(DNI);
+    	if (p == null) throw new PasajeroExc(1, "Pasajero inexistente");
     	return p;
     }
 
     public java.util.List<Ciudad> traerCiudades() throws org.apache.thrift.TException{
-    	List<Ciudad> l = new ArrayList<Ciudad>();
-    	return l;
+    	CiudadDAO cDao = new CiudadDAO();
+    	return cDao.traerCiudades();s
     	
     }
 
     public java.util.List<Pasajero> traerPasajeros() throws org.apache.thrift.TException{
-    	List<Pasajero> p = new ArrayList<Pasajero>();
-    	return p;
+    	PasajeroDAO pDao = new PasajeroDAO();
+    	return pDao.traerPasajeros();
     }
 
 }
