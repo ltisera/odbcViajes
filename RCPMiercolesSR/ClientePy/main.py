@@ -17,8 +17,9 @@ from thrift.protocol import TBinaryProtocol
 
 
 if __name__ == '__main__':
-
-    transport = TSocket.TSocket('localhost', 9090)
+    os.system('CLS')
+    print("Ingrese ip: ", end="")
+    transport = TSocket.TSocket(input(), 9090)
 
     # Buffering is critical. Raw sockets are very slow
     transport = TTransport.TBufferedTransport(transport)
@@ -33,19 +34,17 @@ if __name__ == '__main__':
     
     transport.open()
 
-    print("soy main")
     salir = None
     while(salir != "7"):
         
         os.system('CLS')
-        print("salir: ", salir)
-        print("Elija una ocion")
+        print("Elija una opcion")
         print("1) traer Ciudad")
         print("2) traer latitud")
         print("3) traer nombre")
         print("4) traer Ciudades")
-        print("5) traer pasaje")
-        print("6) traer pasajes")
+        print("5) traer pasajero")
+        print("6) traer pasajeros")
         print("7) salir")
         print("Elegi: ", end='')
         salir = input()
